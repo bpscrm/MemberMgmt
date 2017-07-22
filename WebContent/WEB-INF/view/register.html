@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>会员注册</title>
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/weui.min.js"></script>
+		<script src="js/zepto.min.js"></script>
+	</head>
+	<body>
+
+		<form id="member">
+			<div class="page-cell">
+				<!--<div class="page-cell-hd">
+					<label class="page-cell-label">会员名称</label>
+				</div>-->
+				<div class="page-cell-bd">
+					<input id="membername" class="page-input" type="text" placeholder="会员名称"/>
+				</div>
+			</div>
+			<div class="page-cell">
+				<!--<div class="page-cell-hd">
+					<label class="page-cell-label">手机号码</label>
+				</div>-->
+				<div class="page-cell-bd">
+					<input id="membermobile" class="page-input" type="tel" placeholder="手机号码"/>
+				</div>
+			</div>
+			<div class="page-cell">
+				<!--<div class="page-cell-hd">
+					<label class="page-cell-label">性别</label>
+				</div>-->
+				<div class="page__bd page__bd_spacing">
+					<a href="javascript:;" class="weui-btn weui-btn_default" id="genderPicker" >性别</a>
+				</div>
+			</div>
+			<div class="page-cell">
+				<!--<div class="page-cell-hd">
+					<label class="page-cell-label">
+						生日
+					</label>
+				</div>-->
+				<div class="page__bd page__bd_spacing">
+					<a href="javascript:;" class="weui-btn weui-btn_default" id="datePicker" >生日</a>
+				</div>
+			</div>
+			<div class="page-btn-area">
+				<a class="page-btn page-btn_primary" href="javascript:register()">注册</a>
+			</div>
+		</form>
+		<script type="text/javascript">
+			function register(){
+				//这里还需要加上校验
+				var mname = document.getElementById('membername').value;
+				var mmobile = document.getElementById('membermobile').value;
+				var mbirthday = $('#datePicker').html();
+				var mgender = $('#genderPicker').html();
+				alert(mname + ';' + mmobile + ';' + mgender + ';' + mbirthday);
+			}
+			$('#genderPicker').on('click', function () {
+				weui.picker([{
+		            label: '先生',
+		            value: '先生'
+		        }, {
+		            label: '女士',
+		            value: '女士'
+		        }], {
+	            onChange: function (result) {
+	                console.log(result);	                
+	            },
+	            onConfirm: function (result) {
+	                console.log(result);
+	                $('#genderPicker').html(result);
+	                
+	            }
+	        	});
+    		});
+			$('#datePicker').on('click', function() {
+				weui.datePicker({
+		            start: 1990,
+		            end: new Date().getFullYear(),
+		            onChange: function (result) {
+		                console.log(result);
+		            },
+		            onConfirm: function (result) {
+		                $('#datePicker').html(result[0]+'/'+result[1]+'/'+result[2]);
+		                
+		            }
+		        });
+			});
+		</script>
+		<script type="text/javascript">
+		    $(function(){
+		        var winH = $(window).height();
+		        var categorySpace = 10;
+		
+		        $('.js_item').on('click', function(){
+		            var id = $(this).data('id');
+		            window.pageManager.go(id);
+		        });
+		        $('.js_category').on('click', function(){
+		            var $this = $(this),
+		                $inner = $this.next('.js_categoryInner'),
+		                $page = $this.parents('.page'),
+		                $parent = $(this).parent('li');
+		            var innerH = $inner.data('height');
+		            bear = $page;
+		
+		            if(!innerH){
+		                $inner.css('height', 'auto');
+		                innerH = $inner.height();
+		                $inner.removeAttr('style');
+		                $inner.data('height', innerH);
+		            }
+		
+		            if($parent.hasClass('js_show')){
+		                $parent.removeClass('js_show');
+		            }else{
+		                $parent.siblings().removeClass('js_show');
+		
+		                $parent.addClass('js_show');
+		                if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH){
+		                    var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
+		
+		                    if(scrollTop > this.offsetTop){
+		                        scrollTop = this.offsetTop - categorySpace;
+		                    }
+		
+		                    $page.scrollTop(scrollTop);
+		                }
+		            }
+		        });
+		    });
+		</script>
+	</body>
+</html>
