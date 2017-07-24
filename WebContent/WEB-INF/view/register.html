@@ -59,6 +59,8 @@
 				var mbirthday = $('#datePicker').html();
 				var mgender = $('#genderPicker').html();
 				alert(mname + ';' + mmobile + ';' + mgender + ';' + mbirthday);
+				
+				window.location.href = 'register_success';
 			}
 			$('#genderPicker').on('click', function () {
 				weui.picker([{

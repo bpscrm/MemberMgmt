@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="js/jquery-3.2.1.min.js"></script>
+<title>Welcome</title>
+</head>
+<body>
+	<div>
+		<h1>welcome</h1>
+		<a href="javascript:register()">会员注册</a>
+	</div>	
+	<script type="text/javascript">
+		function register(){
+			
+			$.ajax({  
+		        type: 'get',  
+		        url: 'register',
+		        cache:false, 
+		        async:false,
+		        dataType : 'json',
+		　　　　　　 	contentType : 'application/json',       
+		        success: function (data) { 	
+		        	window.location.href = 'register';
+		        },  
+		        error: function (data) {  
+		        	alert(data.msg);
+		        }  
+		    });
+		}	
+	</script>
+</body>
+
+</html>
