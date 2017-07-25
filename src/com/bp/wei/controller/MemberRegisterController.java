@@ -15,4 +15,9 @@ public class MemberRegisterController {
 	public String redirectRegister(){		
 		return "register";
 	}
+	
+	@RequestMapping(value="msg_success", method = RequestMethod.GET)
+	public String redirectMsg_success(){		
+		return "msg_success";
+	}
 }
