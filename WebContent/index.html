@@ -1,34 +1,86 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<script src="js/jquery-3.2.1.min.js"></script>
-<title>Welcome</title>
-</head>
-<body>
-	<div>
-		<h1>welcome</h1>
-		<a href="javascript:register()">会员注册</a>
-	</div>	
-	<script type="text/javascript">
-		function register(){
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>会员管理入口页面</title>
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.css" rel="stylesheet" />
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/weui.min.js"></script>
+		<script src="js/zepto.min.js"></script>
+	</head>
+
+	<body>
+		<br />
+		<br />
+		<br />
+
+		<div class="page__bd">
+
+			<div class="weui-cells__title">
+				<font size="6">会员管理 体验入口</font>
+			</div>
 			
-			$.ajax({  
-		        type: 'get',  
-		        url: 'register',
-		        cache:false, 
-		        async:false,
-		        dataType : 'json',
-		　　　　　　 	contentType : 'application/json',       
-		        success: function (data) { 	
-		        	window.location.href = 'register';
-		        },  
-		        error: function (data) {  
-		        	alert(data.msg);
-		        }  
-		    });
-		}	
-	</script>
-</body>
+			<div class="weui-cells">
+				
+				
+				<a class="weui-cell weui-cell_access" href="javascript:register();">
+					<span class="weui-cell__bd">
+						<p>注册会员</p>
+					</span>
+					<span class="weui-cell__ft">点击进入</span>
+				</a>
+				<a class="weui-cell weui-cell_access" href="javascript:memberinfo();">
+					<span class="weui-cell__bd">
+						<p>我的资料</p>
+					</span>
+					<span class="weui-cell__ft">点击进入</span>
+				</a>
+
+			</div>
+
+		</div>
+
+		<script type="text/javascript">
+			function register() {
+
+				$.ajax({
+					type: 'get',
+					url: 'register',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'register';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
+			
+			function memberinfo() {
+
+				$.ajax({
+					type: 'get',
+					url: 'memberinfo',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'memberinfo';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
+		</script>
+	</body>
 
 </html>

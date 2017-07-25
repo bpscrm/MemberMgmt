@@ -18,7 +18,24 @@ public class MemberMgmtController {
 	
 	@RequestMapping(value="msg_success", method = RequestMethod.GET)
 	public String redirectMsg_success(){	
-		System.out.println("吃吃吃");
 		return "msg_success";
 	}
+	
+	@RequestMapping(value="memberinfo", method = RequestMethod.GET)
+	public String redirectMemberinfo(){	
+		return "memberinfo";
+	}
+
+	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
+	public String redirectChildrenlist(){	
+		return "childrenlist";
+	}
+	
+	@RequestMapping(value="childinfo", method = RequestMethod.GET)
+	public String redirectChildinfo(){	
+		return "childinfo";
+	}
+	
+	
+	
 }
