@@ -48,18 +48,19 @@
 				</div>
 			</div>
 			<div class="page-btn-area">
-				<a class="page-btn page-btn_primary" href="javascript:register1()">注册</a>
+				<a class="page-btn page-btn_primary" href="javascript:msgsuccess()">注册</a>
 			</div>
 		</form>
 		<script type="text/javascript">
-			function register1(){
+			function msgsuccess(){
+			    alert("1");
 				$.ajax({  
 			        type: 'get',  
 			        url: 'msg_success',
 			        cache:false, 
 			        async:false,
 			        dataType : 'json',
-			　　　　　　 contentType : 'application/json',       
+			　　　　　　 contentType : 'application/json',     
 			        success: function (data) { 	
 			        	window.location.href = 'msg_success';
 			        },  
@@ -67,6 +68,7 @@
 			        	alert(data.msg);
 			        }  
 		    	});
+		    	alert("2");
 		    }
 			function register(){
 				//这里还需要加上校验
