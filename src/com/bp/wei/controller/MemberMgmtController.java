@@ -36,6 +36,34 @@ public class MemberMgmtController {
 		return "childinfo";
 	}
 	
+	@RequestMapping(value="purchaselist", method = RequestMethod.GET)
+	public String redirectPurchaselist(){	
+		return "purchaselist";
+	}
 	
+	@RequestMapping(value="feedbacklist", method = RequestMethod.GET)
+	public String redirectFeedbacklist(){	
+		return "feedbacklist";
+	}
+	
+	@RequestMapping(value="feedbackinfo", method = RequestMethod.GET)
+	public String redirectFeedbackinfo(){	
+		return "feedbackinfo";
+	}
+	
+	@RequestMapping(value="mypromotion", method = RequestMethod.GET)
+	public String redirectMypromotion(){	
+		return "mypromotion";
+	}
+	
+	@RequestMapping(value="myfollower", method = RequestMethod.GET)
+	public String redirectMyfollower(){	
+		return "myfollower";
+	}
+	
+	@RequestMapping(value="myqrcode", method = RequestMethod.GET)
+	public String redirectMyqrcode(){	
+		return "myqrcode";
+	}
 	
 }

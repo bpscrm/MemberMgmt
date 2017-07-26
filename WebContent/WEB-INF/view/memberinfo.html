@@ -41,13 +41,13 @@
 				</span>
 				<span class="weui-cell__ft">点击进入</span>
 			</a>
-			<a class="weui-cell weui-cell_access" href="javascript:;">
+			<a class="weui-cell weui-cell_access" href="javascript:purchaselist();">
 				<span class="weui-cell__bd">
 					<p>购买记录</p>
 				</span>
 				<span class="weui-cell__ft">点击进入</span>
 			</a>
-			<a class="weui-cell weui-cell_access" href="javascript:;">
+			<a class="weui-cell weui-cell_access" href="javascript:mypromotion();">
 				<span class="weui-cell__bd">
 					<p>我的推广</p>
 				</span>
@@ -56,6 +56,12 @@
 
 
 		</div>
+		
+		<div class="page__bd page__bd_spacing">
+				<div class="button-sp-area">
+					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
+				</div>
+			</div>
 
 		<div class="page">
 			<div class="page__bd page__bd_spacing">
@@ -78,6 +84,42 @@
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
 						window.location.href = 'childrenlist';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
+			
+			function purchaselist() {
+
+				$.ajax({
+					type: 'get',
+					url: 'purchaselist',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'purchaselist';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
+			
+			function mypromotion() {
+
+				$.ajax({
+					type: 'get',
+					url: 'mypromotion',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'mypromotion';
 					},
 					error: function(data) {
 						alert(data.msg);
