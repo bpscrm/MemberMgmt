@@ -1,13 +1,24 @@
 package com.bp.wei.model;
 
 public class Member {
+	
+	private int id;
+	
 	private String name;
 	
 	private String mobile;
 	
 	private String gender;
 	
-	private String birthday;
+	private String birthday;	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -43,7 +54,7 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [name=" + name + ", mobile=" + mobile + ", gender=" + gender + ", birthday=" + birthday + "]";
+		return "Member [id=" + id + ", name=" + name + ", mobile=" + mobile + ", gender=" + gender + ", birthday=" + birthday + "]";
 	}	
 	
 }

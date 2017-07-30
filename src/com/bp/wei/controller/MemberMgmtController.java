@@ -2,14 +2,22 @@ package com.bp.wei.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.bp.wei.model.Member;
+import com.bp.wei.service.MemberMgmtService;
 
 @Controller
 @RequestMapping
 public class MemberMgmtController {
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtController.class);
+	
+	@Autowired
+	MemberMgmtService memberService;
 	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String redirectRegister(){		
@@ -66,4 +74,10 @@ public class MemberMgmtController {
 		return "myqrcode";
 	}
 	
+	@RequestMapping(value="getmember", method = RequestMethod.GET)
+	public @ResponseBody Member findMember(int id){
+		
+		return memberService.getMemberById(new Integer(id));
+		
+	}
 }

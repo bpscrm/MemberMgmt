@@ -74,12 +74,34 @@
 				<div class="button-sp-area">
 					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
 					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
-				</div>
+					<a class="page-btn page-btn_primary" href="javascript:getMember()">查找</a>
+				</div>				
 			</div>
 			
 			<div class="weui-cells__tips">底部说明文字底部说明文字</div>
 		</form>
 		<script type="text/javascript">
+		function getMember(){
+			var memberid = document.getElementById('memberid').value;
+			var params = {id: memberid};
+			//alert("memeberid:" + memberid);
+			$.ajax({  
+		        type: 'get',  
+		        url: 'getmember',
+		        cache: false,
+		        dataType : 'json',
+		        data: params,
+		　　　　　　 	contentType : 'application/json', 
+		　　　　　　 	async: false,
+		        success: function (data) { 	
+		        	var result= JSON.stringify(data);
+		        	alert('success:' + result);			        	
+		        },  
+		        error: function (data) { 		        	
+		        	alert('failed:' + data.msg);
+		        }  
+		    });
+		}
 			function register() {
 				//这里还需要加上校验
 				var mname = document.getElementById('membername').value;
