@@ -20,6 +20,7 @@ public class MemberMgmtController {
 	MemberMgmtService memberService;
 	
 	
+	
 	@RequestMapping(value="memberregister", method = RequestMethod.GET)
 	public String redirectMemberregister(){		
 		return "memberregister";
