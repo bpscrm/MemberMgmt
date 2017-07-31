@@ -19,6 +19,28 @@ public class MemberMgmtController {
 	@Autowired
 	MemberMgmtService memberService;
 	
+	
+	@RequestMapping(value="memberregister", method = RequestMethod.GET)
+	public String redirectMemberregister(){		
+		return "memberregister";
+	}
+	
+	@RequestMapping(value="memberinfo", method = RequestMethod.GET)
+	public String redirectMemberinfo(){	
+		return "memberinfo";
+	}
+
+	@RequestMapping(value="mypromotion", method = RequestMethod.GET)
+	public String redirectMypromotion(){	
+		return "mypromotion";
+	}
+	
+	
+	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
+	public String redirectChildrenlist(){	
+		return "childrenlist";
+	}
+	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String redirectRegister(){		
 		return "register";
@@ -27,16 +49,6 @@ public class MemberMgmtController {
 	@RequestMapping(value="msg_success", method = RequestMethod.GET)
 	public String redirectMsg_success(){	
 		return "msg_success";
-	}
-	
-	@RequestMapping(value="memberinfo", method = RequestMethod.GET)
-	public String redirectMemberinfo(){	
-		return "memberinfo";
-	}
-
-	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
-	public String redirectChildrenlist(){	
-		return "childrenlist";
 	}
 	
 	@RequestMapping(value="childinfo", method = RequestMethod.GET)
@@ -57,11 +69,6 @@ public class MemberMgmtController {
 	@RequestMapping(value="feedbackinfo", method = RequestMethod.GET)
 	public String redirectFeedbackinfo(){	
 		return "feedbackinfo";
-	}
-	
-	@RequestMapping(value="mypromotion", method = RequestMethod.GET)
-	public String redirectMypromotion(){	
-		return "mypromotion";
 	}
 	
 	@RequestMapping(value="myfollower", method = RequestMethod.GET)
