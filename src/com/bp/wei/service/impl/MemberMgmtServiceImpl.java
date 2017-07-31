@@ -28,4 +28,10 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		return member;
 	}
 
+	@Override
+	public int setMember(Member member) {
+		int result = dao.insertSelective(member);
+		return result;
+	}
+
 }
