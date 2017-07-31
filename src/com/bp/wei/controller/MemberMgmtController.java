@@ -36,14 +36,17 @@ public class MemberMgmtController {
 	}
 	
 	
-	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
-	public String redirectChildrenlist(){	
-		return "childrenlist";
-	}
+
 	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String redirectRegister(){		
 		return "register";
+	}
+
+	
+	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
+	public String redirectChildrenlist(){	
+		return "childrenlist";
 	}
 	
 	@RequestMapping(value="msg_success", method = RequestMethod.GET)
