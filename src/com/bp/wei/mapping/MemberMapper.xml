@@ -21,13 +21,13 @@
     delete from member
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.bp.wei.model.Member">
-    insert into member (id, name, gender, 
+  <insert id="insert" parameterType="com.bp.wei.model.Member" useGeneratedKeys="true" keyProperty="id">
+    insert into member (name, gender, 
       mobile, birthday)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE})
   </insert>
-  <insert id="insertSelective" parameterType="com.bp.wei.model.Member">
+  <insert id="insertSelective" parameterType="com.bp.wei.model.Member" useGeneratedKeys="true" keyProperty="id">
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

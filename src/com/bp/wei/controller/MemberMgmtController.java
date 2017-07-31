@@ -4,12 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bp.wei.model.Member;
 import com.bp.wei.service.MemberMgmtService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping
@@ -93,9 +97,29 @@ public class MemberMgmtController {
 	}
 	
 	@RequestMapping(value="setmember", method = RequestMethod.POST)
-	public @ResponseBody Member SetMember(int id){
+	public @ResponseBody int setMember(@RequestBody JSONObject strMember){
+		log.debug("Start to set member...");
+		if(strMember == null){
+			log.error("Failed to get member info from UI: " + strMember);
+			return -1;
+		}
+		System.out.println("#################" + strMember.toString());
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		Member member = new Member();
+		String mobile = strMember.getString("membermobile");
+		if(mobile != null && mobile.length() > 0){
+			member.setMobile(mobile);
+		}
+		String name = strMember.getString("membername");
+		if(name != null && name.length() > 0){
+			member.setName(name);
+		}
+		member.setGender("F");
+		member.setBirthday("2017-01-01");
 		
-		return memberService.getMemberById(new Integer(id));
+		int result = memberService.setMember(member);
 		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
 	}
 }
