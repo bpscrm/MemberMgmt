@@ -80,4 +80,11 @@ public class MemberMgmtController {
 		return memberService.getMemberById(new Integer(id));
 		
 	}
+	
+	@RequestMapping(value="setmember", method = RequestMethod.POST)
+	public @ResponseBody Member SetMember(int id){
+		
+		return memberService.getMemberById(new Integer(id));
+		
+	}
 }
