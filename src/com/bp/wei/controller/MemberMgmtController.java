@@ -105,8 +105,7 @@ public class MemberMgmtController {
 			log.error("Failed to get member info from UI: " + strMember);
 			return -1;
 		}
-		System.out.println("#################" + strMember.toString());
-		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		
 		Member member = new Member();
 		String mobile = strMember.getString("membermobile");
 		if(mobile != null && mobile.length() > 0){
@@ -119,9 +118,8 @@ public class MemberMgmtController {
 		member.setGender("F");
 		member.setBirthday("2017-01-01");
 		
-		int result = memberService.setMember(member);
+		int result = memberService.setMember(member);		
 		
-		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	}
 	

@@ -80,10 +80,61 @@
 					<input type="hidden" id="memberid" value="1"/>
 				</div>
 			</div>
-			
+			<div id="searchresult">
+			</div>
 			<div class="weui-cells__tips">底部说明文字底部说明文字</div>
 		</form>
+		
+		<script id="template" type="text/html">
+			<div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<label class="weui-label">姓名</label>
+					</div>
+					<div class="weui-cell__bd">
+						<#= name #>
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd">
+						<label class="weui-label">手机号</label>
+					</div>
+					<div class="weui-cell__bd">
+						<#= mobile #>
+					</div>
+				</div>
+			</div>
+
+		</script>
 		<script type="text/javascript">
+		$.fn.parseTemplate = function(data){ 
+			var str = (this).html(); 
+			var _tmplCache = {} 
+			var err = ""; 
+			try{ 
+				var func = _tmplCache[str]; 
+				if (!func){ 
+					var strFunc = 
+					"var p=[],print=function(){p.push.apply(p,arguments);};" + 
+					"with(obj){p.push('" + 
+					str.replace(/[\r\t\n]/g, " ") 
+					.replace(/'(?=[^#]*#>)/g, "\t") 
+					.split("'").join("\\'") 
+					.split("\t").join("'") 
+					.replace(/<#=(.+?)#>/g, "',$1,'") 
+					.split("<#").join("');") 
+					.split("#>").join("p.push('") 
+					+ "');}return p.join('');";
+					func = new Function("obj", strFunc); 
+					_tmplCache[str] = func; 
+				} 
+				return func(data); 
+			} catch(e){
+				err = e.message; 
+			} 
+				return "< # ERROR: " + err.toString() + " # >"; 
+			};
+			
 		//$(document).ready(function(){
 		$.fn.serializeObject = function()    
 	 		{  	   
@@ -123,7 +174,7 @@
 				        }  
 				    });						
 		
-		}
+			}
 			function getMember(){
 				var memberid = document.getElementById('memberid').value;
 				var params = {id: memberid};
@@ -137,8 +188,12 @@
 			　　　　　　 	contentType : 'application/json', 
 			　　　　　　 	async: false,
 			        success: function (data) { 	
-			        	var result= JSON.stringify(data);
-			        	alert('success:' + result);			        	
+			        	//var result= JSON.stringify(data);
+			        	//alert('success:' + result);
+			        	var output = $('#template').parseTemplate(data);
+			        	
+			        	$('#searchresult').html(output);
+			        				        	
 			        },  
 			        error: function (data) { 		        	
 			        	alert('failed:' + data.msg);
