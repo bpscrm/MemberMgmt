@@ -9,6 +9,8 @@ public interface FollowerinfoDao {
 
     int insertSelective(Followerinfo record);
 
+    String selectByPrimaryOpenid(String name);
+    
     Followerinfo selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(Followerinfo record);

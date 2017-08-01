@@ -22,10 +22,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.bp.wei.model.MemberToFollower">
-    insert into ec1_member_ec1_follower_c (id, date_modified, deleted, 
+    insert into ec1_member_ec1_follower_c (id, date_modified,  
       ec1_member_ec1_followerec1_member_ida, ec1_member_ec1_followerec1_follower_idb
       )
-    values (#{id,jdbcType=VARCHAR}, #{dateModified,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+    values (uuid(), now(), 
       #{ec1MemberEc1Followerec1MemberIda,jdbcType=VARCHAR}, #{ec1MemberEc1Followerec1FollowerIdb,jdbcType=VARCHAR}
       )
   </insert>

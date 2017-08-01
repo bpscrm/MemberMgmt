@@ -10,7 +10,9 @@ import com.bp.wei.dao.MemberDao;
 import com.bp.wei.dao.MemberinfoDao;
 import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
+import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
+import com.bp.wei.model.MemberToFollower;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.service.MemberMgmtService;
 
@@ -23,14 +25,27 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	//for register member
 	@Resource
 	private MemberinfoDao Mbdao;
+	
+	@Resource
 	private FollowerinfoDao Fldao;
+	
+	@Resource
 	private MemberToFollowerDao mtfdao;
 	
 	@Override
 	public int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid) {
+		
 		int result = Mbdao.insert(memberinfowithblogs);
-		//int result1 = Fldao.select();
-		//int result2 = mtfdao.insert();
+		//System.out.println("@@@@@@@@@@@@@@member id: " + memberinfowithblogs.getId());
+		
+		String followerID = Fldao.selectByPrimaryOpenid(openid);
+		
+		MemberToFollower mbTofl = new MemberToFollower();
+		mbTofl.setEc1MemberEc1Followerec1MemberIda(memberinfowithblogs.getId());
+		mbTofl.setEc1MemberEc1Followerec1FollowerIdb(followerID);
+		
+		result = mtfdao.insert(mbTofl);
+		
 		return result;
 	}
 	

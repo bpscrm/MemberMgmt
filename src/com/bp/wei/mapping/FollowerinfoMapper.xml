@@ -23,6 +23,12 @@
   <sql id="Blob_Column_List">
     description
   </sql>
+  <select id="selectByPrimaryOpenid" parameterType="java.lang.String" resultType="String">
+    select 
+     id
+    from ec1_follower
+    where name = #{name,jdbcType=CHAR}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

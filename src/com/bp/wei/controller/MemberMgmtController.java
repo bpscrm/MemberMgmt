@@ -149,11 +149,14 @@ public class MemberMgmtController {
 			memberinfo.setMbTitle(titel);
 		}
 		
-		memberinfo.setId("110011");
+		//memberinfo.setId("222222");
 		memberinfo.setDateEntered("2017-01-01");
 		memberinfo.setCreatedBy("1");
 		memberinfo.setDateModified("2017-01-01");
 		memberinfo.setModifiedUserId("1");
+		
+		Followerinfo followerinfo = new Followerinfo();
+		followerinfo.setId(strMemberinfo.getString("testopenid"));
 		
 		int result = memberService.insertMemberinfo(memberinfo, strMemberinfo.getString("testopenid"));
 		
