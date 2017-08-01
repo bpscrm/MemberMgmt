@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bp.wei.model.Member;
+import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.service.MemberMgmtService;
@@ -161,5 +162,12 @@ public class MemberMgmtController {
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	
+	}
+	
+	@RequestMapping(value="getmemberinfo", method = RequestMethod.GET)
+	public @ResponseBody MemberinfoWithBLOBs findMemberinfo(String name){
+		
+		return memberService.getMemberinfobyname(new String(name));
+		
 	}
 }

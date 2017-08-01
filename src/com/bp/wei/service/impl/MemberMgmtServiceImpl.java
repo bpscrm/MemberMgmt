@@ -13,6 +13,7 @@ import com.bp.wei.dao.MemberToFollowerDao;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
+import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.service.MemberMgmtService;
 
@@ -47,6 +48,16 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		result = mtfdao.insert(mbTofl);
 		
 		return result;
+	}
+	
+	@Override
+	public MemberinfoWithBLOBs getMemberinfobyname(String name) {
+		if(name.length() <= 0){
+			log.error("Invalid member name: " + name);
+			return null;
+		}
+		MemberinfoWithBLOBs memberinfo = Mbdao.selectByMemberName(new String(name));
+		return memberinfo;
 	}
 	
 

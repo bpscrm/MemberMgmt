@@ -11,6 +11,8 @@ public interface MemberinfoDao {
     int insertSelective(MemberinfoWithBLOBs record);
 
     MemberinfoWithBLOBs selectByPrimaryKey(String id);
+    
+    MemberinfoWithBLOBs selectByMemberName(String name);
 
     int updateByPrimaryKeySelective(MemberinfoWithBLOBs record);
 
