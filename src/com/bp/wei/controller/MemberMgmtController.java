@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bp.wei.model.Member;
+import com.bp.wei.model.MemberinfoWithBLOBs;
+import com.bp.wei.model.Followerinfo;
 import com.bp.wei.service.MemberMgmtService;
 
 import net.sf.json.JSONArray;
@@ -121,5 +123,42 @@ public class MemberMgmtController {
 		
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
+	}
+	
+	
+	//for register member
+	@RequestMapping(value="setmemberinfo", method = RequestMethod.POST)
+	public @ResponseBody int setMemberinfo(@RequestBody JSONObject strMemberinfo){
+		
+		log.debug("Start to set member...");
+		if(strMemberinfo == null){
+			log.error("Failed to get member info from UI: " + strMemberinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strMemberinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		MemberinfoWithBLOBs memberinfo = new MemberinfoWithBLOBs();
+		String telnum = strMemberinfo.getString("memberinfotelnum");
+		if(telnum != null && telnum.length() > 0){
+			memberinfo.setName(telnum);
+		}
+		String titel = strMemberinfo.getString("memberinfotitle");
+		if(titel != null && titel.length() > 0){
+			memberinfo.setMbTitle(titel);
+		}
+		
+		memberinfo.setId("110011");
+		memberinfo.setDateEntered("2017-01-01");
+		memberinfo.setCreatedBy("1");
+		memberinfo.setDateModified("2017-01-01");
+		memberinfo.setModifiedUserId("1");
+		
+		int result = memberService.insertMemberinfo(memberinfo, strMemberinfo.getString("testopenid"));
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
+	
 	}
 }

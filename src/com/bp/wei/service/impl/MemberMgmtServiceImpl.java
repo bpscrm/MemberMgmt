@@ -7,7 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.bp.wei.dao.MemberDao;
+import com.bp.wei.dao.MemberinfoDao;
+import com.bp.wei.dao.FollowerinfoDao;
+import com.bp.wei.dao.MemberToFollowerDao;
 import com.bp.wei.model.Member;
+import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.service.MemberMgmtService;
 
 @Service
@@ -15,6 +19,23 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtService.class);
 	
+
+	//for register member
+	@Resource
+	private MemberinfoDao Mbdao;
+	private FollowerinfoDao Fldao;
+	private MemberToFollowerDao mtfdao;
+	
+	@Override
+	public int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid) {
+		int result = Mbdao.insert(memberinfowithblogs);
+		//int result1 = Fldao.select();
+		//int result2 = mtfdao.insert();
+		return result;
+	}
+	
+
+	//for examples
 	@Resource
 	private MemberDao dao;
 

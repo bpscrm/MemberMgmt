@@ -15,214 +15,185 @@
 
 	<body>
 
-		<form id="member">
-			<header class="ui-header ui-header-positive ui-border-b">
-	            <h1>会员注册</h1><button class="ui-btn" onclick="history.back()">回首页</button>
-	        </header>
-			<br />
-			<br />
+		<form id="memberinfo">
 		
+			<header class="ui-header ui-header-positive ui-border-b">
+				<h1>会员注册</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+			</header>
+			<br />
+			<br />
+
 			<div class="weui-cells weui-cells_form">
-				<div class="weui-cell">
-					<div class="weui-cell__hd"><label class="weui-label">qq</label></div>
-					<div class="weui-cell__bd">
-						<input id="memberid" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入qq号" />
-					</div>
-				</div>
+
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
-						<label class="weui-label">手机号</label>
+						<label class="weui-label">手机号码</label>
 					</div>
 					<div class="weui-cell__bd">
-						<input id="membername" class="weui-input" type="tel" placeholder="请输入手机号" />
+						<input name="memberinfotelnum" class="weui-input" type="tel" placeholder="手机号" />
 					</div>
 					<div class="weui-cell__ft">
 						<button class="weui-vcode-btn">获取验证码</button>
 					</div>
 				</div>
+
 				<div class="weui-cell">
-					<div class="weui-cell__hd"><label for="" class="weui-label">日期</label></div>
+					<div class="weui-cell__hd"><label class="weui-label">手机验证码</label></div>
+					<div class="weui-cell__bd">
+						<input name="memberinfocode" class="weui-input" type="number" pattern="[0-9]*" placeholder="验证码" />
+					</div>
+				</div>
+
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">称谓</label>
+					</div>
+
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="memberinfotitle">
+							<option value="L1">女士</option>
+							<option value="L2">先生</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+					<div class="weui-cell__bd">
+						<input name="memberinfoname" class="weui-input" type="text" placeholder="姓名" />
+					</div>
+				</div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
 					<div class="weui-cell__bd">
 						<input class="weui-input" type="date" value="" />
 					</div>
 				</div>
+
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">是否有小孩</label>
+					</div>
+
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="memberinfoifchild">
+							<option value="1">否</option>
+							<option value="2">一个</option>
+							<option value="3">两个</option>
+							<option value="4">两个以上</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">教育程度</label>
+					</div>
+
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="memberinfoedulevel">
+							<option value="1">高中</option>
+							<option value="2">本科</option>
+							<option value="3">硕士</option>
+							<option value="4">其它</option>
+						</select>
+					</div>
+				</div>
+
 				<div class="weui-cell">
-					<div class="weui-cell__hd"><label for="" class="weui-label">时间</label></div>
+					<div class="weui-cell__hd"><label class="weui-label">居住地址</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="datetime-local" value="" placeholder="" />
+						<input name="memberinfoaddr" class="weui-input" type="text" placeholder="地址" />
 					</div>
-				</div>
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
-					<div class="weui-cell__bd">
-						<input class="weui-input" type="number" placeholder="请输入验证码" />
-					</div>
-					<div class="weui-cell__ft">
-						<img class="weui-vcode-img" src="./images/vcode.jpg" />
-					</div>
-				</div>
-			</div>
-			<div class="weui-cell weui-cell_select weui-cell_select-after">
-				<div class="weui-cell__hd">
-					<label for="" class="weui-label">国家/地区</label>
 				</div>
 
-				<div class="weui-cell__bd">
-					<select class="weui-select" name="select2">
-						<option value="1">中国</option>
-						<option value="2">美国</option>
-						<option value="3">英国</option>
-					</select>
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<input id="testopenid" class="weui-input" type="text" placeholder="请输入测试用openid" />
+					</div>
+				</div>
+
+				<div class="page__bd page__bd_spacing">
+					<div class="page-btn-area">
+						<a class="page-btn page-btn_primary" href="javascript:setmemberinfo()">注册</a>
+						<input type="hidden" id="memberid" value="1" />
+					</div>
+				</div>
+
+				<div class="weui-footer weui-footer_fixed-bottom">
+					<p class="weui-footer__links">
+						<a href="javascript:;" class="weui-footer__link">关于我们</a>
+					</p>
+					<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
 				</div>
 			</div>
-			
-			<div class="page__bd page__bd_spacing">
-				<div class="button-sp-area">
-					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
-					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>					
-				</div>
-				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:getMember()">查找</a>
-					<input type="hidden" id="memberid" value="1"/>
-				</div>
-			</div>
-			
-			<div class="weui-cells__tips">底部说明文字底部说明文字</div>
-			
-			<div class="weui-footer weui-footer_fixed-bottom">
-				<p class="weui-footer__links">
-					<a href="javascript:;" class="weui-footer__link">关于我们</a>
-				</p>
-				<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
-			</div>
+
 		</form>
+
 		<script type="text/javascript">
-		function SetMember(){
-			var memberid = document.getElementById('memberid').value;
-			var membername = document.getElementById('membername').value;
-			var params = {id: memberid,name: membername};
-			alert("memeberid:" + memberid + " memebername:" + membername);
-			$.ajax({  
-		        type: 'get',  
-		        url: 'setmember',
-		        cache: false,
-		        dataType : 'json',
-		        data: params,
-		　　　　　　 contentType : 'application/json', 
-		　　　　　　 async: false,
-		        success: function (data) { 	
-		        	var result= JSON.stringify(data);
-		        	alert('success:' + result);			        	
-		        },  
-		        error: function (data) { 		        	
-		        	alert('failed:' + data.msg);
-		        }  
-		    });
-		}
-		
-		function getMember(){
-			var memberid = document.getElementById('memberid').value;
-			var params = {id: memberid};
-			//alert("memeberid:" + memberid);
-			$.ajax({  
-		        type: 'get',  
-		        url: 'getmember',
-		        cache: false,
-		        dataType : 'json',
-		        data: params,
-		　　　　　　 	contentType : 'application/json', 
-		　　　　　　 	async: false,
-		        success: function (data) { 	
-		        	var result= JSON.stringify(data);
-		        	alert('success:' + result);			        	
-		        },  
-		        error: function (data) { 		        	
-		        	alert('failed:' + data.msg);
-		        }  
-		    });
-		}
-			function register() {
-				//这里还需要加上校验
-				var mname = document.getElementById('membername').value;
-				var mmobile = document.getElementById('membermobile').value;
-				var mbirthday = $('#datePicker').html();
-				var mgender = $('#genderPicker').html();
-				alert(mname + ';' + mmobile + ';' + mgender + ';' + mbirthday);
-			}
-			$('#genderPicker').on('click', function() {
-				weui.picker([{
-					label: '先生',
-					value: '先生'
-				}, {
-					label: '女士',
-					value: '女士'
-				}], {
-					onChange: function(result) {
-						console.log(result);
-					},
-					onConfirm: function(result) {
-						console.log(result);
-						$('#genderPicker').html(result);
-
-					}
-				});
-			});
-			$('#datePicker').on('click', function() {
-				weui.datePicker({
-					start: 1990,
-					end: new Date().getFullYear(),
-					onChange: function(result) {
-						console.log(result);
-					},
-					onConfirm: function(result) {
-						$('#datePicker').html(result[0] + '/' + result[1] + '/' + result[2]);
-
-					}
-				});
-			});
-		</script>
-		<script type="text/javascript">
-			$(function() {
-				var winH = $(window).height();
-				var categorySpace = 10;
-
-				$('.js_item').on('click', function() {
-					var id = $(this).data('id');
-					window.pageManager.go(id);
-				});
-				$('.js_category').on('click', function() {
-					var $this = $(this),
-						$inner = $this.next('.js_categoryInner'),
-						$page = $this.parents('.page'),
-						$parent = $(this).parent('li');
-					var innerH = $inner.data('height');
-					bear = $page;
-
-					if(!innerH) {
-						$inner.css('height', 'auto');
-						innerH = $inner.height();
-						$inner.removeAttr('style');
-						$inner.data('height', innerH);
-					}
-
-					if($parent.hasClass('js_show')) {
-						$parent.removeClass('js_show');
-					} else {
-						$parent.siblings().removeClass('js_show');
-
-						$parent.addClass('js_show');
-						if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH) {
-							var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
-
-							if(scrollTop > this.offsetTop) {
-								scrollTop = this.offsetTop - categorySpace;
-							}
-
-							$page.scrollTop(scrollTop);
+			$.fn.serializeObject = function() {
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+					if(o[this.name]) {
+						if(!o[this.name].push) {
+							o[this.name] = [o[this.name]];
 						}
+						o[this.name].push(this.value || '');
+					} else {
+						o[this.name] = this.value || '';
 					}
 				});
-			});
+				return o;
+			};
+
+			function setmemberinfo() {
+
+				var formdata = $('#memberinfo').serializeObject();
+				//alert(formdata);							
+				$.ajax({
+					type: 'post',
+					url: 'setmemberinfo',
+					cache: false,
+					dataType: 'json',
+					data: JSON.stringify(formdata),
+					contentType: 'application/json',
+					　　　　　　async: false,
+					success: function(data) {
+						var result = JSON.stringify(data);
+						alert('success:' + result);
+					},
+					error: function(data) {
+						alert('failed:' + data.msg);
+					}
+				});
+
+			}
+
+			function getMember() {
+				var memberid = document.getElementById('memberid').value;
+				var params = {
+					id: memberid
+				};
+				//alert("memeberid:" + memberid);
+				$.ajax({
+					type: 'get',
+					url: 'getmember',
+					cache: false,
+					dataType: 'json',
+					data: params,
+					　　　　　　contentType: 'application/json',
+					　　　　　　async: false,
+					success: function(data) {
+						var result = JSON.stringify(data);
+						alert('success:' + result);
+					},
+					error: function(data) {
+						alert('failed:' + data.msg);
+					}
+				});
+			}
 		</script>
 	</body>
 
