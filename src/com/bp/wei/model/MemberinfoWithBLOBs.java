@@ -20,4 +20,5 @@ public class MemberinfoWithBLOBs extends Memberinfo {
     public void setMbAddr(String mbAddr) {
         this.mbAddr = mbAddr == null ? null : mbAddr.trim();
     }
+    
 }
