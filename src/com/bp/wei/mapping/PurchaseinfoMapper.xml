@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bp.wei.dao.FeedbackDao">
-  <resultMap id="BaseResultMap" type="com.bp.wei.model.Feedback">
+<mapper namespace="com.bp.wei.dao.PurchaseinfoDao">
+  <resultMap id="BaseResultMap" type="com.bp.wei.model.Purchaseinfo">
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="date_entered" jdbcType="TIMESTAMP" property="dateEntered" />
@@ -10,55 +10,52 @@
     <result column="created_by" jdbcType="CHAR" property="createdBy" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
     <result column="assigned_user_id" jdbcType="CHAR" property="assignedUserId" />
-    <result column="fd_dt" jdbcType="DATE" property="fdDt" />
-    <result column="fd_st" jdbcType="VARCHAR" property="fdSt" />
+    <result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="purchase_st_dt" jdbcType="DATE" property="purchaseStDt" />
+    <result column="purchase_ed_dt" jdbcType="DATE" property="purchaseEdDt" />
+    <result column="purchase_st" jdbcType="VARCHAR" property="purchaseSt" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bp.wei.model.FeedbackWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bp.wei.model.Purchaseinfo">
     <result column="description" jdbcType="LONGVARCHAR" property="description" />
-    <result column="fd_ask" jdbcType="LONGVARCHAR" property="fdAsk" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, date_entered, date_modified, modified_user_id, created_by, deleted, assigned_user_id, 
-    fd_dt, fd_st
+    purchase_price, purchase_st_dt, purchase_ed_dt, purchase_st
   </sql>
   <sql id="Blob_Column_List">
-    description, fd_ask
+    description
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from ec1_feedback
+    from ec1_purchase_data
     where id = #{id,jdbcType=CHAR}
   </select>
-  <select id="selectByFeedbackName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from ec1_feedback
+  <select id="selectIDByMember" parameterType="java.lang.String" resultType="String">
+    select id
+    from ec1_purchase_data
     where name = #{name,jdbcType=CHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from ec1_feedback
+    delete from ec1_purchase_data
     where id = #{id,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.bp.wei.model.FeedbackWithBLOBs">
-    <selectKey keyProperty="id" resultType="String" order="BEFORE">  
-        select  replace(uuid(),'-','')   from dual  
-    </selectKey> 
-    insert into ec1_feedback (id, name, date_entered, date_modified, modified_user_id, created_by, deleted, 
-      assigned_user_id, fd_dt, 
-      fd_st, description, fd_ask
-      )
-    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},  now(), now(), "1", "1", "0",
-      #{assignedUserId,jdbcType=CHAR}, #{fdDt,jdbcType=DATE}, 
-      #{fdSt,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{fdAsk,jdbcType=LONGVARCHAR}
-      )
+  <insert id="insert" parameterType="com.bp.wei.model.Purchaseinfo">
+    insert into ec1_purchase_data (id, name, date_entered, 
+      date_modified, modified_user_id, created_by, 
+      deleted, assigned_user_id, purchase_price, 
+      purchase_st_dt, purchase_ed_dt, purchase_st, 
+      description)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{dateEntered,jdbcType=TIMESTAMP}, 
+      #{dateModified,jdbcType=TIMESTAMP}, #{modifiedUserId,jdbcType=CHAR}, #{createdBy,jdbcType=CHAR}, 
+      #{deleted,jdbcType=BIT}, #{assignedUserId,jdbcType=CHAR}, #{purchasePrice,jdbcType=DECIMAL}, 
+      #{purchaseStDt,jdbcType=DATE}, #{purchaseEdDt,jdbcType=DATE}, #{purchaseSt,jdbcType=VARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bp.wei.model.FeedbackWithBLOBs">
-    insert into ec1_feedback
+  <insert id="insertSelective" parameterType="com.bp.wei.model.Purchaseinfo">
+    insert into ec1_purchase_data
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -84,17 +81,20 @@
       <if test="assignedUserId != null">
         assigned_user_id,
       </if>
-      <if test="fdDt != null">
-        fd_dt,
+      <if test="purchasePrice != null">
+        purchase_price,
       </if>
-      <if test="fdSt != null">
-        fd_st,
+      <if test="purchaseStDt != null">
+        purchase_st_dt,
+      </if>
+      <if test="purchaseEdDt != null">
+        purchase_ed_dt,
+      </if>
+      <if test="purchaseSt != null">
+        purchase_st,
       </if>
       <if test="description != null">
         description,
-      </if>
-      <if test="fdAsk != null">
-        fd_ask,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -122,22 +122,25 @@
       <if test="assignedUserId != null">
         #{assignedUserId,jdbcType=CHAR},
       </if>
-      <if test="fdDt != null">
-        #{fdDt,jdbcType=DATE},
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DECIMAL},
       </if>
-      <if test="fdSt != null">
-        #{fdSt,jdbcType=VARCHAR},
+      <if test="purchaseStDt != null">
+        #{purchaseStDt,jdbcType=DATE},
+      </if>
+      <if test="purchaseEdDt != null">
+        #{purchaseEdDt,jdbcType=DATE},
+      </if>
+      <if test="purchaseSt != null">
+        #{purchaseSt,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         #{description,jdbcType=LONGVARCHAR},
       </if>
-      <if test="fdAsk != null">
-        #{fdAsk,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bp.wei.model.FeedbackWithBLOBs">
-    update ec1_feedback
+  <update id="updateByPrimaryKeySelective" parameterType="com.bp.wei.model.Purchaseinfo">
+    update ec1_purchase_data
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -160,23 +163,26 @@
       <if test="assignedUserId != null">
         assigned_user_id = #{assignedUserId,jdbcType=CHAR},
       </if>
-      <if test="fdDt != null">
-        fd_dt = #{fdDt,jdbcType=DATE},
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=DECIMAL},
       </if>
-      <if test="fdSt != null">
-        fd_st = #{fdSt,jdbcType=VARCHAR},
+      <if test="purchaseStDt != null">
+        purchase_st_dt = #{purchaseStDt,jdbcType=DATE},
+      </if>
+      <if test="purchaseEdDt != null">
+        purchase_ed_dt = #{purchaseEdDt,jdbcType=DATE},
+      </if>
+      <if test="purchaseSt != null">
+        purchase_st = #{purchaseSt,jdbcType=VARCHAR},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
-      <if test="fdAsk != null">
-        fd_ask = #{fdAsk,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bp.wei.model.FeedbackWithBLOBs">
-    update ec1_feedback
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bp.wei.model.Purchaseinfo">
+    update ec1_purchase_data
     set name = #{name,jdbcType=VARCHAR},
       date_entered = #{dateEntered,jdbcType=TIMESTAMP},
       date_modified = #{dateModified,jdbcType=TIMESTAMP},
@@ -184,14 +190,15 @@
       created_by = #{createdBy,jdbcType=CHAR},
       deleted = #{deleted,jdbcType=BIT},
       assigned_user_id = #{assignedUserId,jdbcType=CHAR},
-      fd_dt = #{fdDt,jdbcType=DATE},
-      fd_st = #{fdSt,jdbcType=VARCHAR},
-      description = #{description,jdbcType=LONGVARCHAR},
-      fd_ask = #{fdAsk,jdbcType=LONGVARCHAR}
+      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      purchase_st_dt = #{purchaseStDt,jdbcType=DATE},
+      purchase_ed_dt = #{purchaseEdDt,jdbcType=DATE},
+      purchase_st = #{purchaseSt,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bp.wei.model.Feedback">
-    update ec1_feedback
+  <update id="updateByPrimaryKey" parameterType="com.bp.wei.model.Purchaseinfo">
+    update ec1_purchase_data
     set name = #{name,jdbcType=VARCHAR},
       date_entered = #{dateEntered,jdbcType=TIMESTAMP},
       date_modified = #{dateModified,jdbcType=TIMESTAMP},
@@ -199,8 +206,10 @@
       created_by = #{createdBy,jdbcType=CHAR},
       deleted = #{deleted,jdbcType=BIT},
       assigned_user_id = #{assignedUserId,jdbcType=CHAR},
-      fd_dt = #{fdDt,jdbcType=DATE},
-      fd_st = #{fdSt,jdbcType=VARCHAR}
+      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      purchase_st_dt = #{purchaseStDt,jdbcType=DATE},
+      purchase_ed_dt = #{purchaseEdDt,jdbcType=DATE},
+      purchase_st = #{purchaseSt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=CHAR}
   </update>
 </mapper>

@@ -23,10 +23,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.bp.wei.model.FeedbackToPurchase">
-    insert into ec1_feedback_ec1_purchase_data_c (id, date_modified, deleted, 
+    insert into ec1_feedback_ec1_purchase_data_c (id, date_modified,  
       ec1_feedback_ec1_purchase_dataec1_purchase_data_ida, ec1_feedback_ec1_purchase_dataec1_feedback_idb
       )
-    values (#{id,jdbcType=VARCHAR}, #{dateModified,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+    values (uuid(), now(),
       #{ec1FeedbackEc1PurchaseDataec1PurchaseDataIda,jdbcType=VARCHAR}, #{ec1FeedbackEc1PurchaseDataec1FeedbackIdb,jdbcType=VARCHAR}
       )
   </insert>

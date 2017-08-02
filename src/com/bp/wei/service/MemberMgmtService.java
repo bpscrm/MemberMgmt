@@ -19,12 +19,22 @@ public interface MemberMgmtService {
 	///////////////////for child
 	//insert
 	int insertChildinfo(Childinfo childinfo, String mbname);
+	//search
+	Childinfo getchildinfo(String name);
+	//update
+	int updateChildinfo(Childinfo childinfo);
+	
 	
 	///////////////////for feedback
 	//insert
 	int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename);
-	
+	//search
+	FeedbackWithBLOBs getFeedbackinfobyname(String name);
+	//update
+	int updateFeedbackinfo(FeedbackWithBLOBs feedbackinfo);
 
+	
+	
 	//for examples
 	Member getMemberById(int memberId);
 	int setMember(Member member);

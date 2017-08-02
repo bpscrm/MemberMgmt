@@ -10,6 +10,8 @@ public interface ChildinfoDao {
     int insertSelective(Childinfo record);
 
     Childinfo selectByPrimaryKey(String id);
+    
+    Childinfo selectByChildName(String name);
 
     int updateByPrimaryKeySelective(Childinfo record);
 

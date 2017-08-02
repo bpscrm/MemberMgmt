@@ -82,6 +82,11 @@ public class MemberMgmtController {
 		return "feedbackinfoadd";
 	}
 	
+	@RequestMapping(value="feedbackinfoupdate", method = RequestMethod.GET)
+	public String redirectFeedbackinfoupdate(){	
+		return "feedbackinfoupdate";
+	}
+	
 	@RequestMapping(value="myfollower", method = RequestMethod.GET)
 	public String redirectMyfollower(){	
 		return "myfollower";
@@ -301,8 +306,60 @@ public class MemberMgmtController {
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	}
-
-
+	//search child
+	@RequestMapping(value="getchildinfo", method = RequestMethod.GET)
+	public @ResponseBody Childinfo findChildinfo(String name){
+		
+		return memberService.getchildinfo(new String(name));
+		
+	}
+	//update child
+	@RequestMapping(value="updatechildinfo", method = RequestMethod.POST)
+	public @ResponseBody int updateChildinfo(@RequestBody JSONObject strChildinfo){
+			
+		log.debug("Start to set member...");
+		if(strChildinfo == null){
+			log.error("Failed to get child info from UI: " + strChildinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strChildinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		Childinfo childinfo = new Childinfo();
+		
+		String cid = strChildinfo.getString("childid");
+		if(cid != null && cid.length() > 0){
+			childinfo.setId(cid);
+		}
+		
+		String cname = strChildinfo.getString("childname");
+		if(cname != null && cname.length() > 0){
+			childinfo.setName(cname);
+		}
+		
+		String csex = strChildinfo.getString("childsex");
+		if(csex != null && csex.length() > 0){
+			childinfo.setChildSex(csex);
+		}
+		
+		String cbird = strChildinfo.getString("childbird");
+		if(cbird != null && cbird.length() > 0){
+			childinfo.setChildBirthday(cbird);
+		}
+		
+		String ceng = strChildinfo.getString("childeng");
+		if(ceng != null && ceng.length() > 0){
+			childinfo.setChildEng(ceng);
+		}
+		
+		int result = memberService.updateChildinfo(childinfo);
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
+	}
+	
+		
 	/////////for feedback
 	//insert feedback
 	@RequestMapping(value="setfeedbackinfo", method = RequestMethod.POST)
@@ -341,6 +398,56 @@ public class MemberMgmtController {
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	}
+	//search feedback
+	@RequestMapping(value="getfeedbackinfo", method = RequestMethod.GET)
+	public @ResponseBody FeedbackWithBLOBs findFeedbackinfo(String name){
+		
+		return memberService.getFeedbackinfobyname(new String(name));
+		
+	}
+	//update feedback
+	@RequestMapping(value="updatefeedbackinfo", method = RequestMethod.POST)
+	public @ResponseBody int updatefeedbackinfo(@RequestBody JSONObject strfeedbackinfo){
+		
+		log.debug("Start to set member...");
+		if(strfeedbackinfo == null){
+			log.error("Failed to get child info from UI: " + strfeedbackinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strfeedbackinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		FeedbackWithBLOBs feedback = new FeedbackWithBLOBs();
+		
+		String fid = strfeedbackinfo.getString("feedbackid");
+		if(fid != null && fid.length() > 0){
+			feedback.setId(fid);
+		}
+		
+		String fname = strfeedbackinfo.getString("feedbackname");
+		if(fname != null && fname.length() > 0){
+			feedback.setName(fname);
+		}
+		
+		String fcontent = strfeedbackinfo.getString("feedbackcontent");
+		if(fcontent != null && fcontent.length() > 0){
+			feedback.setDescription(fcontent);
+		}
+		
+		String ftime = strfeedbackinfo.getString("feedbacktime");
+		if(ftime != null && ftime.length() > 0){
+			feedback.setFdDt(ftime);
+		}
+		
+
+		
+		int result = memberService.updateFeedbackinfo(feedback);
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
+	}
+	
 	
 
 }

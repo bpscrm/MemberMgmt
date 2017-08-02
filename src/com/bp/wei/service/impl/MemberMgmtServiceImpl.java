@@ -14,6 +14,7 @@ import com.bp.wei.dao.MemberDao;
 import com.bp.wei.dao.MemberinfoDao;
 import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
+import com.bp.wei.dao.PurchaseinfoDao;
 import com.bp.wei.model.ChildToMember;
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackToPurchase;
@@ -49,6 +50,9 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	private FeedbackDao fdao;
 	
 	@Resource
+	private PurchaseinfoDao pdao;
+	
+	@Resource
 	private FeedbackToPurchaseDao ftpdao;
 	
 	////////////////for member
@@ -69,7 +73,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
-	
 	//search
 	@Override
 	public MemberinfoWithBLOBs getMemberinfobyname(String name) {
@@ -80,7 +83,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		MemberinfoWithBLOBs memberinfo = Mbdao.selectByMemberName(new String(name));
 		return memberinfo;
 	}
-	
 	//update
 	public int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs) {
 		
@@ -106,15 +108,33 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
+	//search
+	@Override
+	public Childinfo getchildinfo(String name) {
+		if(name.length() <= 0){
+			log.error("Invalid member name: " + name);
+			return null;
+		}
+		Childinfo childinfo = cdao.selectByChildName(new String(name));
+		return childinfo;
+	}
+	//update
+	public int updateChildinfo(Childinfo childinfo) {
+		int result = cdao.updateByPrimaryKeyWithBLOBs(childinfo);
+		
+		return result;
+	}
 	
-	////////////////for child
+	
+	
+	////////////////for feedbacks
 	//insert
 	@Override
 	public int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename) {
 	
 		int result = fdao.insert(feedbackinfo);
 		
-		String purID = ftpdao.selectIDByMember(purchasename);
+		String purID = pdao.selectIDByMember(purchasename);
 		
 		FeedbackToPurchase fdToPCH = new FeedbackToPurchase();
 		
@@ -125,9 +145,28 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
+	//search
+	@Override
+	public FeedbackWithBLOBs getFeedbackinfobyname(String name) {
+		System.out.println("@@@@@@@@@@@@@@feedback name: " + name);
+		if(name.length() <= 0){
+			log.error("Invalid member name: " + name);
+			return null;
+		}
+		FeedbackWithBLOBs feedbackinfo = fdao.selectByFeedbackName(new String(name));
+		return feedbackinfo;
+	}
+	//update
+	public int updateFeedbackinfo(FeedbackWithBLOBs feedbackinfo) {
+		
+		System.out.println("@@@@@@@@@@@@@@feedback: " + feedbackinfo.getName());
+		
+		int result = fdao.updateByPrimaryKeyWithBLOBs(feedbackinfo);
+		
+		return result;
+	}
 	
-	
-	
+		
 
 	//for examples
 	@Resource

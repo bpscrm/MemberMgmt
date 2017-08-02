@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>小孩资料</title>
+		<title>查看小孩资料</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/frozen.css">
@@ -15,60 +15,204 @@
 
 	<body>
 
-		<form id="childrenlist" method="post">
+		<form id="childreninfo" method="post">
+		
 			<header class="ui-header ui-header-positive ui-border-b">
-				<h1>我的资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+				<h1>小孩资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
 			<br />
 			<br />
 
 			<div class="weui-cells weui-cells_form">
-				<div class="weui-cell">
-					<div class="weui-cell__hd"><label class="weui-label">小孩昵称</label></div>
-					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="显示小孩昵称，可以修改" />
-					</div>
-				</div>
+
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
-						<label class="weui-label">小孩性别</label>
+						<label class="weui-label">昵称</label>
 					</div>
 					<div class="weui-cell__bd">
-						<select class="weui-select" name="select2">
-							<option value="1">女生</option>
-							<option value="2">男生</option>
-						</select>
+						<input id="childinfoname" class="weui-input" type="text" placeholder="已添加小孩昵称" />
 					</div>
-				</div>
-				<div class="weui-cell">
-					<div class="weui-cell__hd"><label for="" class="weui-label">小孩生日</label></div>
-					<div class="weui-cell__bd">
-						<input class="weui-input" type="date" value="" />
+					<div class="weui-cell__ft">
+						<a href="javascript:getchildinfo();" class="weui-btn weui-btn_mini weui-btn_default">查找</a>
 					</div>
+
 				</div>
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd"><label class="weui-label">英文水平</label></div>
-					<div class="weui-cell__bd">
-						<select class="weui-select" name="select2">
-							<option value="1">未学</option>
-							<option value="2">初级</option>
-							<option value="2">中级</option>
-							<option value="2">高级</option>
-						</select>
-					</div>
-				</div>
+
+				<div id="searchresult"></div>
+
+				<br />
+				<br />
 			</div>
 
 			<div class="page__bd page__bd_spacing">
 				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:setchildinfo()">新增</a>
+					<a class="page-btn page-btn_primary" href="javascript:updatechildinfo()">修改</a>
 					<input type="hidden" id="memberid" value="1" />
 				</div>
 			</div>
 
 		</form>
 
+		<div class="weui-footer">
+			<br />
+			<br />
+			<p class="weui-footer__links">
+				<a href="javascript:;" class="weui-footer__link">关于我们</a>
+			</p>
+			<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
+		</div>
+
+		<script id="template" type="text/html">
+			<div>
+              <input type="hidden" name="childid" value=<#= id #> />
+
+              <div class="weui-cells weui-cells_form">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label">小孩昵称</label></div>
+					<div class="weui-cell__bd">
+						<input  name="childname" class="weui-input" type="text" value=<#= name #> />
+					</div>
+				</div>
+				
+				<div class="weui-cell weui-cell_vcode">
+					<div class="weui-cell__hd">
+						<label class="weui-label">小孩性别</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="childsex" value=<#= childSex #> >
+							<option value="L1">女生</option>
+							<option value="L2">男生</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label for="" class="weui-label">小孩生日</label></div>
+					<div class="weui-cell__bd">
+						<input name="childbird" class="weui-input" type="date" value=<#= childBirthday #> />
+					</div>
+				</div>
+				
+				<div class="weui-cell weui-cell_vcode">
+					<div class="weui-cell__hd"><label class="weui-label">英文水平</label></div>
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="childeng" value=<#= childEng #> >
+							<option value="L1">未学</option>
+							<option value="L2">初级</option>
+							<option value="L3">中级</option>
+							<option value="L4">高级</option>
+						</select>
+					</div>
+				</div>
+			  </div>
+
+			</div>
+
+		</script>
+
 		<script type="text/javascript">
+			//search data
+			$.fn.parseTemplate = function(data) {
+				var str = (this).html();
+				var _tmplCache = {}
+				var err = "";
+				try {
+					var func = _tmplCache[str];
+					if(!func) {
+						var strFunc =
+							"var p=[],print=function(){p.push.apply(p,arguments);};" +
+							"with(obj){p.push('" +
+							str.replace(/[\r\t\n]/g, " ")
+							.replace(/'(?=[^#]*#>)/g, "\t")
+							.split("'").join("\\'")
+							.split("\t").join("'")
+							.replace(/<#=(.+?)#>/g, "',$1,'")
+							.split("<#").join("');")
+							.split("#>").join("p.push('") +
+							"');}return p.join('');";
+						func = new Function("obj", strFunc);
+						_tmplCache[str] = func;
+					}
+					return func(data);
+				} catch(e) {
+					err = e.message;
+				}
+				return "< # ERROR: " + err.toString() + " # >";
+			};
+
+			function getchildinfo() {
+				var childinfoname = document.getElementById('childinfoname').value;
+				var params = {
+					name: childinfoname
+				};
+				alert('childinfoname:' + childinfoname);
+
+				$.ajax({
+					type: 'get',
+					url: 'getchildinfo',
+					cache: false,
+					dataType: 'json',
+					data: params,
+					　　　　　　contentType: 'application/json',
+					　　　　　　async: false,
+					success: function(data) {
+						//var result= JSON.stringify(data);
+						//alert('success:' + result);
+						var output = $('#template').parseTemplate(data);
+
+						$('#searchresult').html(output);
+
+					},
+					error: function(data) {
+						alert('failed:' + data.msg);
+					}
+				});
+			}
+
+			$(function() {
+				var winH = $(window).height();
+				var categorySpace = 10;
+
+				$('.js_item').on('click', function() {
+					var id = $(this).data('id');
+					window.pageManager.go(id);
+				});
+				$('.js_category').on('click', function() {
+					var $this = $(this),
+						$inner = $this.next('.js_categoryInner'),
+						$page = $this.parents('.page'),
+						$parent = $(this).parent('li');
+					var innerH = $inner.data('height');
+					bear = $page;
+
+					if(!innerH) {
+						$inner.css('height', 'auto');
+						innerH = $inner.height();
+						$inner.removeAttr('style');
+						$inner.data('height', innerH);
+					}
+
+					if($parent.hasClass('js_show')) {
+						$parent.removeClass('js_show');
+					} else {
+						$parent.siblings().removeClass('js_show');
+
+						$parent.addClass('js_show');
+						if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH) {
+							var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
+
+							if(scrollTop > this.offsetTop) {
+								scrollTop = this.offsetTop - categorySpace;
+							}
+
+							$page.scrollTop(scrollTop);
+						}
+					}
+				});
+			});
+
+
+			//for update data
 			$.fn.serializeObject = function() {
 				var o = {};
 				var a = this.serializeArray();
@@ -85,13 +229,13 @@
 				return o;
 			};
 
-			function setchildinfo() {
+			function updatechildinfo() {
 
-				var formdata = $('#memberinfo').serializeObject();
+				var formdata = $('#childreninfo').serializeObject();
 				//alert(formdata);							
 				$.ajax({
 					type: 'post',
-					url: 'setchildinfo',
+					url: 'updatechildinfo',
 					cache: false,
 					dataType: 'json',
 					data: JSON.stringify(formdata),
@@ -106,6 +250,7 @@
 					}
 				});
 			}
+
 		</script>
 	</body>
 

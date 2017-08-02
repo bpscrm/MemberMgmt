@@ -59,19 +59,19 @@
 
 			<div class="weui-cells__title">点选查看对此产品提出的建议和反馈</div>
 			<div class="weui-cells">
-				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfoupdate();">
 					<span class="weui-cell__bd">
 					<p>产品反馈1</p>
 				</span>
 					<span class="weui-cell__ft">点击进入</span>
 				</a>
-				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfoupdate();">
 					<span class="weui-cell__bd">
 					<p>产品反馈2</p>
 				</span>
 					<span class="weui-cell__ft">点击进入</span>
 				</a>
-				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfoupdate();">
 					<span class="weui-cell__bd">
 					<p>产品反馈3</p>
 				</span>
@@ -97,6 +97,23 @@
 		</form>
 
 		<script type="text/javascript">
+			function feedbackinfoupdate() {
+
+				$.ajax({
+					type: 'get',
+					url: 'feedbackinfoupdate',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'feedbackinfoupdate';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
 			function feedbackinfoadd() {
 
 				$.ajax({
