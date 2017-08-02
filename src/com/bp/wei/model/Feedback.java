@@ -19,7 +19,7 @@ public class Feedback {
 
     private String assignedUserId;
 
-    private Date fdDt;
+    private String fdDt;
 
     private String fdSt;
 
@@ -87,11 +87,11 @@ public class Feedback {
         this.assignedUserId = assignedUserId == null ? null : assignedUserId.trim();
     }
 
-    public Date getFdDt() {
+    public String getFdDt() {
         return fdDt;
     }
 
-    public void setFdDt(Date fdDt) {
+    public void setFdDt(String fdDt) {
         this.fdDt = fdDt;
     }
 

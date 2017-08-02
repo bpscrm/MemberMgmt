@@ -1,7 +1,5 @@
 package com.bp.wei.model;
 
-import java.util.Date;
-
 public class Memberinfo {
     private String id;
 

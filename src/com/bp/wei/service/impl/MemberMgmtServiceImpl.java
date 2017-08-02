@@ -16,10 +16,10 @@ import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
 import com.bp.wei.model.ChildToMember;
 import com.bp.wei.model.Childinfo;
-import com.bp.wei.model.Followerinfo;
+import com.bp.wei.model.FeedbackToPurchase;
+import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
-import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.service.MemberMgmtService;
 
@@ -106,6 +106,26 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
+	
+	////////////////for child
+	//insert
+	@Override
+	public int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename) {
+	
+		int result = fdao.insert(feedbackinfo);
+		
+		String purID = ftpdao.selectIDByMember(purchasename);
+		
+		FeedbackToPurchase fdToPCH = new FeedbackToPurchase();
+		
+		fdToPCH.setEc1FeedbackEc1PurchaseDataec1PurchaseDataIda(purID);
+		fdToPCH.setEc1FeedbackEc1PurchaseDataec1FeedbackIdb(feedbackinfo.getId());
+		
+		result = ftpdao.insert(fdToPCH);
+		
+		return result;
+	}
+	
 	
 	
 

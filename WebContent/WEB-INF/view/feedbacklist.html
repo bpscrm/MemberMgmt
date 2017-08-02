@@ -81,7 +81,7 @@
 
 			<div class="page__bd page__bd_spacing">
 				<div class="button-sp-area">
-						<a class="page-btn page-btn_primary" href="javascript:childinfoadd()">新增意见反馈</a>
+						<a class="page-btn page-btn_primary" href="javascript:feedbackinfoadd();">新增意见反馈</a>
 						<input type="hidden" id="memberid" value="1" />
 				</div>
 			</div>
@@ -97,17 +97,17 @@
 		</form>
 
 		<script type="text/javascript">
-			function feedbackinfo() {
+			function feedbackinfoadd() {
 
 				$.ajax({
 					type: 'get',
-					url: 'feedbackinfo',
+					url: 'feedbackinfoadd',
 					cache: false,
 					async: false,
 					dataType: 'json',
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						window.location.href = 'feedbackinfo';
+						window.location.href = 'feedbackinfoadd';
 					},
 					error: function(data) {
 						alert(data.msg);

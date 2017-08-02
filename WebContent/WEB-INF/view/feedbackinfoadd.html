@@ -4,9 +4,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>小孩资料</title>
+		<title>新增产品意见反馈</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/frozen.css">
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
@@ -14,143 +15,97 @@
 
 	<body>
 
-		<form id="member">
+		<form id="feedbackinfo" method="post">
+
+			<header class="ui-header ui-header-positive ui-border-b">
+				<h1>新增产品意见反馈</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+			</header>
 			<br />
 			<br />
-			<br />
-			<br />
-			<br />
-			
-			<div class="weui-cells__title">产品意见反馈</div>
-			<br />
+
 			<div class="weui-cells weui-cells_form">
 				<div class="weui-cell">
-					<div class="weui-cell__hd"><label class="weui-label">产品意见反馈</label></div>
+					<div class="weui-cell__hd"><label class="weui-label">标题</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="产品反馈1" />
+						<input name="feedbackname" class="weui-input" type="text" value="产品反馈" />
 					</div>
 				</div>
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd">
-						<label class="weui-label">反馈内容</label>
-					</div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label">内容</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="太贵，价格太贵" />
+						<input name="feedbackcontent" class="weui-input" type="text" placeholder="反馈内容" />
 					</div>
 				</div>
+
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><label for="" class="weui-label">提出时间</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="2017-02-01" />
+						<input name="feedbacktime" class="weui-input" type="date" />
+						<script language="JavaScript">
+							today = new Date();
+							feedbackinfo.feedbacktime.value = today.getYear() + '年' + today.getMonth() + '月' + today.getDay() + '日';
+						</script>
 					</div>
 				</div>
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd"><label class="weui-label">回复人</label></div>
-					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="Li Kaifeng" />
-					</div>
-				</div>
-				
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd"><label class="weui-label">回复内容</label></div>
-					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="不贵不贵" />
-					</div>
-				</div>
+
 			</div>
+			<br />
 			
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<input name="testpurchase" class="weui-input" type="text" placeholder="输入测试用产品订购" />
+					</div>
+				</div>
+
 			<div class="page__bd page__bd_spacing">
 				<div class="button-sp-area">
-					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
-	            	<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
-	            </div>
-	        </div>
-			<div class="weui-cells__tips">请选择功能按钮</div>
+					<a class="page-btn page-btn_primary" href="javascript:setfeedbackinfo();">新增</a>
+					<input type="hidden" id="memberid" value="1" />
+				</div>
+			</div>
+
 		</form>
 		<script type="text/javascript">
-			function register() {
-				//这里还需要加上校验
-				var mname = document.getElementById('membername').value;
-				var mmobile = document.getElementById('membermobile').value;
-				var mbirthday = $('#datePicker').html();
-				var mgender = $('#genderPicker').html();
-				alert(mname + ';' + mmobile + ';' + mgender + ';' + mbirthday);
-			}
-			$('#genderPicker').on('click', function() {
-				weui.picker([{
-					label: '先生',
-					value: '先生'
-				}, {
-					label: '女士',
-					value: '女士'
-				}], {
-					onChange: function(result) {
-						console.log(result);
-					},
-					onConfirm: function(result) {
-						console.log(result);
-						$('#genderPicker').html(result);
-
-					}
-				});
-			});
-			$('#datePicker').on('click', function() {
-				weui.datePicker({
-					start: 1990,
-					end: new Date().getFullYear(),
-					onChange: function(result) {
-						console.log(result);
-					},
-					onConfirm: function(result) {
-						$('#datePicker').html(result[0] + '/' + result[1] + '/' + result[2]);
-
-					}
-				});
-			});
-		</script>
-		<script type="text/javascript">
-			$(function() {
-				var winH = $(window).height();
-				var categorySpace = 10;
-
-				$('.js_item').on('click', function() {
-					var id = $(this).data('id');
-					window.pageManager.go(id);
-				});
-				$('.js_category').on('click', function() {
-					var $this = $(this),
-						$inner = $this.next('.js_categoryInner'),
-						$page = $this.parents('.page'),
-						$parent = $(this).parent('li');
-					var innerH = $inner.data('height');
-					bear = $page;
-
-					if(!innerH) {
-						$inner.css('height', 'auto');
-						innerH = $inner.height();
-						$inner.removeAttr('style');
-						$inner.data('height', innerH);
-					}
-
-					if($parent.hasClass('js_show')) {
-						$parent.removeClass('js_show');
-					} else {
-						$parent.siblings().removeClass('js_show');
-
-						$parent.addClass('js_show');
-						if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH) {
-							var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
-
-							if(scrollTop > this.offsetTop) {
-								scrollTop = this.offsetTop - categorySpace;
-							}
-
-							$page.scrollTop(scrollTop);
+			$.fn.serializeObject = function() {
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+					if(o[this.name]) {
+						if(!o[this.name].push) {
+							o[this.name] = [o[this.name]];
 						}
+						o[this.name].push(this.value || '');
+					} else {
+						o[this.name] = this.value || '';
 					}
 				});
-			});
+				return o;
+			};
+
+			function setfeedbackinfo() {
+
+				var formdata = $('#feedbackinfo').serializeObject();
+				//alert(formdata);							
+				$.ajax({
+					type: 'post',
+					url: 'setfeedbackinfo',
+					cache: false,
+					dataType: 'json',
+					data: JSON.stringify(formdata),
+					contentType: 'application/json',
+					　　　　　　async: false,
+					success: function(data) {
+						var result = JSON.stringify(data);
+						alert('success:' + result);
+					},
+					error: function(data) {
+						alert('failed:' + data.msg);
+					}
+				});
+			}
 		</script>
+
 	</body>
 
 </html>

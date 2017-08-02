@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bp.wei.model.Childinfo;
+import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Member;
-import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.service.MemberMgmtService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -78,9 +77,9 @@ public class MemberMgmtController {
 		return "feedbacklist";
 	}
 	
-	@RequestMapping(value="feedbackinfo", method = RequestMethod.GET)
-	public String redirectFeedbackinfo(){	
-		return "feedbackinfo";
+	@RequestMapping(value="feedbackinfoadd", method = RequestMethod.GET)
+	public String redirectFeedbackinfoadd(){	
+		return "feedbackinfoadd";
 	}
 	
 	@RequestMapping(value="myfollower", method = RequestMethod.GET)
@@ -304,5 +303,44 @@ public class MemberMgmtController {
 	}
 
 
+	/////////for feedback
+	//insert feedback
+	@RequestMapping(value="setfeedbackinfo", method = RequestMethod.POST)
+	public @ResponseBody int setfeedbackinfo(@RequestBody JSONObject strfeedbackinfo){
+		
+		log.debug("Start to set member...");
+		if(strfeedbackinfo == null){
+			log.error("Failed to get child info from UI: " + strfeedbackinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strfeedbackinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		FeedbackWithBLOBs feedback = new FeedbackWithBLOBs();
+		
+		String fname = strfeedbackinfo.getString("feedbackname");
+		if(fname != null && fname.length() > 0){
+			feedback.setName(fname);
+		}
+		
+		String fcontent = strfeedbackinfo.getString("feedbackcontent");
+		if(fcontent != null && fcontent.length() > 0){
+			feedback.setDescription(fcontent);
+		}
+		
+		String ftime = strfeedbackinfo.getString("feedbacktime");
+		if(ftime != null && ftime.length() > 0){
+			feedback.setFdDt(ftime);
+		}
+		
+
+		
+		int result = memberService.insertFeedbackinfo(feedback, strfeedbackinfo.getString("testpurchase"));
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
+	}
+	
 
 }
