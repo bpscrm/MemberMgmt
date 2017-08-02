@@ -2,7 +2,7 @@ package com.bp.wei.dao;
 
 import com.bp.wei.model.Childinfo;
 
-public interface ChildinfoMapper {
+public interface ChildinfoDao {
     int deleteByPrimaryKey(String id);
 
     int insert(Childinfo record);

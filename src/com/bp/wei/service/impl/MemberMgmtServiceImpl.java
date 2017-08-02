@@ -6,10 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.bp.wei.dao.ChildToMemberDao;
+import com.bp.wei.dao.ChildinfoDao;
+import com.bp.wei.dao.FeedbackDao;
+import com.bp.wei.dao.FeedbackToPurchaseDao;
 import com.bp.wei.dao.MemberDao;
 import com.bp.wei.dao.MemberinfoDao;
 import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
+import com.bp.wei.model.ChildToMember;
+import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
@@ -23,7 +29,7 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtService.class);
 	
 
-	////////////////for member
+	
 	@Resource
 	private MemberinfoDao Mbdao;
 	
@@ -33,6 +39,19 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	@Resource
 	private MemberToFollowerDao mtfdao;
 	
+	@Resource
+	private ChildinfoDao cdao;
+	
+	@Resource
+	private ChildToMemberDao ctmdao;
+	
+	@Resource
+	private FeedbackDao fdao;
+	
+	@Resource
+	private FeedbackToPurchaseDao ftpdao;
+	
+	////////////////for member
 	//insert
 	@Override
 	public int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid) {
@@ -69,6 +88,26 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
+	
+	////////////////for child
+	//insert
+	@Override
+	public int insertChildinfo(Childinfo childinfo, String mbname) {
+	
+		int result = cdao.insert(childinfo);
+		
+		String mbID = Mbdao.selectIDByMember(mbname);
+		
+		ChildToMember cdTomb = new ChildToMember();
+		cdTomb.setEc1ChildDataEc1Memberec1MemberIda(mbID);
+		cdTomb.setEc1ChildDataEc1Memberec1ChildDataIdb(childinfo.getId());
+		
+		result = ctmdao.insert(cdTomb);
+		
+		return result;
+	}
+	
+	
 
 	//for examples
 	@Resource

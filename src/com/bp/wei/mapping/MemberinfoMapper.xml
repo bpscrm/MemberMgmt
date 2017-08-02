@@ -36,6 +36,11 @@
     from ec1_member
     where name = #{name,jdbcType=CHAR}
   </select>
+  <select id="selectIDByMember" parameterType="java.lang.String" resultType="String">
+    select id 
+    from ec1_member
+    where name = #{name,jdbcType=CHAR}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

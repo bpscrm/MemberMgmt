@@ -21,7 +21,7 @@ public class Childinfo {
 
     private String childSex;
 
-    private Date childBirthday;
+    private String childBirthday;
 
     private String childEng;
 
@@ -99,11 +99,11 @@ public class Childinfo {
         this.childSex = childSex == null ? null : childSex.trim();
     }
 
-    public Date getChildBirthday() {
+    public String getChildBirthday() {
         return childBirthday;
     }
 
-    public void setChildBirthday(Date childBirthday) {
+    public void setChildBirthday(String childBirthday) {
         this.childBirthday = childBirthday;
     }
 

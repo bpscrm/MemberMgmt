@@ -1,6 +1,7 @@
 package com.bp.wei.service;
 
 
+import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
@@ -15,6 +16,10 @@ public interface MemberMgmtService {
 	//update
 	int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs);
 
+	
+	///////////////////for child
+	//insert
+	int insertChildinfo(Childinfo childinfo, String mbname);
 
 	//for examples
 	Member getMemberById(int memberId);

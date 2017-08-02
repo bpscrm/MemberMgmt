@@ -2,7 +2,7 @@ package com.bp.wei.dao;
 
 import com.bp.wei.model.ChildToMember;
 
-public interface ChildToMemberMapper {
+public interface ChildToMemberDao {
     int deleteByPrimaryKey(String id);
 
     int insert(ChildToMember record);

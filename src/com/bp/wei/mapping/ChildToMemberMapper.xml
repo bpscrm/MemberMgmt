@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bp.wei.dao.ChildToMemberMapper">
+<mapper namespace="com.bp.wei.dao.ChildToMemberDao">
   <resultMap id="BaseResultMap" type="com.bp.wei.model.ChildToMember">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="date_modified" jdbcType="TIMESTAMP" property="dateModified" />
@@ -22,10 +22,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.bp.wei.model.ChildToMember">
-    insert into ec1_child_data_ec1_member_c (id, date_modified, deleted, 
+    insert into ec1_child_data_ec1_member_c (id, date_modified, 
       ec1_child_data_ec1_memberec1_member_ida, ec1_child_data_ec1_memberec1_child_data_idb
       )
-    values (#{id,jdbcType=VARCHAR}, #{dateModified,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+    values (uuid(), now(), 
       #{ec1ChildDataEc1Memberec1MemberIda,jdbcType=VARCHAR}, #{ec1ChildDataEc1Memberec1ChildDataIdb,jdbcType=VARCHAR}
       )
   </insert>

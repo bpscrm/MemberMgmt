@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>小孩资料</title>
+		<title>新增小孩</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/frozen.css">
@@ -15,9 +15,9 @@
 
 	<body>
 
-		<form id="childrenlist" method="post">
+		<form id="childinfoadd" method="post">
 			<header class="ui-header ui-header-positive ui-border-b">
-				<h1>我的资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+				<h1>新增小孩</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
 			<br />
 			<br />
@@ -26,42 +26,51 @@
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><label class="weui-label">小孩昵称</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="text" placeholder="显示小孩昵称，可以修改" />
+						<input  name="childname" class="weui-input" type="text" placeholder="昵称" />
 					</div>
 				</div>
+				
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
 						<label class="weui-label">小孩性别</label>
 					</div>
 					<div class="weui-cell__bd">
-						<select class="weui-select" name="select2">
-							<option value="1">女生</option>
-							<option value="2">男生</option>
+						<select class="weui-select" name="childsex">
+							<option value="L1">女生</option>
+							<option value="L2">男生</option>
 						</select>
 					</div>
 				</div>
+				
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><label for="" class="weui-label">小孩生日</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="date" value="" />
+						<input name="childbird" class="weui-input" type="date" value="" />
 					</div>
 				</div>
+				
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd"><label class="weui-label">英文水平</label></div>
 					<div class="weui-cell__bd">
-						<select class="weui-select" name="select2">
-							<option value="1">未学</option>
-							<option value="2">初级</option>
-							<option value="2">中级</option>
-							<option value="2">高级</option>
+						<select class="weui-select" name="childeng">
+							<option value="L1">未学</option>
+							<option value="L2">初级</option>
+							<option value="L2">中级</option>
+							<option value="L2">高级</option>
 						</select>
 					</div>
 				</div>
 			</div>
+			
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<input name="testmbname" class="weui-input" type="text" placeholder="请输入测试用会员手机号码" />
+					</div>
+				</div>
 
 			<div class="page__bd page__bd_spacing">
 				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:setchildinfo()">新增</a>
+					<a class="page-btn page-btn_primary" href="javascript:setchildinfo();">新增</a>
 					<input type="hidden" id="memberid" value="1" />
 				</div>
 			</div>
@@ -87,7 +96,7 @@
 
 			function setchildinfo() {
 
-				var formdata = $('#memberinfo').serializeObject();
+				var formdata = $('#childinfoadd').serializeObject();
 				//alert(formdata);							
 				$.ajax({
 					type: 'post',

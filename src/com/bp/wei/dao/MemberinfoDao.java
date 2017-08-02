@@ -13,6 +13,8 @@ public interface MemberinfoDao {
     MemberinfoWithBLOBs selectByPrimaryKey(String id);
     
     MemberinfoWithBLOBs selectByMemberName(String name);
+    
+    String selectIDByMember(String name);
 
     int updateByPrimaryKeySelective(MemberinfoWithBLOBs record);
 

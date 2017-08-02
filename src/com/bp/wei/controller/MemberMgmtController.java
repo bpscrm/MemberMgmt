@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
@@ -90,6 +91,11 @@ public class MemberMgmtController {
 	@RequestMapping(value="myqrcode", method = RequestMethod.GET)
 	public String redirectMyqrcode(){	
 		return "myqrcode";
+	}
+	
+	@RequestMapping(value="registerinfo", method = RequestMethod.GET)
+	public String redirectRegisterinfo(){	
+		return "registerinfo";
 	}
 	
 	@RequestMapping(value="getmember", method = RequestMethod.GET)
@@ -254,4 +260,49 @@ public class MemberMgmtController {
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;	
 	}
+	
+	/////////for child
+	//insert child
+	@RequestMapping(value="setchildinfo", method = RequestMethod.POST)
+	public @ResponseBody int setChildinfo(@RequestBody JSONObject strChildinfo){
+		
+		log.debug("Start to set member...");
+		if(strChildinfo == null){
+			log.error("Failed to get child info from UI: " + strChildinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strChildinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		Childinfo childinfo = new Childinfo();
+		
+		String cname = strChildinfo.getString("childname");
+		if(cname != null && cname.length() > 0){
+			childinfo.setName(cname);
+		}
+		
+		String csex = strChildinfo.getString("childsex");
+		if(csex != null && csex.length() > 0){
+			childinfo.setChildSex(csex);
+		}
+		
+		String cbird = strChildinfo.getString("childbird");
+		if(cbird != null && cbird.length() > 0){
+			childinfo.setChildBirthday(cbird);
+		}
+		
+		String ceng = strChildinfo.getString("childeng");
+		if(ceng != null && ceng.length() > 0){
+			childinfo.setChildEng(ceng);
+		}
+		
+		int result = memberService.insertChildinfo(childinfo, strChildinfo.getString("testmbname"));
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;		
+	}
+
+
+
 }

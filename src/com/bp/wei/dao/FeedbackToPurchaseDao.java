@@ -2,7 +2,7 @@ package com.bp.wei.dao;
 
 import com.bp.wei.model.FeedbackToPurchase;
 
-public interface FeedbackToPurchaseMapper {
+public interface FeedbackToPurchaseDao {
     int deleteByPrimaryKey(String id);
 
     int insert(FeedbackToPurchase record);
