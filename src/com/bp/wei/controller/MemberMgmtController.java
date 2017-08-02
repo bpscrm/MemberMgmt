@@ -120,7 +120,8 @@ public class MemberMgmtController {
 	}
 	
 	
-	//for register member
+	/////////for member 
+	//insert member
 	@RequestMapping(value="setmemberinfo", method = RequestMethod.POST)
 	public @ResponseBody int setMemberinfo(@RequestBody JSONObject strMemberinfo){
 		
@@ -179,12 +180,73 @@ public class MemberMgmtController {
 		return result;		
 	
 	}
-	
-	//for my data
+	//search member
 	@RequestMapping(value="getmemberinfo", method = RequestMethod.GET)
 	public @ResponseBody MemberinfoWithBLOBs findMemberinfo(String name){
 		
 		return memberService.getMemberinfobyname(new String(name));
 		
+	}
+	//update member 
+	@RequestMapping(value="updatememberinfo", method = RequestMethod.POST)
+	public @ResponseBody int updateMemberinfo(@RequestBody JSONObject strMemberinfo){
+		
+		log.debug("Start to update member...");
+		if(strMemberinfo == null){
+			log.error("Failed to get member info from UI: " + strMemberinfo);
+			return -1;
+		}
+		
+		System.out.println("#################" + strMemberinfo.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		MemberinfoWithBLOBs memberinfo = new MemberinfoWithBLOBs();
+		
+		
+		String mid = strMemberinfo.getString("memberid1");
+		if(mid != null && mid.length() > 0){
+			memberinfo.setId(mid);
+		}
+		
+		String telnum = strMemberinfo.getString("memberinfotelnum");
+		if(telnum != null && telnum.length() > 0){
+			memberinfo.setName(telnum);
+		}
+		
+		String titel = strMemberinfo.getString("memberinfotitle");
+		if(titel != null && titel.length() > 0){
+			memberinfo.setMbTitle(titel);
+		}
+		
+		String mbname = strMemberinfo.getString("memberinfoname");
+		if(mbname != null && mbname.length() > 0){
+			memberinfo.setMbName(mbname);
+		}
+		
+		String birthday = strMemberinfo.getString("memberinfobird");
+		if(birthday != null && birthday.length() > 0){
+			memberinfo.setMbBirthday(birthday);
+		}
+		
+		String ifchild = strMemberinfo.getString("memberinfoifchild");
+		if(ifchild != null && ifchild.length() > 0){
+			memberinfo.setMbChild(ifchild);
+		}
+		
+		String edulevel = strMemberinfo.getString("memberinfoedulevel");
+		if(edulevel != null && edulevel.length() > 0){
+			memberinfo.setMbEdu(edulevel);
+		}
+		
+		String addr = strMemberinfo.getString("memberinfoaddr");
+		if(addr != null && addr.length() > 0){
+			memberinfo.setMbAddr(addr);
+		}
+		
+		
+		int result = memberService.updateMemberinfo(memberinfo);
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		return result;	
 	}
 }

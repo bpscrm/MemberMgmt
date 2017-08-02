@@ -23,7 +23,7 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtService.class);
 	
 
-	//for register member
+	////////////////for member
 	@Resource
 	private MemberinfoDao Mbdao;
 	
@@ -33,6 +33,7 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	@Resource
 	private MemberToFollowerDao mtfdao;
 	
+	//insert
 	@Override
 	public int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid) {
 		
@@ -50,6 +51,7 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		return result;
 	}
 	
+	//search
 	@Override
 	public MemberinfoWithBLOBs getMemberinfobyname(String name) {
 		if(name.length() <= 0){
@@ -60,6 +62,13 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		return memberinfo;
 	}
 	
+	//update
+	public int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs) {
+		
+		int result = Mbdao.updateByPrimaryKeyWithBLOBs(memberinfowithblogs);
+		
+		return result;
+	}
 
 	//for examples
 	@Resource

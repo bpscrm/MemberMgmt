@@ -6,9 +6,14 @@ import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 
 public interface MemberMgmtService {
-	//for register member
+	
+	///////////////////for member
+	//insert
 	int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid);
+	//search
 	MemberinfoWithBLOBs getMemberinfobyname(String name);
+	//update
+	int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs);
 
 
 	//for examples
