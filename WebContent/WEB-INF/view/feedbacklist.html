@@ -7,6 +7,7 @@
 		<title>购买产品详细资料</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/frozen.css">
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
@@ -14,86 +15,87 @@
 
 	<body>
 
-		<div class="page__bd">
-			<article class="weui-article">
-				<h1>购买产品信息</h1>
-				<section>
-					<p>
-						<div class="weui-cell">
-							<div class="weui-cell__hd"><label class="weui-label">产品名称</label></div>
-							<div class="weui-cell__bd">
-								<input class="weui-input" type="text" placeholder="留学英语上" />
-							</div>
-						</div>
-						<div class="weui-cell weui-cell_vcode">
-							<div class="weui-cell__hd">
-								<label class="weui-label">购买价格</label>
-							</div>
-							<div class="weui-cell__bd">
-								<input class="weui-input" type="number" placeholder="10000" />
-							</div>
-						</div>
-						<div class="weui-cell">
-							<div class="weui-cell__hd"><label for="" class="weui-label">开始时间</label></div>
-							<div class="weui-cell__bd">
-								<input class="weui-input" type="text" placeholder="2017-01-01" />
-							</div>
-						</div>
-						<div class="weui-cell">
-							<div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
-							<div class="weui-cell__bd">
-								<input class="weui-input" type="text" placeholder="2017-06-01" />
-							</div>
-						</div>
-					</p>
-					<p>
-						<img src="./images/pic_article.png" alt="">
-						<img src="./images/pic_article.png" alt="">
-					</p>
-				</section>
-			</article>
-		</div>
+		<form id="member" method="post">
+			<header class="ui-header ui-header-positive ui-border-b">
+				<h1>已购产品信息</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+			</header>
+			<br />
+			<br />
 
-		<div class="weui-cells__title">通过下面的连接可以您对产品提出的意见</div>
-		<div class="weui-cells">
-			<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
-				<span class="weui-cell__bd">
+			<div class="page__bd">
+				<article class="weui-article">
+					<section>
+						<p>
+							<div class="weui-cell">
+								<div class="weui-cell__hd"><label class="weui-label">产品名称</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input" type="text" placeholder="留学英语上" />
+								</div>
+							</div>
+							<div class="weui-cell weui-cell_vcode">
+								<div class="weui-cell__hd">
+									<label class="weui-label">购买价格</label>
+								</div>
+								<div class="weui-cell__bd">
+									<input class="weui-input" type="number" placeholder="10000" />
+								</div>
+							</div>
+							<div class="weui-cell">
+								<div class="weui-cell__hd"><label for="" class="weui-label">开始时间</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input" type="text" placeholder="2017-01-01" />
+								</div>
+							</div>
+							<div class="weui-cell">
+								<div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
+								<div class="weui-cell__bd">
+									<input class="weui-input" type="text" placeholder="2017-06-01" />
+								</div>
+							</div>
+						</p>
+					</section>
+				</article>
+			</div>
+
+			<div class="weui-cells__title">点选查看对此产品提出的建议和反馈</div>
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+					<span class="weui-cell__bd">
 					<p>产品反馈1</p>
 				</span>
-				<span class="weui-cell__ft">点击进入</span>
-			</a>
-			<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
-				<span class="weui-cell__bd">
+					<span class="weui-cell__ft">点击进入</span>
+				</a>
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+					<span class="weui-cell__bd">
 					<p>产品反馈2</p>
 				</span>
-				<span class="weui-cell__ft">点击进入</span>
-			</a>
-			<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
-				<span class="weui-cell__bd">
+					<span class="weui-cell__ft">点击进入</span>
+				</a>
+				<a class="weui-cell weui-cell_access" href="javascript:feedbackinfo();">
+					<span class="weui-cell__bd">
 					<p>产品反馈3</p>
 				</span>
-				<span class="weui-cell__ft">点击进入</span>
-			</a>
-		</div>
-
-		<div class="page__bd page__bd_spacing">
-			<div class="button-sp-area">
-				<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
-				<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
+					<span class="weui-cell__ft">点击进入</span>
+				</a>
 			</div>
-		</div>
-		<div class="weui-cells__tips">请选择功能按钮</div>
 
-		<div class="page">
 			<div class="page__bd page__bd_spacing">
-				<div class="weui-footer">
-					<p class="weui-footer__text">Copyright &copy; 2008-2017 Ban，Wong，KF</p>
+				<div class="button-sp-area">
+						<a class="page-btn page-btn_primary" href="javascript:childinfoadd()">新增意见反馈</a>
+						<input type="hidden" id="memberid" value="1" />
 				</div>
-
 			</div>
-		</div>
-		
-		
+
+			<div class="weui-footer">
+				<br />
+				<br />
+				<p class="weui-footer__links">
+					<a href="javascript:;" class="weui-footer__link">关于我们</a>
+				</p>
+				<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
+			</div>
+		</form>
+
 		<script type="text/javascript">
 			function feedbackinfo() {
 
