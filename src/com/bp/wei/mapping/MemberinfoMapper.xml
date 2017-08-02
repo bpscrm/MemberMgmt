@@ -52,10 +52,16 @@
     <selectKey keyProperty="id" resultType="String" order="BEFORE">  
         select  replace(uuid(),'-','')   from dual  
     </selectKey> 
-    insert into ec1_member (id, name, date_entered, 
-      date_modified, modified_user_id, created_by)
-    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{dateEntered,jdbcType=TIMESTAMP}, 
-      #{dateModified,jdbcType=TIMESTAMP}, #{modifiedUserId,jdbcType=CHAR}, #{createdBy,jdbcType=CHAR})
+    insert into ec1_member (id, name, date_entered, date_modified, modified_user_id, created_by, deleted, 
+      assigned_user_id, mb_password, 
+      mb_title, mb_name, mb_birthday, 
+      mb_child, mb_edu, description, 
+      mb_addr)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, now(), now(), "1", "1", "0",
+      #{assignedUserId,jdbcType=CHAR}, #{mbPassword,jdbcType=VARCHAR}, 
+      #{mbTitle,jdbcType=VARCHAR}, #{mbName,jdbcType=VARCHAR}, #{mbBirthday,jdbcType=DATE}, 
+      #{mbChild,jdbcType=VARCHAR}, #{mbEdu,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, 
+      #{mbAddr,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bp.wei.model.MemberinfoWithBLOBs">
     insert into ec1_member

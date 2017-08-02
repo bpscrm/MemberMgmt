@@ -26,8 +26,6 @@ public class MemberMgmtController {
 	@Autowired
 	MemberMgmtService memberService;
 	
-	
-	
 	@RequestMapping(value="memberregister", method = RequestMethod.GET)
 	public String redirectMemberregister(){		
 		return "memberregister";
@@ -44,14 +42,11 @@ public class MemberMgmtController {
 	}
 	
 	
-
-	
 	@RequestMapping(value="register", method = RequestMethod.GET)
 	public String redirectRegister(){		
 		return "register";
 	}
 
-	
 	@RequestMapping(value="childrenlist", method = RequestMethod.GET)
 	public String redirectChildrenlist(){	
 		return "childrenlist";
@@ -139,20 +134,41 @@ public class MemberMgmtController {
 		
 		//JSONObject jsonObject = JSONObject.fromObject(strMember);
 		MemberinfoWithBLOBs memberinfo = new MemberinfoWithBLOBs();
+		
 		String telnum = strMemberinfo.getString("memberinfotelnum");
 		if(telnum != null && telnum.length() > 0){
 			memberinfo.setName(telnum);
 		}
+		
 		String titel = strMemberinfo.getString("memberinfotitle");
 		if(titel != null && titel.length() > 0){
 			memberinfo.setMbTitle(titel);
 		}
 		
-		//memberinfo.setId("222222");
-		memberinfo.setDateEntered("2017-01-01");
-		memberinfo.setCreatedBy("1");
-		memberinfo.setDateModified("2017-01-01");
-		memberinfo.setModifiedUserId("1");
+		String mbname = strMemberinfo.getString("memberinfoname");
+		if(mbname != null && mbname.length() > 0){
+			memberinfo.setMbName(mbname);
+		}
+		
+		String birthday = strMemberinfo.getString("memberinfobird");
+		if(birthday != null && birthday.length() > 0){
+			memberinfo.setMbBirthday(birthday);
+		}
+		
+		String ifchild = strMemberinfo.getString("memberinfoifchild");
+		if(ifchild != null && ifchild.length() > 0){
+			memberinfo.setMbChild(ifchild);
+		}
+		
+		String edulevel = strMemberinfo.getString("memberinfoedulevel");
+		if(edulevel != null && edulevel.length() > 0){
+			memberinfo.setMbEdu(edulevel);
+		}
+		
+		String addr = strMemberinfo.getString("memberinfoaddr");
+		if(addr != null && addr.length() > 0){
+			memberinfo.setMbAddr(addr);
+		}
 		
 		Followerinfo followerinfo = new Followerinfo();
 		followerinfo.setId(strMemberinfo.getString("testopenid"));
@@ -164,6 +180,7 @@ public class MemberMgmtController {
 	
 	}
 	
+	//for my data
 	@RequestMapping(value="getmemberinfo", method = RequestMethod.GET)
 	public @ResponseBody MemberinfoWithBLOBs findMemberinfo(String name){
 		

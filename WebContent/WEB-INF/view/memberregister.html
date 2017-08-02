@@ -67,7 +67,7 @@
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
 					<div class="weui-cell__bd">
-						<input class="weui-input" type="date" value="" />
+						<input name="memberinfobird" class="weui-input" type="date" value="" />
 					</div>
 				</div>
 
@@ -78,10 +78,10 @@
 
 					<div class="weui-cell__bd">
 						<select class="weui-select" name="memberinfoifchild">
-							<option value="1">否</option>
-							<option value="2">一个</option>
-							<option value="3">两个</option>
-							<option value="4">两个以上</option>
+							<option value="L1">否</option>
+							<option value="L2">一个</option>
+							<option value="L3">两个</option>
+							<option value="L4">两个以上</option>
 						</select>
 					</div>
 				</div>
@@ -93,10 +93,10 @@
 
 					<div class="weui-cell__bd">
 						<select class="weui-select" name="memberinfoedulevel">
-							<option value="1">高中</option>
-							<option value="2">本科</option>
-							<option value="3">硕士</option>
-							<option value="4">其它</option>
+							<option value="L1">高中</option>
+							<option value="L2">本科</option>
+							<option value="L3">硕士</option>
+							<option value="L4">其它</option>
 						</select>
 					</div>
 				</div>
@@ -161,31 +161,6 @@
 					dataType: 'json',
 					data: JSON.stringify(formdata),
 					contentType: 'application/json',
-					　　　　　　async: false,
-					success: function(data) {
-						var result = JSON.stringify(data);
-						alert('success:' + result);
-					},
-					error: function(data) {
-						alert('failed:' + data.msg);
-					}
-				});
-
-			}
-
-			function getMember() {
-				var memberid = document.getElementById('memberid').value;
-				var params = {
-					id: memberid
-				};
-				//alert("memeberid:" + memberid);
-				$.ajax({
-					type: 'get',
-					url: 'getmember',
-					cache: false,
-					dataType: 'json',
-					data: params,
-					　　　　　　contentType: 'application/json',
 					　　　　　　async: false,
 					success: function(data) {
 						var result = JSON.stringify(data);
