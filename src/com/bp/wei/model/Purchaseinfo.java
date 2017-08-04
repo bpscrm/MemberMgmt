@@ -1,8 +1,9 @@
 package com.bp.wei.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class Feedback {
+public class Purchaseinfo {
     private String id;
 
     private String name;
@@ -19,9 +20,15 @@ public class Feedback {
 
     private String assignedUserId;
 
-    private String fdDt;
+    private BigDecimal purchasePrice;
 
-    private String fdSt;
+    private Date purchaseStDt;
+
+    private Date purchaseEdDt;
+
+    private String purchaseSt;
+
+    private String description;
 
     public String getId() {
         return id;
@@ -87,19 +94,43 @@ public class Feedback {
         this.assignedUserId = assignedUserId == null ? null : assignedUserId.trim();
     }
 
-    public String getFdDt() {
-        return fdDt;
+    public BigDecimal getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setFdDt(String fdDt) {
-        this.fdDt = fdDt;
+    public void setPurchasePrice(BigDecimal purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
-    public String getFdSt() {
-        return fdSt;
+    public Date getPurchaseStDt() {
+        return purchaseStDt;
     }
 
-    public void setFdSt(String fdSt) {
-        this.fdSt = fdSt == null ? null : fdSt.trim();
+    public void setPurchaseStDt(Date purchaseStDt) {
+        this.purchaseStDt = purchaseStDt;
+    }
+
+    public Date getPurchaseEdDt() {
+        return purchaseEdDt;
+    }
+
+    public void setPurchaseEdDt(Date purchaseEdDt) {
+        this.purchaseEdDt = purchaseEdDt;
+    }
+
+    public String getPurchaseSt() {
+        return purchaseSt;
+    }
+
+    public void setPurchaseSt(String purchaseSt) {
+        this.purchaseSt = purchaseSt == null ? null : purchaseSt.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

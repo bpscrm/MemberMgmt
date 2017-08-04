@@ -16,21 +16,21 @@
 	<body>
 		<form id="childrenlist" method="post">
 			<header class="ui-header ui-header-positive ui-border-b">
-				<h1>我的资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+				<h1>我的小孩资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
 			<br />
 			<br />
 			
         	<div class="weui-cells">
 
-	            <a class="weui-cell weui-cell_access" href="javascript:childinfo();">
+	            <a class="weui-cell weui-cell_access" href="javascript:childinfoupdate();">
 	                <div class="weui-cell__hd"><img src="./images/Users_favico.png"  alt="" style="width:20px;margin-right:5px;display:block"></div>
 	                <div class="weui-cell__bd">
 	                    <p>Tom</p>
 	                </div>
 	                <div class="weui-cell__ft">查看详细资料</div>
 	            </a>
-	            <a class="weui-cell weui-cell_access" href="javascript:childinfo();">
+	            <a class="weui-cell weui-cell_access" href="javascript:childinfoupdate();">
 	                <div class="weui-cell__hd"><img src="./images/Users_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
 	                <div class="weui-cell__bd">
 	                    <p>Jerry</p>
@@ -50,6 +50,25 @@
         </form>
         
         <script type="text/javascript">
+        
+       	  function childinfoupdate() {
+
+				$.ajax({
+					type: 'get',
+					url: 'childinfoupdate',
+					cache: false,
+					async: false,
+					dataType: 'json',
+					　　　　　　contentType: 'application/json',
+					success: function(data) {
+						window.location.href = 'childinfoupdate';
+					},
+					error: function(data) {
+						alert(data.msg);
+					}
+				});
+			}
+			
 			function childinfoadd() {
 
 				$.ajax({

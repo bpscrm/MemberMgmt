@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>查看小孩资料</title>
+		<title>查看产品意见反馈</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/frozen.css">
@@ -15,10 +15,10 @@
 
 	<body>
 
-		<form id="childreninfo" method="post">
-		
+		<form id="feedbackinfo" method="post">
+
 			<header class="ui-header ui-header-positive ui-border-b">
-				<h1>小孩资料</h1><button class="ui-btn" onclick="history.back()">回首页</button>
+				<h1>查看产品意见反馈</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
 			<br />
 			<br />
@@ -27,13 +27,13 @@
 
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
-						<label class="weui-label">昵称</label>
+						<label class="weui-label">标题</label>
 					</div>
 					<div class="weui-cell__bd">
-						<input id="childinfoname" class="weui-input" type="text" placeholder="已添加小孩昵称" />
+						<input id="purchasename" class="weui-input" type="text" placeholder="已添加反馈标题" />
 					</div>
 					<div class="weui-cell__ft">
-						<a href="javascript:getchildinfo();" class="weui-btn weui-btn_mini weui-btn_default">查找</a>
+						<a href="javascript:getfeedbackinfo();" class="weui-btn weui-btn_mini weui-btn_default">查找</a>
 					</div>
 
 				</div>
@@ -46,7 +46,7 @@
 
 			<div class="page__bd page__bd_spacing">
 				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:updatechildinfo()">修改</a>
+					<a class="page-btn page-btn_primary" href="javascript:updatefeedbackinfo();">修改</a>
 					<input type="hidden" id="memberid" value="1" />
 				</div>
 			</div>
@@ -64,47 +64,38 @@
 
 		<script id="template" type="text/html">
 			<div>
-              <input type="hidden" name="childid" value=<#= id #> />
 
-              <div class="weui-cells weui-cells_form">
-				<div class="weui-cell">
-					<div class="weui-cell__hd"><label class="weui-label">小孩昵称</label></div>
-					<div class="weui-cell__bd">
-						<input  name="childname" class="weui-input" type="text" value=<#= name #> />
-					</div>
-				</div>
-				
+				<input type="hidden" name="feedbackid" value=<#= id #> />
+
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
-						<label class="weui-label">小孩性别</label>
+						<label class="weui-label">标题</label>
 					</div>
 					<div class="weui-cell__bd">
-						<select class="weui-select" name="childsex" value=<#= childSex #> >
-							<option value="L1">女生</option>
-							<option value="L2">男生</option>
-						</select>
+						<input name="feedbackname" class="weui-input" type="text" value=<#= name #> />
 					</div>
 				</div>
-				
+
 				<div class="weui-cell">
-					<div class="weui-cell__hd"><label for="" class="weui-label">小孩生日</label></div>
+					<div class="weui-cell__hd"><label class="weui-label">内容</label></div>
 					<div class="weui-cell__bd">
-						<input name="childbird" class="weui-input" type="date" value=<#= childBirthday #> />
+						<input name="feedbackcontent" class="weui-input" type="text" value=<#= description #> />
 					</div>
 				</div>
-				
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd"><label class="weui-label">英文水平</label></div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label for="" class="weui-label">提出时间</label></div>
 					<div class="weui-cell__bd">
-						<select class="weui-select" name="childeng" value=<#= childEng #> >
-							<option value="L1">未学</option>
-							<option value="L2">初级</option>
-							<option value="L3">中级</option>
-							<option value="L4">高级</option>
-						</select>
+						<input name="feedbacktime" class="weui-input" type="date" value=<#= fdDt #> />
 					</div>
 				</div>
-			  </div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label">回复内容</label></div>
+					<div class="weui-cell__bd">
+						<input name="feedbackask" class="weui-input" type="text" value=<#= fdAsk #> />
+					</div>
+				</div>
 
 			</div>
 
@@ -140,16 +131,16 @@
 				return "< # ERROR: " + err.toString() + " # >";
 			};
 
-			function getchildinfo() {
-				var childinfoname = document.getElementById('childinfoname').value;
+			function getfeedbackinfo() {
+				var purchasename = document.getElementById('purchasename').value;
 				var params = {
-					name: childinfoname
+					name: purchasename
 				};
-				alert('childinfoname:' + childinfoname);
+				alert('purchasename:' + purchasename);
 
 				$.ajax({
 					type: 'get',
-					url: 'getchildinfo',
+					url: 'getfeedbackinfo',
 					cache: false,
 					dataType: 'json',
 					data: params,
@@ -229,13 +220,13 @@
 				return o;
 			};
 
-			function updatechildinfo() {
+			function updatefeedbackinfo() {
 
-				var formdata = $('#childreninfo').serializeObject();
+				var formdata = $('#feedbackinfo').serializeObject();
 				//alert(formdata);							
 				$.ajax({
 					type: 'post',
-					url: 'updatechildinfo',
+					url: 'updatefeedbackinfo',
 					cache: false,
 					dataType: 'json',
 					data: JSON.stringify(formdata),

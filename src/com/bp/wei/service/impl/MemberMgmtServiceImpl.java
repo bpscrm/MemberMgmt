@@ -14,12 +14,14 @@ import com.bp.wei.dao.MemberDao;
 import com.bp.wei.dao.MemberinfoDao;
 import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
+import com.bp.wei.dao.PurchaseinfoDao;
 import com.bp.wei.model.ChildToMember;
 import com.bp.wei.model.Childinfo;
+import com.bp.wei.model.FeedbackToPurchase;
+import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
-import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.service.MemberMgmtService;
 
@@ -28,7 +30,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtService.class);
 	
-
 	
 	@Resource
 	private MemberinfoDao mbdao;
@@ -47,6 +48,9 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	@Resource
 	private FeedbackDao fdao;
+	
+	@Resource
+	private PurchaseinfoDao pdao;
 	
 	@Resource
 	private FeedbackToPurchaseDao ftpdao;
@@ -69,7 +73,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
-	
 	//search
 	@Override
 	public MemberinfoWithBLOBs getMemberinfobyname(String name) {
@@ -80,7 +83,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		MemberinfoWithBLOBs memberinfo = mbdao.selectByMemberName(new String(name));
 		return memberinfo;
 	}
-	
 	//update
 	public int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs) {
 		
@@ -106,8 +108,90 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
+	//search
+	@Override
+	public Childinfo getchildinfo(String name) {
+		if(name.length() <= 0){
+			log.error("Invalid member name: " + name);
+			return null;
+		}
+		Childinfo childinfo = cdao.selectByChildName(new String(name));
+		return childinfo;
+	}
+	//update
+	public int updateChildinfo(Childinfo childinfo) {
+		int result = cdao.updateByPrimaryKeyWithBLOBs(childinfo);
+		
+		return result;
+	}
 	
 	
+	
+	////////////////for feedbacks
+	//insert
+	@Override
+	public int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename) {
+	
+		int result = fdao.insert(feedbackinfo);
+		
+		String purID = pdao.selectIDByMember(purchasename);
+		
+		FeedbackToPurchase fdToPCH = new FeedbackToPurchase();
+		
+		fdToPCH.setEc1FeedbackEc1PurchaseDataec1PurchaseDataIda(purID);
+		fdToPCH.setEc1FeedbackEc1PurchaseDataec1FeedbackIdb(feedbackinfo.getId());
+		
+		result = ftpdao.insert(fdToPCH);
+		
+		return result;
+	}
+	//search
+	@Override
+	public FeedbackWithBLOBs getFeedbackinfobyname(String name) {
+		System.out.println("@@@@@@@@@@@@@@feedback name: " + name);
+		if(name.length() <= 0){
+			log.error("Invalid member name: " + name);
+			return null;
+		}
+		FeedbackWithBLOBs feedbackinfo = fdao.selectByFeedbackName(new String(name));
+		return feedbackinfo;
+	}
+	//update
+	public int updateFeedbackinfo(FeedbackWithBLOBs feedbackinfo) {
+		
+		System.out.println("@@@@@@@@@@@@@@feedback: " + feedbackinfo.getName());
+		
+		int result = fdao.updateByPrimaryKeyWithBLOBs(feedbackinfo);
+		
+		return result;
+	}
+	
+	
+	///////////////////for test follower  
+	public String getTestFollowerinfo(Followerinfo follow) {
+		
+		System.out.println("@@@@@@@@@@@@@@follower open id: " + follow.getName());
+		if(follow.getName().length() <= 0){
+			log.error("Invalid member name: " + follow.getName());
+			return "null";
+		}
+		
+		String FollowerID = Fldao.selectByPrimaryOpenid(follow.getName());
+		
+		if(FollowerID != null && FollowerID.length() > 0){
+			return FollowerID;
+		} else {
+			
+			int result = Fldao.insert(follow);
+			if(result == 1){
+				return follow.getId();
+			} else {
+				return "null";
+			}
+			
+		}
+	}
+		
 
 	//for examples
 	@Resource

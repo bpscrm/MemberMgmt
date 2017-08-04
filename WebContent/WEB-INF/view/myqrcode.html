@@ -7,33 +7,35 @@
 		<title>面对面推广</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/frozen.css">
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
 	</head>
 
 	<body>
+		<header class="ui-header ui-header-positive ui-border-b">
+			<h1>我的二维码</h1><button class="ui-btn" onclick="history.back()">回上页</button>
+		</header>
 		<br />
 		<br />
-		<br />
-		<div class="weui-cells__title">你的二维码：</div>
+
 		<div class="weui-cells">
 			<br />
-			
-				<div class="weui-cells__tips">二维码</div>
-			
+
+			<div class="weui-cells__tips">二维码</div>
+
 			<br />
-		
+
 		</div>
 
-		<div class="page__bd page__bd_spacing">
-			<div class="button-sp-area">
-				<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_primary">保存</a>
-				<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>
-			</div>
+		<div class="weui-footer weui-footer_fixed-bottom">
+			<p class="weui-footer__links">
+				<a href="javascript:;" class="weui-footer__link">关于我们</a>
+			</p>
+			<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
 		</div>
-		<div class="weui-cells__tips">请选择功能按钮</div>
-
+		</form>
 	</body>
 
 </html>

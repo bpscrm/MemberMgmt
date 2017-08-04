@@ -42,14 +42,13 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bp.wei.model.Followerinfo">
-    insert into ec1_follower (id, name, date_entered, 
-      date_modified, modified_user_id, created_by, 
-      deleted, assigned_user_id, follow_dt, 
-      wechat_userid, description)
-    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{dateEntered,jdbcType=TIMESTAMP}, 
-      #{dateModified,jdbcType=TIMESTAMP}, #{modifiedUserId,jdbcType=CHAR}, #{createdBy,jdbcType=CHAR}, 
-      #{deleted,jdbcType=BIT}, #{assignedUserId,jdbcType=CHAR}, #{followDt,jdbcType=TIMESTAMP}, 
-      #{wechatUserid,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">  
+        select  uuid()   from dual  
+    </selectKey>
+    insert into ec1_follower (id, name, date_entered, date_modified, modified_user_id, created_by, deleted, 
+      assigned_user_id, follow_dt, wechat_userid, description)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},now(), now(), "1", "1", "0",
+      #{assignedUserId,jdbcType=CHAR}, now(),"test data", #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bp.wei.model.Followerinfo">
     insert into ec1_follower

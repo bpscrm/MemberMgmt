@@ -32,19 +32,28 @@
     from ec1_feedback
     where id = #{id,jdbcType=CHAR}
   </select>
+  <select id="selectByFeedbackName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ec1_feedback
+    where name = #{name,jdbcType=CHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ec1_feedback
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bp.wei.model.FeedbackWithBLOBs">
-    insert into ec1_feedback (id, name, date_entered, 
-      date_modified, modified_user_id, created_by, 
-      deleted, assigned_user_id, fd_dt, 
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">  
+        select  uuid()   from dual  
+    </selectKey> 
+    insert into ec1_feedback (id, name, date_entered, date_modified, modified_user_id, created_by, deleted, 
+      assigned_user_id, fd_dt, 
       fd_st, description, fd_ask
       )
-    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{dateEntered,jdbcType=TIMESTAMP}, 
-      #{dateModified,jdbcType=TIMESTAMP}, #{modifiedUserId,jdbcType=CHAR}, #{createdBy,jdbcType=CHAR}, 
-      #{deleted,jdbcType=BIT}, #{assignedUserId,jdbcType=CHAR}, #{fdDt,jdbcType=DATE}, 
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},  now(), now(), "1", "1", "0",
+      #{assignedUserId,jdbcType=CHAR}, #{fdDt,jdbcType=DATE}, 
       #{fdSt,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}, #{fdAsk,jdbcType=LONGVARCHAR}
       )
   </insert>

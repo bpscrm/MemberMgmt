@@ -11,6 +11,8 @@ public interface FeedbackDao {
     int insertSelective(FeedbackWithBLOBs record);
 
     FeedbackWithBLOBs selectByPrimaryKey(String id);
+    
+    FeedbackWithBLOBs selectByFeedbackName(String name);
 
     int updateByPrimaryKeySelective(FeedbackWithBLOBs record);
 

@@ -336,7 +336,14 @@
 						alert(data.msg);
 					}
 				});
-			}
+			};
+			
+			$(document).ready(function() {
+			    $("#memberinfotelnum").val("1");
+			    
+			    alter($.session.get('followerID', data.id));
+				getmemberinfo();
+			});
 		</script>
 	</body>
 
