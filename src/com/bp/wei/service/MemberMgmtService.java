@@ -3,6 +3,7 @@ package com.bp.wei.service;
 
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackWithBLOBs;
+import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 
@@ -33,6 +34,9 @@ public interface MemberMgmtService {
 	//update
 	int updateFeedbackinfo(FeedbackWithBLOBs feedbackinfo);
 
+	
+    ///////////////////for test follower  
+	String getTestFollowerinfo(Followerinfo follow);
 	
 	
 	//for examples

@@ -1,5 +1,8 @@
 package com.bp.wei.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.service.MemberMgmtService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -448,6 +452,45 @@ public class MemberMgmtController {
 		return result;		
 	}
 	
-	
+	//for test data 
+	@RequestMapping(value="gettestfollowerid", method = RequestMethod.POST)
+	public @ResponseBody JSONObject getTestfollowerid(@RequestBody JSONObject strtestfollowerid){
+		
+		Map params = new HashMap();
+		
+		log.debug("Start to set member...");
+		if(strtestfollowerid == null){
+			log.error("Failed to get child info from UI: " + strtestfollowerid);
+			
+
+			 
+			params.put("id", "null");
+			JSONObject result = JSONObject.fromObject(params);
+			
+			return result;
+		}
+		
+		System.out.println("#################" + strtestfollowerid.toString());
+		
+		//JSONObject jsonObject = JSONObject.fromObject(strMember);
+		Followerinfo follow = new Followerinfo();
+		
+		String flname = strtestfollowerid.getString("membertelnumname");
+		if(flname != null && flname.length() > 0){
+			follow.setName("openid-" + flname);
+		}
+		
+				
+		String flid = memberService.getTestFollowerinfo(follow);
+		
+		
+		
+		params.put("id", flid);
+		JSONObject result = JSONObject.fromObject(params);
+		
+		System.out.println("@@@@@@@@@@@@@@result: " + result);
+		
+		return result;		
+	}
 
 }

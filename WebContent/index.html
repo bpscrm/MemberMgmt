@@ -14,6 +14,7 @@
 	</head>
 
 	<body>
+	    <form id="memberindex" method="post">
 		<header class="ui-header ui-header-positive ui-border-b">
 			<h1>功能选项</h1>
 		</header>
@@ -77,13 +78,13 @@
 				<div class="weui-cell">
 					<div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
 					<div class="weui-cell__bd">
-						<input name="memberinfocode" class="weui-input" type="number" pattern="[0-9]*" placeholder="手机号码" />
+						<input id="membertelnumid" name="membertelnumname" class="weui-input" type="text" pattern="[0-9]*" placeholder="手机号码" />
 					</div>
 				</div>
 
 				<div class="page__bd page__bd_spacing">
 					<div class="page-btn-area">
-						<a class="page-btn page-btn_primary" href="javascript:setmemberinfo()">创建测试粉丝</a>
+						<a class="page-btn page-btn_primary" href="javascript:gettestfollowerid();">获取测试粉丝资料</a>
 						<input type="hidden" id="memberid" value="1" />
 					</div>
 				</div>
@@ -98,18 +99,22 @@
 			</p>
 			<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
 		</div>
-
+		
+		</form>
+		
+		
 		<script type="text/javascript">
 			function memberregister() {
-
+				//var memberinfocode2 = document.getElementById('memberinfocode1').value;
+				
 				$.ajax({
 					type: 'get',
 					url: 'memberregister',
-					cache: false,
-					async: false,
+					async:false,
 					dataType: 'json',
-					　　　　　　contentType: 'application/json',
+					//data: {"id":"ii".toString()},
 					success: function(data) {
+						//alert(data);
 						window.location.href = 'memberregister';
 					},
 					error: function(data) {
@@ -171,6 +176,65 @@
 					}
 				});
 			}
+			
+			//for test follower data
+			$.fn.serializeObject = function() {
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+					if(o[this.name]) {
+						if(!o[this.name].push) {
+							o[this.name] = [o[this.name]];
+						}
+						o[this.name].push(this.value || '');
+					} else {
+						o[this.name] = this.value || '';
+					}
+				});
+				return o;
+			};
+
+			function gettestfollowerid() {
+
+				var formdata = $('#memberindex').serializeObject();
+				var mbcode = document.getElementById('membertelnumid').value;
+				
+				
+		
+				
+
+											
+				if(mbcode != ""){
+				
+					$.ajax({
+						type: 'post',
+						url: 'gettestfollowerid',
+						cache: false,
+						dataType: 'json',
+						data: JSON.stringify(formdata),
+						contentType: 'application/json',
+						　　　　　　async: false,
+						success: function(data) {
+							var result = JSON.stringify(data);
+							alert('success:' + data.id);
+							
+							
+							session["followerid"]=data.id;
+							
+							$("#membertelnumid").val(data.id);
+							
+						},
+						error: function(data) {
+							alert('failed:' + data.msg);
+						}
+					});
+					
+				} else {
+					alert("请输入测试手机号码");
+				}
+			}
+			
+			
 		</script>
 	</body>
 

@@ -19,6 +19,7 @@ import com.bp.wei.model.ChildToMember;
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackToPurchase;
 import com.bp.wei.model.FeedbackWithBLOBs;
+import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
 import com.bp.wei.model.MemberinfoWithBLOBs;
@@ -29,7 +30,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtService.class);
 	
-
 	
 	@Resource
 	private MemberinfoDao Mbdao;
@@ -166,6 +166,31 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		return result;
 	}
 	
+	
+	///////////////////for test follower  
+	public String getTestFollowerinfo(Followerinfo follow) {
+		
+		System.out.println("@@@@@@@@@@@@@@follower open id: " + follow.getName());
+		if(follow.getName().length() <= 0){
+			log.error("Invalid member name: " + follow.getName());
+			return "null";
+		}
+		
+		String FollowerID = Fldao.selectByPrimaryOpenid(follow.getName());
+		
+		if(FollowerID != null && FollowerID.length() > 0){
+			return FollowerID;
+		} else {
+			
+			int result = Fldao.insert(follow);
+			if(result == 1){
+				return follow.getId();
+			} else {
+				return "null";
+			}
+			
+		}
+	}
 		
 
 	//for examples
