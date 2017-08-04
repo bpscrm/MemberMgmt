@@ -104,23 +104,25 @@
 		
 		
 		<script type="text/javascript">
-			function memberregister() {
-				//var memberinfocode2 = document.getElementById('memberinfocode1').value;
+			function memberregister() {			
+			
+			var mbcode = document.getElementById('membertelnumid').value;
 				
 				$.ajax({
 					type: 'get',
 					url: 'memberregister',
-					async:false,
+					cache: false,
+					async: false,
 					dataType: 'json',
-					//data: {"id":"ii".toString()},
+					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						//alert(data);
-						window.location.href = 'memberregister';
+						window.location.href = 'memberregister.html?flid=' + mbcode;
 					},
 					error: function(data) {
 						alert(data.msg);
 					}
 				});
+				
 			}
 
 			function memberinfo() {
@@ -217,9 +219,6 @@
 						success: function(data) {
 							var result = JSON.stringify(data);
 							alert('success:' + data.id);
-							
-							
-							session["followerid"]=data.id;
 							
 							$("#membertelnumid").val(data.id);
 							

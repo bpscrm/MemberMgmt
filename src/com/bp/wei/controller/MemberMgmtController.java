@@ -35,6 +35,7 @@ public class MemberMgmtController {
 		return "memberregister";
 	}
 	
+	
 	@RequestMapping(value="memberinfo", method = RequestMethod.GET)
 	public String redirectMemberinfo(){	
 		return "memberinfo";
