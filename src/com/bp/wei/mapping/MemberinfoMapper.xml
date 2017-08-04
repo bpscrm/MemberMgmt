@@ -23,11 +23,11 @@
   </resultMap>
   <!-- 屁要的栗子 start -->
   <resultMap id="ResultMapWithChildren" type="com.bp.wei.model.Member">
-  	<id property="id" column="id"/>
-  	<result property="name" column="name"/>
+  	<id property="id" column="mid"/>
+  	<result property="name" column="mname"/>
   	<collection property="children" javaType="java.util.List" ofType="com.bp.wei.model.Childinfo">
-  		<id property="id" column="id"/>
-  		<result property="name" column="name"/>
+  		<id property="id" column="cid"/>
+  		<result property="name" column="cname"/>
   	</collection>
   </resultMap>
   <!-- 屁要的栗子 end -->
@@ -61,7 +61,7 @@
   </select>
   <!-- 屁要的栗子 start-->
   <select id="selectChildrenByKey" parameterType="java.lang.String" resultMap="ResultMapWithChildren">
-  	select member.id, member.name, child.id, child.name from ec1_member member, ec1_child_data child, ec1_child_data_ec1_member_c mtoc
+  	select member.id as mid, member.name as mname, child.id as cid, child.name as cname from ec1_member member, ec1_child_data child, ec1_child_data_ec1_member_c mtoc
   	where member.id = mtoc.ec1_child_data_ec1_memberec1_member_ida
   	and child.id = mtoc.ec1_child_data_ec1_memberec1_child_data_idb
   	and member.id = #{id, jdbcType=CHAR}
