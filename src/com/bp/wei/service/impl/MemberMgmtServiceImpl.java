@@ -176,13 +176,13 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 			return "null";
 		}
 		
-		String FollowerID = Fldao.selectByPrimaryOpenid(follow.getName());
+		String FollowerID = fldao.selectByPrimaryOpenid(follow.getName());
 		
 		if(FollowerID != null && FollowerID.length() > 0){
 			return FollowerID;
 		} else {
 			
-			int result = Fldao.insert(follow);
+			int result = fldao.insert(follow);
 			if(result == 1){
 				return follow.getId();
 			} else {
