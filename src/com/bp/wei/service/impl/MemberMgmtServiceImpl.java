@@ -32,10 +32,10 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	
 	@Resource
-	private MemberinfoDao Mbdao;
+	private MemberinfoDao mbdao;
 	
 	@Resource
-	private FollowerinfoDao Fldao;
+	private FollowerinfoDao fldao;
 	
 	@Resource
 	private MemberToFollowerDao mtfdao;
@@ -60,10 +60,10 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	@Override
 	public int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid) {
 		
-		int result = Mbdao.insert(memberinfowithblogs);
+		int result = mbdao.insert(memberinfowithblogs);
 		//System.out.println("@@@@@@@@@@@@@@member id: " + memberinfowithblogs.getId());
 		
-		String followerID = Fldao.selectByPrimaryOpenid(openid);
+		String followerID = fldao.selectByPrimaryOpenid(openid);
 		
 		MemberToFollower mbTofl = new MemberToFollower();
 		mbTofl.setEc1MemberEc1Followerec1MemberIda(memberinfowithblogs.getId());
@@ -80,13 +80,13 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 			log.error("Invalid member name: " + name);
 			return null;
 		}
-		MemberinfoWithBLOBs memberinfo = Mbdao.selectByMemberName(new String(name));
+		MemberinfoWithBLOBs memberinfo = mbdao.selectByMemberName(new String(name));
 		return memberinfo;
 	}
 	//update
 	public int updateMemberinfo(MemberinfoWithBLOBs memberinfowithblogs) {
 		
-		int result = Mbdao.updateByPrimaryKeyWithBLOBs(memberinfowithblogs);
+		int result = mbdao.updateByPrimaryKeyWithBLOBs(memberinfowithblogs);
 		
 		return result;
 	}
@@ -98,7 +98,7 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 		int result = cdao.insert(childinfo);
 		
-		String mbID = Mbdao.selectIDByMember(mbname);
+		String mbID = mbdao.selectIDByMember(mbname);
 		
 		ChildToMember cdTomb = new ChildToMember();
 		cdTomb.setEc1ChildDataEc1Memberec1MemberIda(mbID);
@@ -176,13 +176,13 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 			return "null";
 		}
 		
-		String FollowerID = Fldao.selectByPrimaryOpenid(follow.getName());
+		String FollowerID = fldao.selectByPrimaryOpenid(follow.getName());
 		
 		if(FollowerID != null && FollowerID.length() > 0){
 			return FollowerID;
 		} else {
 			
-			int result = Fldao.insert(follow);
+			int result = fldao.insert(follow);
 			if(result == 1){
 				return follow.getId();
 			} else {
@@ -211,6 +211,12 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	public int setMember(Member member) {
 		int result = dao.insertSelective(member);
 		return result;
+	}
+
+	@Override
+	public Member getMemberWithChildren(String memberId) {
+		Member member = mbdao.selectChildrenByKey(memberId);
+		return member;
 	}
 
 }

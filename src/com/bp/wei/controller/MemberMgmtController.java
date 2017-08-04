@@ -1,8 +1,10 @@
 package com.bp.wei.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackWithBLOBs;
@@ -19,7 +22,6 @@ import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.service.MemberMgmtService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -102,9 +104,17 @@ public class MemberMgmtController {
 		return "myqrcode";
 	}
 	
-	@RequestMapping(value="registerinfo", method = RequestMethod.GET)
-	public String redirectRegisterinfo(){	
-		return "registerinfo";
+	@RequestMapping(value="registerinfo", method = RequestMethod.POST)
+	public ModelAndView viewRegisterinfo(HttpServletRequest request){	
+		log.debug("redirectRegisterinfo start...");
+		Member member = new Member();
+		member.setName(request.getParameter("membername"));
+		log.debug("################" + member.toString());
+		ModelAndView result = new ModelAndView();
+		//Map<String, Object> modelMap = new HashMap<String, Object>();
+		result.setViewName("registerinfo");		
+		result.addObject("member", JSONObject.fromObject(member));	
+		return result;
 	}
 	
 	@RequestMapping(value="getmember", method = RequestMethod.GET)
@@ -112,6 +122,18 @@ public class MemberMgmtController {
 		
 		return memberService.getMemberById(new Integer(id));
 		
+	}
+	
+	@RequestMapping(value="getMemberchild", method = RequestMethod.GET)
+	public @ResponseBody Member findMemberWithChildren(String id){
+		log.debug("###########memberid: " + id);
+		if(id == null || id.length() == 0){
+			return null;
+		}
+		log.debug("###########memberid: " + id);
+		Member member = memberService.getMemberWithChildren(id);
+		log.debug("###########" + member.toString());
+		return member;
 	}
 	
 	@RequestMapping(value="setmember", method = RequestMethod.POST)

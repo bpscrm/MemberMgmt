@@ -42,4 +42,6 @@ public interface MemberMgmtService {
 	//for examples
 	Member getMemberById(int memberId);
 	int setMember(Member member);
+	
+	Member getMemberWithChildren(String memberId);
 }

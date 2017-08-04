@@ -1,8 +1,10 @@
 package com.bp.wei.model;
 
+import java.util.List;
+
 public class Member {
 	
-	private int id;
+	private String id;
 	
 	private String name;
 	
@@ -10,13 +12,15 @@ public class Member {
 	
 	private String gender;
 	
-	private String birthday;	
+	private String birthday;
+	
+	private List<Childinfo> children;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -50,11 +54,20 @@ public class Member {
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+	}	
+
+	public List<Childinfo> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Childinfo> children) {
+		this.children = children;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", name=" + name + ", mobile=" + mobile + ", gender=" + gender + ", birthday=" + birthday + "]";
-	}	
+		return "Member [id=" + id + ", name=" + name + ", mobile=" + mobile + ", gender=" + gender + ", birthday="
+				+ birthday + ", children=" + children + "]";
+	}
 	
 }

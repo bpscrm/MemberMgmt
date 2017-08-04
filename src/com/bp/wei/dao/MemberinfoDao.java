@@ -1,5 +1,6 @@
 package com.bp.wei.dao;
 
+import com.bp.wei.model.Member;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 
@@ -21,4 +22,6 @@ public interface MemberinfoDao {
     int updateByPrimaryKeyWithBLOBs(MemberinfoWithBLOBs record);
 
     int updateByPrimaryKey(Memberinfo record);
+    
+    Member selectChildrenByKey(String id);//主要是不想搞乱屁的Memberinfo
 }

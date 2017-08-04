@@ -11,11 +11,12 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/func.js"></script>
 	</head>
 
 	<body>
 
-		<form id="member" method="post">
+		<form id="member" method="post" action="registerinfo">
 			<header class="ui-header ui-header-positive ui-border-b">
 				<h1>新增小孩</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
@@ -83,7 +84,7 @@
 				</div>
 				<div class="page-btn-area">
 					<a class="page-btn page-btn_primary" href="javascript:getMember()">查找</a>
-					<input type="hidden" id="memberid" value="1"/>
+					<input type="hidden" id="memberid" value="710463d0-78e9-11e7-80d6-540a022e1610"/>
 				</div>
 			</div>
 			<div id="searchresult">
@@ -121,74 +122,21 @@
 			</div>
 
 		</script>
+		<script id="children-template" type="text/html">
+			 <a class="weui-cell weui-cell_access" href="javascript:registerinfo();">
+	                <div class="weui-cell__hd"><img src="./images/Users_favico.png"  alt="" style="width:20px;margin-right:5px;display:block"></div>
+	                <div class="weui-cell__bd">
+	                    <p><#= name #></p>
+	                </div>
+	                <div class="weui-cell__ft">查看详细资料</div>
+	         </a>			
+		</script>
 		<script type="text/javascript">
 		function registerinfo() {
-
-				$.ajax({
-					type: 'get',
-					url: 'registerinfo',
-					cache: false,
-					async: false,
-					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
-						window.location.href = 'registerinfo';
-					},
-					error: function(data) {
-						alert(data.msg);
-					}
-				});
-			}
-		
-		
-		$.fn.parseTemplate = function(data){ 
-			var str = (this).html(); 
-			var _tmplCache = {} 
-			var err = ""; 
-			try{ 
-				var func = _tmplCache[str]; 
-				if (!func){ 
-					var strFunc = 
-					"var p=[],print=function(){p.push.apply(p,arguments);};" + 
-					"with(obj){p.push('" + 
-					str.replace(/[\r\t\n]/g, " ") 
-					.replace(/'(?=[^#]*#>)/g, "\t") 
-					.split("'").join("\\'") 
-					.split("\t").join("'") 
-					.replace(/<#=(.+?)#>/g, "',$1,'") 
-					.split("<#").join("');") 
-					.split("#>").join("p.push('") 
-					+ "');}return p.join('');";
-					func = new Function("obj", strFunc); 
-					_tmplCache[str] = func; 
-				} 
-				return func(data); 
-			} catch(e){
-				err = e.message; 
-			} 
-				return "< # ERROR: " + err.toString() + " # >"; 
-			};
-			
-		//$(document).ready(function(){
-		$.fn.serializeObject = function()    
-	 		{  	   
-	 		   var o = {};    
-	 		   var a = this.serializeArray();    
-	 		   $.each(a, function() {    
-	 		       if (o[this.name]) {    
-	 		           if (!o[this.name].push) {    
-	 		               o[this.name] = [o[this.name]];    
-	 		           }    
-	 		           o[this.name].push(this.value || '');    
-	 		       } else {    
-	 		           o[this.name] = this.value || '';    
-	 		       }    
-	 		   });    
-	 		   return o;    
-	 	};
+			$('#member').submit();				
+		}		
 	 		
-		function setMember(){
-			
+		function setMember(){			
 			var formdata = $('#member').serializeObject();
 			alert(formdata);							
 					$.ajax({  
@@ -206,27 +154,31 @@
 				        error: function (data) { 		        	
 				        	alert('failed:' + data.msg);
 				        }  
-				    });						
-		
+				    });			
 			}
+		
 			function getMember(){
 				var memberid = document.getElementById('memberid').value;
 				var params = {id: memberid};
-				//alert("memeberid:" + memberid);
+				
 				$.ajax({  
 			        type: 'get',  
-			        url: 'getmember',
+			        url: 'getMemberchild',
 			        cache: false,
 			        dataType : 'json',
 			        data: params,
 			　　　　　　 	contentType : 'application/json', 
 			　　　　　　 	async: false,
 			        success: function (data) { 	
-			        	//var result= JSON.stringify(data);
-			        	//alert('success:' + result);
-			        	var output = $('#template').parseTemplate(data);
+			        	var result= JSON.stringify(data);
 			        	
-			        	$('#searchresult').html(output);
+			        	var htmllist = '';
+			        	data.children.forEach(function(object) {			        		
+			        		var output = $('#children-template').parseTemplate(object);			        		
+			        		htmllist += output;
+			        	});
+			        	
+			        	$('#searchresult').html(htmllist); 
 			        				        	
 			        },  
 			        error: function (data) { 		        	
@@ -275,49 +227,7 @@
 			});
 		//});
 		</script>
-		<script type="text/javascript">
-			$(function() {
-				var winH = $(window).height();
-				var categorySpace = 10;
-
-				$('.js_item').on('click', function() {
-					var id = $(this).data('id');
-					window.pageManager.go(id);
-				});
-				$('.js_category').on('click', function() {
-					var $this = $(this),
-						$inner = $this.next('.js_categoryInner'),
-						$page = $this.parents('.page'),
-						$parent = $(this).parent('li');
-					var innerH = $inner.data('height');
-					bear = $page;
-
-					if(!innerH) {
-						$inner.css('height', 'auto');
-						innerH = $inner.height();
-						$inner.removeAttr('style');
-						$inner.data('height', innerH);
-					}
-
-					if($parent.hasClass('js_show')) {
-						$parent.removeClass('js_show');
-					} else {
-						$parent.siblings().removeClass('js_show');
-
-						$parent.addClass('js_show');
-						if(this.offsetTop + this.offsetHeight + innerH > $page.scrollTop() + winH) {
-							var scrollTop = this.offsetTop + this.offsetHeight + innerH - winH + categorySpace;
-
-							if(scrollTop > this.offsetTop) {
-								scrollTop = this.offsetTop - categorySpace;
-							}
-
-							$page.scrollTop(scrollTop);
-						}
-					}
-				});
-			});
-		</script>
+		
 	</body>
 
 </html>
