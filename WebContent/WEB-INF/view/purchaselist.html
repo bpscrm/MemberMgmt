@@ -11,35 +11,33 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/func.js"></script>
 	</head>
 
 	<body>
-		<form id="member" method="post">
+		<form id="purchaselist" method="post">
 			<header class="ui-header ui-header-positive ui-border-b">
 				<h1>已购产品信息</h1><button class="ui-btn" onclick="history.back()">回首页</button>
 			</header>
 			<br />
 			<br />
 
+        		<div id="searchresult"> 
+	       		</div>
 			<div class="weui-cells">
+                <input type="hidden" id="memberid" value="1" />
 
-				<a class="weui-cell weui-cell_access" href="javascript:feedbacklist();">
-					<div class="weui-cell__hd"><img src="./images/Projects_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-					<div class="weui-cell__bd">
-						<p>留学英语上</p>
-					</div>
-					<div class="weui-cell__ft">查看详细资料</div>
-				</a>
-				<a class="weui-cell weui-cell_access" href="javascript:feedbacklist();">
-					<div class="weui-cell__hd"><img src="./images/Projects_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-					<div class="weui-cell__bd">
-						<p>幼儿英语第一季</p>
-					</div>
-					<div class="weui-cell__ft">查看详细资料</div>
-				</a>
+	       		
 			</div>
 
 			<div class="weui-cells__title">可以点选进去查看已购买产品详细资料</div>
+
+            <div class="page__bd page__bd_spacing">
+				<div class="page-btn-area">
+					<a class="page-btn page-btn_primary" href="javascript:getPurchaselist()">修改</a>
+					<input type="hidden" id="cdid" value="1" />
+				</div>
+			</div>
 
 			<div class="weui-footer">
 				<br />
@@ -51,7 +49,48 @@
 			</div>
 		</form>
 
+        <script id="purchase-template" type="text/html">
+			 <a class="weui-cell weui-cell_access" href="javascript:feedbacklist('<#= id #>');">
+	                <div class="weui-cell__hd"><img src="./images/Projects_favico.png"  alt="" style="width:20px;margin-right:5px;display:block"></div>
+	                <div class="weui-cell__bd">
+	                    <p><#= name #></p>
+	                </div>
+	                <div class="weui-cell__ft">查看详细资料</div>
+	         </a>			
+		</script>
+
 		<script type="text/javascript">
+        	
+        	function getPurchaselist(){
+				var memberid = document.getElementById('memberid').value;
+				var params = {id: memberid};
+				
+				$.ajax({  
+			        type: 'get',  
+			        url: 'getPurchaselist',
+			        cache: false,
+			        dataType : 'json',
+			        data: params,
+			　　　　　　 	contentType : 'application/json', 
+			　　　　　　 	async: false,
+			        success: function (data) { 	
+			        	var result= JSON.stringify(data);
+			        	
+			        	var htmllist = '';
+			        	data.purchase.forEach(function(object) {			        		
+			        		var output = $('#purchase-template').parseTemplate(object);			        		
+			        		htmllist += output;
+			        	});
+			        	
+			        	$('#searchresult').html(htmllist); 
+			        			        				        	
+			        },  
+			        error: function (data) { 		        	
+			        	alert('failed:' + data.msg);
+			        }  
+			    });
+			}		
+		
 			function feedbacklist() {
 
 				$.ajax({
@@ -69,6 +108,19 @@
 					}
 				});
 			}
+			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#memberid").val($.getUrlParam('mbid'));
+
+				getPurchaselist();
+			});			
 		</script>
 
 	</body>

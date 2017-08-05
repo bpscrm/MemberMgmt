@@ -22,7 +22,9 @@ import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.MemberToFollower;
+import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
+import com.bp.wei.model.Purchaseinfo;
 import com.bp.wei.service.MemberMgmtService;
 
 @Service
@@ -94,11 +96,11 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	////////////////for child
 	//insert
 	@Override
-	public int insertChildinfo(Childinfo childinfo, String mbname) {
+	public int insertChildinfo(Childinfo childinfo, String mbid) {
 	
 		int result = cdao.insert(childinfo);
 		
-		String mbID = mbdao.selectIDByMember(mbname);
+		String mbID = mbid;
 		
 		ChildToMember cdTomb = new ChildToMember();
 		cdTomb.setEc1ChildDataEc1Memberec1MemberIda(mbID);
@@ -110,12 +112,12 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	}
 	//search
 	@Override
-	public Childinfo getchildinfo(String name) {
-		if(name.length() <= 0){
-			log.error("Invalid member name: " + name);
+	public Childinfo getchildinfo(String id) {
+		if(id.length() <= 0){
+			log.error("Invalid child id: " + id);
 			return null;
 		}
-		Childinfo childinfo = cdao.selectByChildName(new String(name));
+		Childinfo childinfo = cdao.selectByPrimaryKey(new String(id));
 		return childinfo;
 	}
 	//update
@@ -124,7 +126,14 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		
 		return result;
 	}
-	
+
+	////////////////for Purchase
+	//search
+	@Override
+	public Memberinfo getMemberWithPurchase(String id) {
+		Memberinfo member = mbdao.selectPurchaseByKey(id);
+		return member;
+	}
 	
 	
 	////////////////for feedbacks
@@ -214,8 +223,8 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	}
 
 	@Override
-	public Member getMemberWithChildren(String memberId) {
-		Member member = mbdao.selectChildrenByKey(memberId);
+	public Memberinfo getMemberWithChildren(String memberId) {
+		Memberinfo member = mbdao.selectChildrenByKey(memberId);
 		return member;
 	}
 

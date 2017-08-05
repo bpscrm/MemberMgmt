@@ -3,8 +3,11 @@ package com.bp.wei.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Member;
+import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
+import com.bp.wei.model.Purchaseinfo;
 import com.bp.wei.service.MemberMgmtService;
 
 import net.sf.json.JSONObject;
@@ -125,13 +130,13 @@ public class MemberMgmtController {
 	}
 	
 	@RequestMapping(value="getMemberchild", method = RequestMethod.GET)
-	public @ResponseBody Member findMemberWithChildren(String id){
+	public @ResponseBody Memberinfo findMemberWithChildren(String id){
 		log.debug("###########memberid: " + id);
 		if(id == null || id.length() == 0){
 			return null;
 		}
 		log.debug("###########memberid: " + id);
-		Member member = memberService.getMemberWithChildren(id);
+		Memberinfo member = memberService.getMemberWithChildren(id);
 		log.debug("###########" + member.toString());
 		return member;
 	}
@@ -214,9 +219,9 @@ public class MemberMgmtController {
 		}
 		
 		Followerinfo followerinfo = new Followerinfo();
-		followerinfo.setId(strMemberinfo.getString("testopenid"));
+		followerinfo.setId(strMemberinfo.getString("followid"));
 		
-		int result = memberService.insertMemberinfo(memberinfo, strMemberinfo.getString("testopenid"));
+		int result = memberService.insertMemberinfo(memberinfo, strMemberinfo.getString("followid"));
 		
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
@@ -328,16 +333,16 @@ public class MemberMgmtController {
 			childinfo.setChildEng(ceng);
 		}
 		
-		int result = memberService.insertChildinfo(childinfo, strChildinfo.getString("testmbname"));
+		int result = memberService.insertChildinfo(childinfo, strChildinfo.getString("memberid1"));
 		
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	}
 	//search child
 	@RequestMapping(value="getchildinfo", method = RequestMethod.GET)
-	public @ResponseBody Childinfo findChildinfo(String name){
+	public @ResponseBody Childinfo findChildinfo(String id){
 		
-		return memberService.getchildinfo(new String(name));
+		return memberService.getchildinfo(new String(id));
 		
 	}
 	//update child
@@ -386,6 +391,20 @@ public class MemberMgmtController {
 		return result;		
 	}
 	
+	
+	/////////for purchase
+	//search purchase
+	@RequestMapping(value="getPurchaselist", method = RequestMethod.GET)
+	public @ResponseBody Memberinfo findMemberWithPurchase(String id){
+		log.debug("###########memberid: " + id);
+		if(id == null || id.length() == 0){
+			return null;
+		}
+		log.debug("###########memberid: " + id);
+		Memberinfo member = memberService.getMemberWithPurchase(id);
+		log.debug("###########" + member.toString());
+		return member;
+	}
 		
 	/////////for feedback
 	//insert feedback
@@ -485,8 +504,6 @@ public class MemberMgmtController {
 		if(strtestfollowerid == null){
 			log.error("Failed to get child info from UI: " + strtestfollowerid);
 			
-
-			 
 			params.put("id", "null");
 			JSONObject result = JSONObject.fromObject(params);
 			
@@ -502,11 +519,8 @@ public class MemberMgmtController {
 		if(flname != null && flname.length() > 0){
 			follow.setName("openid-" + flname);
 		}
-		
 				
 		String flid = memberService.getTestFollowerinfo(follow);
-		
-		
 		
 		params.put("id", flid);
 		JSONObject result = JSONObject.fromObject(params);

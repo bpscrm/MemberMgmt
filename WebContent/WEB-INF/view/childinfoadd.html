@@ -61,17 +61,11 @@
 					</div>
 				</div>
 			</div>
-			
-				<div class="weui-cell">
-					<div class="weui-cell__bd">
-						<input name="testmbname" class="weui-input" type="text" placeholder="请输入测试用会员手机号码" />
-					</div>
-				</div>
 
 			<div class="page__bd page__bd_spacing">
 				<div class="page-btn-area">
 					<a class="page-btn page-btn_primary" href="javascript:setchildinfo();">新增</a>
-					<input type="hidden" id="memberid" value="1" />
+					<input type="hidden" id="memberid" name="memberid1" value="1" />
 				</div>
 			</div>
 
@@ -115,6 +109,18 @@
 					}
 				});
 			}
+			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#memberid").val($.getUrlParam('mbid'));
+				
+			});
 		</script>
 	</body>
 

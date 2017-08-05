@@ -5,7 +5,9 @@ import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Member;
+import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
+import com.bp.wei.model.Purchaseinfo;
 
 public interface MemberMgmtService {
 	
@@ -19,12 +21,16 @@ public interface MemberMgmtService {
 
 	///////////////////for child
 	//insert
-	int insertChildinfo(Childinfo childinfo, String mbname);
+	int insertChildinfo(Childinfo childinfo, String mbid);
 	//search
-	Childinfo getchildinfo(String name);
+	Childinfo getchildinfo(String id);
+	Memberinfo getMemberWithChildren(String memberId);
 	//update
 	int updateChildinfo(Childinfo childinfo);
 	
+	///////////////////for Purchase
+	//search
+	Memberinfo getMemberWithPurchase(String id);
 	
 	///////////////////for feedback
 	//insert
@@ -43,5 +49,5 @@ public interface MemberMgmtService {
 	Member getMemberById(int memberId);
 	int setMember(Member member);
 	
-	Member getMemberWithChildren(String memberId);
+	
 }

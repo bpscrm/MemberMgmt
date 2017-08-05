@@ -24,30 +24,17 @@
 			<div class="page__bd">
 
 				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd">
-						<label class="weui-label">手机号码</label>
-					</div>
-					<div class="weui-cell__bd">
-						<input id="memberinfotelnum" class="weui-input" type="tel" placeholder="已注册手机号" />
-					</div>
-					<div class="weui-cell__ft">
-						<a href="javascript:getmemberinfo();" class="weui-btn weui-btn_mini weui-btn_default">查找</a>
-						<input type="hidden" id="memberid" value="1" />
-					</div>
-
+					<div id="searchresult"></div>
 				</div>
-
-				<div id="searchresult"></div>
-
-				<br />
-				<br />
+				
 			</div>
 		</form>
 
 		<div class="page__bd page__bd_spacing">
 			<div class="page-btn-area">
 				<a class="page-btn page-btn_primary" href="javascript:updatememberinfo()">修改</a>
-				<input type="hidden" id="memberid" value="1" />
+					<input type="hidden" id="followid" name="followid" value="1" />
+					<input type="hidden" id="membertel" name="membertel" value="2" />
 			</div>
 		</div>
 
@@ -80,7 +67,7 @@
 		<script id="template" type="text/html">
 			<div>
 
-                <input type="hidden" name="memberid1" value = <#= id #> />
+                <input type="hidden" id="memberid" name="memberid1" value = <#= id #> />
 
 				<div class="weui-cell weui-cell_vcode">
 					<div class="weui-cell__hd">
@@ -191,11 +178,10 @@
 			};
 
 			function getmemberinfo() {
-				var memberinfotelnum = document.getElementById('memberinfotelnum').value;
+				var memberinfotelnum = document.getElementById('membertel').value;
 				var params = {
 					name: memberinfotelnum
 				};
-				alert('memberinfotelnum:' + memberinfotelnum);
 
 				$.ajax({
 					type: 'get',
@@ -302,7 +288,8 @@
 			}
 
 			//for open page
-			function childrenlist() {
+			function childrenlist() {			
+				var mbid = document.getElementById('memberid').value;
 
 				$.ajax({
 					type: 'get',
@@ -312,7 +299,7 @@
 					dataType: 'json',
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						window.location.href = 'childrenlist';
+						window.location.href = 'childrenlist.html?mdid=' + mbid;
 					},
 					error: function(data) {
 						alert(data.msg);
@@ -321,7 +308,8 @@
 			}
 
 			function purchaselist() {
-
+			    var mbid = document.getElementById('memberid').value;
+			    
 				$.ajax({
 					type: 'get',
 					url: 'purchaselist',
@@ -330,7 +318,7 @@
 					dataType: 'json',
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						window.location.href = 'purchaselist';
+						window.location.href = 'purchaselist.html?mbid=' + mbid;
 					},
 					error: function(data) {
 						alert(data.msg);
@@ -338,9 +326,17 @@
 				});
 			};
 			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
 			$(document).ready(function() {
-			    $("#memberinfotelnum").val("1");
-			    
+				
+				$("#followid").val($.getUrlParam('flid'));
+				$("#membertel").val($.getUrlParam('mbtel'));
+
 				getmemberinfo();
 			});
 		</script>

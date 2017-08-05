@@ -3,6 +3,7 @@ package com.bp.wei.dao;
 import com.bp.wei.model.Member;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
+import com.bp.wei.model.Purchaseinfo;
 
 public interface MemberinfoDao {
     int deleteByPrimaryKey(String id);
@@ -23,5 +24,6 @@ public interface MemberinfoDao {
 
     int updateByPrimaryKey(Memberinfo record);
     
-    Member selectChildrenByKey(String id);//主要是不想搞乱屁的Memberinfo
+    Memberinfo selectChildrenByKey(String id);
+    Memberinfo selectPurchaseByKey(String id);
 }

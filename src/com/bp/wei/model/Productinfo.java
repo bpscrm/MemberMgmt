@@ -2,9 +2,8 @@ package com.bp.wei.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
-public class Purchaseinfo {
+public class Productinfo {
     private String id;
 
     private String name;
@@ -21,16 +20,12 @@ public class Purchaseinfo {
 
     private String assignedUserId;
 
-    private BigDecimal purchasePrice;
+    private BigDecimal productPrice;
 
-    private Date purchaseStDt;
-
-    private Date purchaseEdDt;
-
-    private String purchaseSt;
+    private Long custScores;
 
     private String description;
-    
+
     public String getId() {
         return id;
     }
@@ -95,36 +90,20 @@ public class Purchaseinfo {
         this.assignedUserId = assignedUserId == null ? null : assignedUserId.trim();
     }
 
-    public BigDecimal getPurchasePrice() {
-        return purchasePrice;
+    public BigDecimal getProductPrice() {
+        return productPrice;
     }
 
-    public void setPurchasePrice(BigDecimal purchasePrice) {
-        this.purchasePrice = purchasePrice;
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 
-    public Date getPurchaseStDt() {
-        return purchaseStDt;
+    public Long getCustScores() {
+        return custScores;
     }
 
-    public void setPurchaseStDt(Date purchaseStDt) {
-        this.purchaseStDt = purchaseStDt;
-    }
-
-    public Date getPurchaseEdDt() {
-        return purchaseEdDt;
-    }
-
-    public void setPurchaseEdDt(Date purchaseEdDt) {
-        this.purchaseEdDt = purchaseEdDt;
-    }
-
-    public String getPurchaseSt() {
-        return purchaseSt;
-    }
-
-    public void setPurchaseSt(String purchaseSt) {
-        this.purchaseSt = purchaseSt == null ? null : purchaseSt.trim();
+    public void setCustScores(Long custScores) {
+        this.custScores = custScores;
     }
 
     public String getDescription() {
@@ -134,5 +113,4 @@ public class Purchaseinfo {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
-  
 }

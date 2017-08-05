@@ -18,4 +18,5 @@ public interface PurchaseinfoDao {
     int updateByPrimaryKeyWithBLOBs(Purchaseinfo record);
 
     int updateByPrimaryKey(Purchaseinfo record);
+
 }

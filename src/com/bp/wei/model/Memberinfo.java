@@ -1,5 +1,7 @@
 package com.bp.wei.model;
 
+import java.util.List;
+
 public class Memberinfo {
     private String id;
 
@@ -28,6 +30,10 @@ public class Memberinfo {
     private String mbChild;
 
     private String mbEdu;
+    
+    private List<Childinfo> children;
+    
+    private List<Purchaseinfo> purchase;
 
     public String getId() {
         return id;
@@ -140,4 +146,20 @@ public class Memberinfo {
     public void setMbEdu(String mbEdu) {
         this.mbEdu = mbEdu == null ? null : mbEdu.trim();
     }
+    
+	public List<Childinfo> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Childinfo> children) {
+		this.children = children;
+	}
+	
+	public List<Purchaseinfo> getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(List<Purchaseinfo> purchase) {
+		this.purchase = purchase;
+	}
 }

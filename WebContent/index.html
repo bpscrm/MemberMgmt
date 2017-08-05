@@ -72,7 +72,7 @@
 			<br />
 			<article class="weui-article">
 				<p>
-					如果你不是微信进入此页面，请设定你的手机号码，为后续页面使用
+					如果你不是微信进入此页面，请设定你的手机号码，作为测试数据为后续页面使用
 				</p>
 
 				<div class="weui-cell">
@@ -85,7 +85,8 @@
 				<div class="page__bd page__bd_spacing">
 					<div class="page-btn-area">
 						<a class="page-btn page-btn_primary" href="javascript:gettestfollowerid();">获取测试粉丝资料</a>
-						<input type="hidden" id="memberid" value="1" />
+						<input type="hidden" id="followid" value="1" />
+						<input type="hidden" id="membertel" value="2" />
 					</div>
 				</div>
 			</article>
@@ -104,61 +105,77 @@
 		
 		
 		<script type="text/javascript">
-			function memberregister() {			
-			
-			var mbcode = document.getElementById('membertelnumid').value;
+			function memberregister() {						
+				var flid = document.getElementById('followid').value;
+				var mbtel = document.getElementById('membertel').value;
 				
-				$.ajax({
-					type: 'get',
-					url: 'memberregister',
-					cache: false,
-					async: false,
-					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
-						window.location.href = 'memberregister.html?flid=' + mbcode;
-					},
-					error: function(data) {
-						alert(data.msg);
-					}
-				});
-				
+				if(flid != "" & mbtel != ""){
+					$.ajax({
+						type: 'get',
+						url: 'memberregister',
+						cache: false,
+						async: false,
+						dataType: 'json',
+						　　　　　　contentType: 'application/json',
+						success: function(data) {
+							window.location.href = 'memberregister.html?flid=' + flid + '&mbtel=' + mbtel;
+						},
+						error: function(data) {
+							alert(data.msg);
+						}
+					});
+				} else {
+					alert("请先   获取测试粉丝资料");
+				}
 			}
 
 			function memberinfo() {
+				var flid = document.getElementById('followid').value;
+				var mbtel = document.getElementById('membertel').value;
+				
+				if(flid != "" & mbtel != ""){
 
-				$.ajax({
-					type: 'get',
-					url: 'memberinfo',
-					cache: false,
-					async: false,
-					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
-						window.location.href = 'memberinfo';
-					},
-					error: function(data) {
-						alert(data.msg);
-					}
-				});
+					$.ajax({
+						type: 'get',
+						url: 'memberinfo',
+						cache: false,
+						async: false,
+						dataType: 'json',
+						　　　　　　contentType: 'application/json',
+						success: function(data) {
+							window.location.href = 'memberinfo.html?flid=' + flid + '&mbtel=' + mbtel;
+						},
+						error: function(data) {
+							alert(data.msg);
+						}
+					});
+				} else {
+					alert("请先   获取测试粉丝资料");
+				}
 			}
 
 			function mypromotion() {
-
-				$.ajax({
-					type: 'get',
-					url: 'mypromotion',
-					cache: false,
-					async: false,
-					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
-						window.location.href = 'mypromotion';
-					},
-					error: function(data) {
-						alert(data.msg);
-					}
-				});
+				var flid = document.getElementById('followid').value;
+				var mbtel = document.getElementById('membertel').value;
+				
+				if(flid != "" & mbtel != ""){
+					$.ajax({
+						type: 'get',
+						url: 'mypromotion',
+						cache: false,
+						async: false,
+						dataType: 'json',
+						　　　　　　contentType: 'application/json',
+						success: function(data) {
+							window.location.href = 'mypromotion';
+						},
+						error: function(data) {
+							alert(data.msg);
+						}
+					});
+				} else {
+					alert("请先   获取测试粉丝资料");
+				}
 			}
 
 			function register() {
@@ -199,14 +216,12 @@
 			function gettestfollowerid() {
 
 				var formdata = $('#memberindex').serializeObject();
-				var mbcode = document.getElementById('membertelnumid').value;
+				var mbtel = document.getElementById('membertelnumid').value;
 				
-				
-		
-				
-
-											
-				if(mbcode != ""){
+				$("#followid").val('');
+				$("#membertel").val('');
+														
+				if(mbtel != ""){
 				
 					$.ajax({
 						type: 'post',
@@ -218,9 +233,10 @@
 						　　　　　　async: false,
 						success: function(data) {
 							var result = JSON.stringify(data);
-							alert('success:' + data.id);
+							//alert('success:' + data.id);
 							
-							$("#membertelnumid").val(data.id);
+							$("#followid").val(data.id);
+							$("#membertel").val(mbtel);
 							
 						},
 						error: function(data) {
@@ -229,7 +245,7 @@
 					});
 					
 				} else {
-					alert("请输入测试手机号码");
+					alert("请输入  手机号码");
 				}
 			}
 			
