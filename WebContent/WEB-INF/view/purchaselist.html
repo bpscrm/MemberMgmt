@@ -32,12 +32,6 @@
 
 			<div class="weui-cells__title">可以点选进去查看已购买产品详细资料</div>
 
-            <div class="page__bd page__bd_spacing">
-				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:getPurchaselist()">修改</a>
-					<input type="hidden" id="cdid" value="1" />
-				</div>
-			</div>
 
 			<div class="weui-footer">
 				<br />
@@ -91,7 +85,7 @@
 			    });
 			}		
 		
-			function feedbacklist() {
+			function feedbacklist(id) {
 
 				$.ajax({
 					type: 'get',
@@ -101,7 +95,7 @@
 					dataType: 'json',
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						window.location.href = 'feedbacklist';
+						window.location.href = 'feedbacklist.html?purid=' + id;
 					},
 					error: function(data) {
 						alert(data.msg);

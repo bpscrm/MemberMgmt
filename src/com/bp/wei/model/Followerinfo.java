@@ -1,6 +1,7 @@
 package com.bp.wei.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Followerinfo {
     private String id;
@@ -19,11 +20,13 @@ public class Followerinfo {
 
     private String assignedUserId;
 
-    private Date followDt;
+    private String followDt;
 
     private String wechatUserid;
 
     private String description;
+    
+    private List<Followerinfo> follower;
 
     public String getId() {
         return id;
@@ -89,11 +92,11 @@ public class Followerinfo {
         this.assignedUserId = assignedUserId == null ? null : assignedUserId.trim();
     }
 
-    public Date getFollowDt() {
+    public String getFollowDt() {
         return followDt;
     }
 
-    public void setFollowDt(Date followDt) {
+    public void setFollowDt(String followDt) {
         this.followDt = followDt;
     }
 
@@ -112,4 +115,12 @@ public class Followerinfo {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
+    
+	public List<Followerinfo> getFollower() {
+		return follower;
+	}
+
+	public void setFollower(List<Followerinfo> follower) {
+		this.follower = follower;
+	}
 }

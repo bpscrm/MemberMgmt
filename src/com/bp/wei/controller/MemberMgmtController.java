@@ -166,6 +166,20 @@ public class MemberMgmtController {
 		return result;		
 	}
 	
+	/////////for follower
+	//search myfollower
+	@RequestMapping(value="getFollowerlist", method = RequestMethod.GET)
+	public @ResponseBody Followerinfo findMyFollowerList(String id){
+		log.debug("###########memberid: " + id);
+		if(id == null || id.length() == 0){
+			return null;
+		}
+		log.debug("###########memberid: " + id);
+		Followerinfo followerinfo = memberService.getFollowerlist(id);
+		log.debug("###########" + followerinfo.toString());
+		return followerinfo;
+	}
+	
 	
 	/////////for member 
 	//insert member
@@ -405,6 +419,20 @@ public class MemberMgmtController {
 		log.debug("###########" + member.toString());
 		return member;
 	}
+	
+	@RequestMapping(value="getPurchaseinfo", method = RequestMethod.GET)
+	public @ResponseBody Purchaseinfo findPurchaseInfo(String id){
+		log.debug("###########memberid: " + id);
+		if(id == null || id.length() == 0){
+			return null;
+		}
+		log.debug("###########memberid: " + id);
+		Purchaseinfo purinfo = memberService.getPurchaseInfo(id);
+		log.debug("###########" + purinfo.toString());
+		return purinfo;
+	}
+	
+	
 		
 	/////////for feedback
 	//insert feedback
@@ -439,18 +467,31 @@ public class MemberMgmtController {
 		
 
 		
-		int result = memberService.insertFeedbackinfo(feedback, strfeedbackinfo.getString("testpurchase"));
+		int result = memberService.insertFeedbackinfo(feedback, strfeedbackinfo.getString("purchaseid"));
 		
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
 	}
 	//search feedback
 	@RequestMapping(value="getfeedbackinfo", method = RequestMethod.GET)
-	public @ResponseBody FeedbackWithBLOBs findFeedbackinfo(String name){
+	public @ResponseBody FeedbackWithBLOBs findFeedbackinfo(String id){
 		
-		return memberService.getFeedbackinfobyname(new String(name));
+		return memberService.getFeedbackinfobyid(new String(id));
 		
 	}
+	
+	@RequestMapping(value="getFeedbacklist", method = RequestMethod.GET)
+	public @ResponseBody Purchaseinfo findFeedbacklist(String id){
+		log.debug("###########memberid: " + id);
+		if(id == null || id.length() == 0){
+			return null;
+		}
+		log.debug("###########memberid: " + id);
+		Purchaseinfo purinfo = memberService.getFeedbacklist(id);
+		log.debug("###########" + purinfo.toString());
+		return purinfo;
+	}
+	
 	//update feedback
 	@RequestMapping(value="updatefeedbackinfo", method = RequestMethod.POST)
 	public @ResponseBody int updatefeedbackinfo(@RequestBody JSONObject strfeedbackinfo){

@@ -11,6 +11,10 @@ import com.bp.wei.model.Purchaseinfo;
 
 public interface MemberMgmtService {
 	
+	///////////////////for follower
+	//search myfollower
+	Followerinfo getFollowerlist(String id);
+	
 	///////////////////for member
 	//insert
 	int insertMemberinfo(MemberinfoWithBLOBs memberinfowithblogs, String openid);
@@ -23,20 +27,22 @@ public interface MemberMgmtService {
 	//insert
 	int insertChildinfo(Childinfo childinfo, String mbid);
 	//search
-	Childinfo getchildinfo(String id);
 	Memberinfo getMemberWithChildren(String memberId);
+	Childinfo getchildinfo(String id);
 	//update
 	int updateChildinfo(Childinfo childinfo);
 	
 	///////////////////for Purchase
 	//search
 	Memberinfo getMemberWithPurchase(String id);
+	Purchaseinfo getPurchaseInfo(String id);
 	
 	///////////////////for feedback
 	//insert
-	int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename);
+	int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchaseid);
 	//search
-	FeedbackWithBLOBs getFeedbackinfobyname(String name);
+	FeedbackWithBLOBs getFeedbackinfobyid(String id);
+	Purchaseinfo getFeedbacklist(String id);
 	//update
 	int updateFeedbackinfo(FeedbackWithBLOBs feedbackinfo);
 

@@ -12,7 +12,7 @@ public interface FeedbackDao {
 
     FeedbackWithBLOBs selectByPrimaryKey(String id);
     
-    FeedbackWithBLOBs selectByFeedbackName(String name);
+    FeedbackWithBLOBs selectFeedbackByid(String id);
 
     int updateByPrimaryKeySelective(FeedbackWithBLOBs record);
 

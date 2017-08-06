@@ -24,20 +24,6 @@
 			<br />
 
 			<div class="weui-cells weui-cells_form">
-
-				<div class="weui-cell weui-cell_vcode">
-					<div class="weui-cell__hd">
-						<label class="weui-label">标题</label>
-					</div>
-					<div class="weui-cell__bd">
-						<input id="purchasename" class="weui-input" type="text" placeholder="已添加反馈标题" />
-					</div>
-					<div class="weui-cell__ft">
-						<a href="javascript:getfeedbackinfo();" class="weui-btn weui-btn_mini weui-btn_default">查找</a>
-					</div>
-
-				</div>
-
 				<div id="searchresult"></div>
 
 				<br />
@@ -47,7 +33,7 @@
 			<div class="page__bd page__bd_spacing">
 				<div class="page-btn-area">
 					<a class="page-btn page-btn_primary" href="javascript:updatefeedbackinfo();">修改</a>
-					<input type="hidden" id="memberid" value="1" />
+					<input type="hidden" id="feedbackid" value="1" />
 				</div>
 			</div>
 
@@ -132,11 +118,11 @@
 			};
 
 			function getfeedbackinfo() {
-				var purchasename = document.getElementById('purchasename').value;
+				var fbid = document.getElementById('feedbackid').value;
 				var params = {
-					name: purchasename
+					id: fbid
 				};
-				alert('purchasename:' + purchasename);
+				//alert('fbid:' + fbid);
 
 				$.ajax({
 					type: 'get',
@@ -241,6 +227,20 @@
 					}
 				});
 			}
+			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#feedbackid").val($.getUrlParam('fbid'));
+				
+				getfeedbackinfo();
+				
+			});				
 
 		</script>
 	</body>

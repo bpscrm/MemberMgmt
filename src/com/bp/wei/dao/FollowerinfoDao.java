@@ -12,6 +12,8 @@ public interface FollowerinfoDao {
     String selectByPrimaryOpenid(String name);
     
     Followerinfo selectByPrimaryKey(String id);
+    
+    Followerinfo selectMyFollowerListByKey(String id);
 
     int updateByPrimaryKeySelective(Followerinfo record);
 

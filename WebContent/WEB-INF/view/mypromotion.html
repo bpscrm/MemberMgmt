@@ -25,6 +25,8 @@
 
 			<div class="weui-cells">
 
+				<input type="hidden" id="flid" value="1" />
+				
 				<a class="weui-cell weui-cell_access" href="javascript:myfollower();">
 					<div class="weui-cell__hd"><img src="./images/Projects_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
 					<div class="weui-cell__bd">
@@ -52,6 +54,7 @@
 
 		<script type="text/javascript">
 			function myfollower() {
+			    var flid = document.getElementById('flid').value;
 
 				$.ajax({
 					type: 'get',
@@ -61,7 +64,7 @@
 					dataType: 'json',
 					　　　　　　contentType: 'application/json',
 					success: function(data) {
-						window.location.href = 'myfollower';
+						window.location.href = 'myfollower.html?flid=' + flid;
 					},
 					error: function(data) {
 						alert(data.msg);
@@ -86,6 +89,19 @@
 					}
 				});
 			}
+
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#flid").val($.getUrlParam('flid'));
+				//alert($.getUrlParam('flid'));
+				
+			});				
 		</script>
 
 	</body>

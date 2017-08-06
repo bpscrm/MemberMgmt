@@ -23,13 +23,15 @@ public class Purchaseinfo {
 
     private BigDecimal purchasePrice;
 
-    private Date purchaseStDt;
+    private String purchaseStDt;
 
-    private Date purchaseEdDt;
+    private String purchaseEdDt;
 
     private String purchaseSt;
 
     private String description;
+    
+    private List<Feedback> feedback;
     
     public String getId() {
         return id;
@@ -103,19 +105,19 @@ public class Purchaseinfo {
         this.purchasePrice = purchasePrice;
     }
 
-    public Date getPurchaseStDt() {
+    public String getPurchaseStDt() {
         return purchaseStDt;
     }
 
-    public void setPurchaseStDt(Date purchaseStDt) {
+    public void setPurchaseStDt(String purchaseStDt) {
         this.purchaseStDt = purchaseStDt;
     }
 
-    public Date getPurchaseEdDt() {
+    public String getPurchaseEdDt() {
         return purchaseEdDt;
     }
 
-    public void setPurchaseEdDt(Date purchaseEdDt) {
+    public void setPurchaseEdDt(String purchaseEdDt) {
         this.purchaseEdDt = purchaseEdDt;
     }
 
@@ -135,4 +137,11 @@ public class Purchaseinfo {
         this.description = description == null ? null : description.trim();
     }
   
+	public List<Feedback> getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(List<Feedback> feedback) {
+		this.feedback = feedback;
+	}
 }

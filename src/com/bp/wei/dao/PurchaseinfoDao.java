@@ -11,6 +11,10 @@ public interface PurchaseinfoDao {
 
     Purchaseinfo selectByPrimaryKey(String id);
     
+    Purchaseinfo selectPurchaseinfoByKey(String id);
+    
+    Purchaseinfo selectFeedbacklistByKey(String id);
+    
     String selectIDByMember(String name);
 
     int updateByPrimaryKeySelective(Purchaseinfo record);

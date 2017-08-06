@@ -11,6 +11,7 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/func.js"></script>
 	</head>
 
 	<body>
@@ -61,7 +62,7 @@
 			<div class="page__bd page__bd_spacing">
 				<div class="button-sp-area">
 					<a class="page-btn page-btn_primary" href="javascript:setfeedbackinfo();">新增</a>
-					<input type="hidden" id="memberid" value="1" />
+					<input type="hidden" id="purchaseid1" name="purchaseid" value="1" />
 				</div>
 			</div>
 
@@ -86,7 +87,7 @@
 			function setfeedbackinfo() {
 
 				var formdata = $('#feedbackinfo').serializeObject();
-				//alert(formdata);							
+											
 				$.ajax({
 					type: 'post',
 					url: 'setfeedbackinfo',
@@ -104,6 +105,18 @@
 					}
 				});
 			}
+			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#purchaseid1").val($.getUrlParam('purid'));
+				
+			});				
 		</script>
 
 	</body>

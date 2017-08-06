@@ -57,6 +57,13 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	@Resource
 	private FeedbackToPurchaseDao ftpdao;
 	
+	////////////////for follower
+	//myfollower
+	public Followerinfo getFollowerlist(String id) {
+		Followerinfo followerinfo = fldao.selectMyFollowerListByKey(id);
+		return followerinfo;
+	}
+		
 	////////////////for member
 	//insert
 	@Override
@@ -112,6 +119,11 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	}
 	//search
 	@Override
+	public Memberinfo getMemberWithChildren(String memberId) {
+		Memberinfo member = mbdao.selectChildrenByKey(memberId);
+		return member;
+	}
+	@Override
 	public Childinfo getchildinfo(String id) {
 		if(id.length() <= 0){
 			log.error("Invalid child id: " + id);
@@ -134,16 +146,20 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 		Memberinfo member = mbdao.selectPurchaseByKey(id);
 		return member;
 	}
-	
+	@Override
+	public Purchaseinfo getPurchaseInfo(String id) {
+		Purchaseinfo purinfo = pdao.selectPurchaseinfoByKey(id);
+		return purinfo;
+	}
 	
 	////////////////for feedbacks
 	//insert
 	@Override
-	public int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchasename) {
+	public int insertFeedbackinfo(FeedbackWithBLOBs feedbackinfo, String purchaseid) {
 	
 		int result = fdao.insert(feedbackinfo);
 		
-		String purID = pdao.selectIDByMember(purchasename);
+		String purID = purchaseid;
 		
 		FeedbackToPurchase fdToPCH = new FeedbackToPurchase();
 		
@@ -156,13 +172,18 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	}
 	//search
 	@Override
-	public FeedbackWithBLOBs getFeedbackinfobyname(String name) {
-		System.out.println("@@@@@@@@@@@@@@feedback name: " + name);
-		if(name.length() <= 0){
-			log.error("Invalid member name: " + name);
+	public Purchaseinfo getFeedbacklist(String id) {
+		Purchaseinfo purinfo = pdao.selectFeedbacklistByKey(id);
+		return purinfo;
+	}
+	@Override
+	public FeedbackWithBLOBs getFeedbackinfobyid(String id) {
+		System.out.println("@@@@@@@@@@@@@@feedback id: " + id);
+		if(id.length() <= 0){
+			log.error("Invalid fb id: " + id);
 			return null;
 		}
-		FeedbackWithBLOBs feedbackinfo = fdao.selectByFeedbackName(new String(name));
+		FeedbackWithBLOBs feedbackinfo = fdao.selectFeedbackByid(new String(id));
 		return feedbackinfo;
 	}
 	//update
@@ -220,12 +241,6 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	public int setMember(Member member) {
 		int result = dao.insertSelective(member);
 		return result;
-	}
-
-	@Override
-	public Memberinfo getMemberWithChildren(String memberId) {
-		Memberinfo member = mbdao.selectChildrenByKey(memberId);
-		return member;
 	}
 
 }

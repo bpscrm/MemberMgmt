@@ -11,6 +11,7 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/func.js"></script>
 	</head>
 
 	<body>
@@ -22,21 +23,12 @@
 			<br />
 			<br />
 
-			<a class="weui-cell weui-cell_access" href="javascript:;">
-				<div class="weui-cell__hd"><img src="./images/Users_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-				<div class="weui-cell__bd">
-					<p>张三</p>
-				</div>
-				<div class="weui-cell__ft">关注日期：2017-07-21</div>
-			</a>
-
-			<a class="weui-cell weui-cell_access" href="javascript:;">
-				<div class="weui-cell__hd"><img src="./images/Users_favico.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-				<div class="weui-cell__bd">
-					<p>李四</p>
-				</div>
-				<div class="weui-cell__ft">关注日期：2017-07-21</div>
-			</a>
+			<input type="hidden" id="flid" value="1" />
+			
+			<div class="weui-cells">
+        		<div id="searchresult"> 
+	       		</div>
+	       	</div>
 
 			<div class="weui-footer weui-footer_fixed-bottom">
 				<p class="weui-footer__links">
@@ -45,6 +37,64 @@
 				<p class="weui-footer__text">Copyright &copy; 2007-2017 XXXXX</p>
 			</div>
 		</form>
+		
+		<script id="myfollow-template" type="text/html">
+			 <a class="weui-cell weui-cell_access" href="javascript:;">
+	                <div class="weui-cell__hd"><img src="./images/Users_favico.png"  alt="" style="width:20px;margin-right:5px;display:block"></div>
+	                <div class="weui-cell__bd">
+	                    <p><#= name #></p>
+	                </div>
+	                <div class="weui-cell__ft"><#= followDt #></div>
+	         </a>			
+		</script>
+        
+        <script type="text/javascript">
+        
+        	function getFollowerlist(){
+				var flid = document.getElementById('flid').value;
+				var params = {id: flid};
+				
+				alert(flid);
+				
+				$.ajax({  
+			        type: 'get',  
+			        url: 'getFollowerlist',
+			        cache: false,
+			        dataType : 'json',
+			        data: params,
+			　　　　　　 	contentType : 'application/json', 
+			　　　　　　 	async: false,
+			        success: function (data) { 	
+			        	var result= JSON.stringify(data);
+			        	
+			        	var htmllist = '';
+			        	data.follower.forEach(function(object) {			        		
+			        		var output = $('#myfollow-template').parseTemplate(object);			        		
+			        		htmllist += output;
+			        	});
+			        	
+			        	$('#searchresult').html(htmllist); 
+			        				        	
+			        },  
+			        error: function (data) { 		        	
+			        	alert('failed:' + data.msg);
+			        }  
+			    });
+			}
+        					
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			}  
+			
+			$(document).ready(function() {
+				
+				$("#flid").val($.getUrlParam('flid'));
+
+				getFollowerlist();
+			});
+		</script>
 
 	</body>
 
