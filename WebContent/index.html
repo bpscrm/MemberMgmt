@@ -11,86 +11,16 @@
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
+		<script src="js/xmlhttp.js"></script>
 	</head>
 
-	<body>
+	<body onload="startup_func()">
 	    <form id="memberindex" method="post">
 		<header class="ui-header ui-header-positive ui-border-b">
 			<h1>功能选项</h1>
 		</header>
 		<br />
 		<br />
-
-		<div class="page__bd">
-
-			<div class="page">
-				<div class="weui-grids">
-					<a href="javascript:memberregister();" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/frame_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">会员注册</p>
-					</a>
-					<a href="javascript:memberinfo();" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/flag_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">我的资料</p>
-					</a>
-					<a href="javascript:mypromotion();" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/gear_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">我的推广</p>
-					</a>
-					<a href="javascript:register();" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/book_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">测试页面</p>
-					</a>
-					<a href="javascript:;" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/calendar_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">预留</p>
-					</a>
-					<a href="javascript:;" class="weui-grid">
-						<div class="weui-grid__icon">
-							<img src="./images/book_bookmark_64.png" alt="">
-						</div>
-						<p class="weui-grid__label">预留</p>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="page__bd">
-			<br />
-			<br />
-			<br />
-			<article class="weui-article">
-				<p>
-					如果你不是微信进入此页面，请设定你的手机号码，作为测试数据为后续页面使用
-				</p>
-
-				<div class="weui-cell">
-					<div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
-					<div class="weui-cell__bd">
-						<input id="membertelnumid" name="membertelnumname" class="weui-input" type="text" pattern="[0-9]*" placeholder="手机号码" />
-					</div>
-				</div>
-
-				<div class="page__bd page__bd_spacing">
-					<div class="page-btn-area">
-						<a class="page-btn page-btn_primary" href="javascript:gettestfollowerid();">获取测试粉丝资料</a>
-						<input type="hidden" id="followid" value="1" />
-						<input type="hidden" id="membertel" value="2" />
-					</div>
-				</div>
-			</article>
-		</div>
 
 		<div class="weui-footer">
 			<br />
@@ -103,152 +33,85 @@
 		
 		</form>
 		
+			<script type="text/javascript">
+				var gbl_app_id = "";
+				var gbl_url = "";
+				var gbl_appsecret = "";
+				var gbl_location_href = location.href;
+				var gbl_server = "http://wongls.hopto.org"; 
+				
+				function parse_query_string(query) 
+				{
+					var params = {};
+					if (query) 
+					{
+			    		var parts = query.substring(1).split('&');
+
+			    		for (var i = 0; i < parts.length; i++) 
+			    		{
+			        		var nv = parts[i].split('=');
+			        		if (!nv[0]) continue;
+			        		params[nv[0]] = nv[1] || true;
+			    		}
+					}
+
+			  	return params;
+				}
+				
+				function readConfigFile(file)
+				{
+		    	var rawFile = new XMLHttpRequest();
+		    	rawFile.open("GET", file, false);
+		    	rawFile.onreadystatechange = function ()
+		    	{
+		        	if(rawFile.readyState === 4)
+		        	{
+		            	if(rawFile.status === 200 || rawFile.status == 0)
+		            	{			            	
+		        			var rawfile_recs = rawFile.responseText.replace(/\r/g, "");			        			
+		            		var arrlines = rawfile_recs.split("\n");		            	
+		            		var tot_recs = arrlines.length;
+		            	
+		            		for (var ws_cnt = 0; ws_cnt < tot_recs; ws_cnt++)	
+		            		{
+		            			var curLine = arrlines[ws_cnt];
+		            			//alert(curLine);
+		            			if (curLine.substring(0,5) == "APPID")
+		            			{
+		            				gbl_app_id = curLine.substring(6);
+		            			}
+		            			if (curLine.substring(0,9) == "APPSECRET")
+		            			{
+		            				gbl_appsecret = curLine.substring(10);
+		            			}
+								if (curLine.substring(0,6) == "SERVER")
+		            			{
+		            				gbl_server = curLine.substring(7);
+		            			}
+
+
+
+		            		}			
+		              	//var allText = rawFile.responseText;
+		              	//alert(allText);
+		            	}
+		        	}
+		    	}
+		    	rawFile.send(null);
+				}
 		
-		<script type="text/javascript">
-			function memberregister() {						
-				var flid = document.getElementById('followid').value;
-				var mbtel = document.getElementById('membertel').value;
-				
-				if(flid != "" & mbtel != ""){
-					$.ajax({
-						type: 'get',
-						url: 'memberregister',
-						cache: false,
-						async: false,
-						dataType: 'json',
-						　　　　　　contentType: 'application/json',
-						success: function(data) {
-							window.location.href = 'memberregister.html?flid=' + flid + '&mbtel=' + mbtel;
-						},
-						error: function(data) {
-							alert(data.msg);
-						}
-					});
-				} else {
-					alert("请先   获取测试粉丝资料");
+				function startup_func()
+				{ 
+					//alert("in java section");
+					readConfigFile("config.txt");
+					//alert("after read");
+					//alert(gbl_app_id);
+					//alert(gbl_appsecret);
+					//alert(gbl_location_href);
+					var redirect_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+gbl_app_id+"&redirect_uri="+gbl_server+"/MemberMgmt/index1.html&response_type=code&scope=snsapi_userinfo&state="+gbl_appsecret+"appid"+gbl_app_id+"#wechat_redirect";
+					//alert(redirect_url);
+					window.location.href = redirect_url; 	
 				}
-			}
-
-			function memberinfo() {
-				var flid = document.getElementById('followid').value;
-				var mbtel = document.getElementById('membertel').value;
-				
-				if(flid != "" & mbtel != ""){
-
-					$.ajax({
-						type: 'get',
-						url: 'memberinfo',
-						cache: false,
-						async: false,
-						dataType: 'json',
-						　　　　　　contentType: 'application/json',
-						success: function(data) {
-							window.location.href = 'memberinfo.html?flid=' + flid + '&mbtel=' + mbtel;
-						},
-						error: function(data) {
-							alert(data.msg);
-						}
-					});
-				} else {
-					alert("请先   获取测试粉丝资料");
-				}
-			}
-
-			function mypromotion() {
-				var flid = document.getElementById('followid').value;
-				var mbtel = document.getElementById('membertel').value;
-				
-				if(flid != "" & mbtel != ""){
-					$.ajax({
-						type: 'get',
-						url: 'mypromotion',
-						cache: false,
-						async: false,
-						dataType: 'json',
-						　　　　　　contentType: 'application/json',
-						success: function(data) {
-							window.location.href = 'mypromotion.html?flid=' + flid;
-						},
-						error: function(data) {
-							alert(data.msg);
-						}
-					});
-				} else {
-					alert("请先   获取测试粉丝资料");
-				}
-			}
-
-			function register() {
-
-				$.ajax({
-					type: 'get',
-					url: 'register',
-					cache: false,
-					async: false,
-					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
-						window.location.href = 'register';
-					},
-					error: function(data) {
-						alert(data.msg);
-					}
-				});
-			}
-			
-			//for test follower data
-			$.fn.serializeObject = function() {
-				var o = {};
-				var a = this.serializeArray();
-				$.each(a, function() {
-					if(o[this.name]) {
-						if(!o[this.name].push) {
-							o[this.name] = [o[this.name]];
-						}
-						o[this.name].push(this.value || '');
-					} else {
-						o[this.name] = this.value || '';
-					}
-				});
-				return o;
-			};
-
-			function gettestfollowerid() {
-
-				var formdata = $('#memberindex').serializeObject();
-				var mbtel = document.getElementById('membertelnumid').value;
-				
-				$("#followid").val('');
-				$("#membertel").val('');
-														
-				if(mbtel != ""){
-				
-					$.ajax({
-						type: 'post',
-						url: 'gettestfollowerid',
-						cache: false,
-						dataType: 'json',
-						data: JSON.stringify(formdata),
-						contentType: 'application/json',
-						　　　　　　async: false,
-						success: function(data) {
-							var result = JSON.stringify(data);
-							//alert('success:' + data.id);
-							
-							$("#followid").val(data.id);
-							$("#membertel").val(mbtel);
-							
-						},
-						error: function(data) {
-							alert('failed:' + data.msg);
-						}
-					});
-					
-				} else {
-					alert("请输入  手机号码");
-				}
-			}
-			
 			
 		</script>
 	</body>

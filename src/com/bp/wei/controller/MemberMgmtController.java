@@ -1,5 +1,11 @@
 package com.bp.wei.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +33,27 @@ import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Purchaseinfo;
 import com.bp.wei.service.MemberMgmtService;
 
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
+import org.json.JSONException;
+import net.sf.json.JSONArray;
+
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 @Controller
 @RequestMapping
 public class MemberMgmtController {
 	public static Logger log = LoggerFactory.getLogger(MemberMgmtController.class);
+	
+	private final static String USER_AGENT = "Mozilla/5.0";
 	
 	@Autowired
 	MemberMgmtService memberService;
@@ -533,6 +554,127 @@ public class MemberMgmtController {
 		
 		System.out.println("@@@@@@@@@@@@@@result: " + result);
 		return result;		
+	}
+	
+	//for test data 
+	@RequestMapping(value="getopenid", method = RequestMethod.GET)
+	public @ResponseBody String getopenid(String appid, String secret, String code){
+		log.debug("Start to get OPENID..."+appid+" "+secret+" "+code);
+		
+		JSONParser parser = new JSONParser();
+		String ws_openid="unknown";
+		
+		//Get ACCESS_TOKEN
+		String token_url ="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID" +
+			"&secret=APPSECRET&code=CODE&grant_type=authorization_code";
+		String requestUrl = token_url.replace("APPID", appid).replace("APPSECRET", secret).replace("CODE",  code);  
+				
+		//System.out.println("requestUrl "+ requestUrl);
+
+       	URL obj = null;
+		try {
+			obj = new URL(requestUrl);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	HttpURLConnection con = null;
+		try {
+			con = (HttpURLConnection) obj.openConnection();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    		
+    	con.setRequestProperty("Accept-Charset", "UTF-8");
+    		try {
+				con.setRequestMethod("GET");
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+    		//add request header
+    		con.setRequestProperty("User-Agent", USER_AGENT);
+
+    		int responseCode = 0;
+			try {
+				responseCode = con.getResponseCode();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		System.out.println("\nSending 'GET' request to URL : " + requestUrl);
+    		System.out.println("Response Code : " + responseCode);
+
+    		BufferedReader in = null;
+			try {
+				in = new BufferedReader(
+				        new InputStreamReader(con.getInputStream(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		String inputLine;
+    		StringBuffer response1 = new StringBuffer();
+    		String trim_response;
+
+    		try {
+				while ((inputLine = in.readLine()) != null) {
+					response1.append(inputLine);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		try {
+				in.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+    		trim_response = response1.toString();
+    		//trim_response = trim_response.trim().replaceAll(" +", " ") + "\n";
+    		//print result
+    		System.out.println("trim_response "+trim_response);
+    		
+    		/*
+    		Object obj1 = null;
+			try {
+				obj1 = parser.parse(trim_response);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		String userlocation = null;    	
+    		*/
+    		
+    	  JSONArray jsonArray = (net.sf.json.JSONArray) JSONArray.fromObject("["+trim_response+"]");	
+  
+          System.out.println(jsonArray);
+                   
+          //JSONObject json = (JSONObject) outerArray.get(0);
+ 
+          System.out.println("json size");
+          System.out.println(jsonArray.size());
+          
+          JSONObject station = jsonArray.getJSONObject(0);
+          ws_openid = station.getString("openid");
+          System.out.println("station "+ station.getString("openid"));
+          // take the elements of the json array 
+          /*
+          for(int i=0; i<lang.size(); i++)
+          { 
+                System.out.println("The " + i + " element of the array: "+lang.get(i)); 
+          } 
+		  */
+
+		return ws_openid;
 	}
 	
 	//for test data 
