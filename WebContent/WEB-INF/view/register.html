@@ -7,13 +7,12 @@
 		<title>会员注册</title>
 		<link href="css/style.css" rel="stylesheet" />
 		<link href="css/weui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="css/frozen.css">
 		<script src="js/jquery-3.2.1.min.js"></script>
 		<script src="js/weui.min.js"></script>
 		<script src="js/zepto.min.js"></script>
 		<script src="js/func.js"></script>
 	</head>
-
+	
 	<body>
 
 		<form id="member" method="post" action="registerinfo">
@@ -83,11 +82,9 @@
 					<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>					
 				</div>
 				<div class="page-btn-area">
-					<a class="page-btn page-btn_primary" href="javascript:getMember()">查找</a>
+					<a class="page-btn page-btn_primary" href="javascript:getSurvey()">查找</a>
 					<input type="hidden" id="memberid" value="2e48426f-a448-0b1c-2324-597f2ca95921"/>
 				</div>
-			</div>
-			<div id="searchresult">
 			</div>
 			
 
@@ -99,6 +96,15 @@
 	                <div class="weui-cell__ft">查看详细资料</div>
 	            </a>
 
+		</form>
+		<form id="survey" method="post" action="submitSurvey">	
+			<input type="hidden" id="surveyid" value="a8623f48-5642-7273-fa8a-5987da775c2d"/>		
+				<div id="searchresult">
+				</div>
+			<div class="button-sp-area">
+				<a href="javascript:submitSurvey();" class="weui-btn weui-btn_mini weui-btn_primary">提交</a>
+				<a href="javascript:history.back();" class="weui-btn weui-btn_mini weui-btn_default">返回</a>					
+			</div>
 		</form>
 		
 		<script id="template" type="text/html">
@@ -131,6 +137,31 @@
 	                <div class="weui-cell__ft">查看详细资料</div>
 	         </a>			
 		</script>
+		<script type="text/html" id="question-header">			
+			<div class="page-hd">
+				<p class="page-title"><#= name #></p>
+				<input type="hidden" name = "sid" value = "<#= id #>"/>
+			</div>			
+		</script>
+		<script type="text/html" id="question-list">
+			<div class="weui-cell__hd">
+				<p><#= name #></p>
+				<input type="hidden" name="<#= qtag #>" value = "<#= id #>"/>
+			</div>	
+		</script>
+		<script type="text/html" id="option-list">
+			<div class="weui-cells weui-cells_radio">
+            	<label class="weui-cell weui-check__label" for="<#= id #>">
+                	<div class="weui-cell__bd">
+                    	<p><#= name #></p>
+                	</div>
+                	<div class="weui-cell__ft">
+                    	<input type="radio" name ="<#= tag #>" id="<#= id #>" value="<#= id #>"/>
+                    	<span class="weui-icon-checked"></span>
+                	</div>
+            	</label>            
+        	</div>
+		</script>
 		<script type="text/javascript">
 		function registerinfo() {
 			$('#member').submit();				
@@ -155,7 +186,7 @@
 				        	alert('failed:' + data.msg);
 				        }  
 				    });			
-			}
+			}			
 		
 			function getMember(){
 				var memberid = document.getElementById('memberid').value;
@@ -173,11 +204,7 @@
 			        	var result= JSON.stringify(data);
 			        	
 			        	var htmllist = '';
-			        	data.children.forEach(function(object) {			        		
-			        		var output = $('#children-template').parseTemplate(object);			        		
-			        		htmllist += output;
-			        	});
-			        	
+			        	htmllist = $('#')
 			        	$('#searchresult').html(htmllist); 
 			        				        	
 			        },  
@@ -225,6 +252,54 @@
 					}
 				});
 			});
+			
+			function getSurvey(){
+				var surveyid = document.getElementById('surveyid').value;
+				var params = {id: surveyid};
+				
+				$.ajax({  
+			        type: 'get',  
+			        url: 'getQuestionnaire',
+			        cache: false,
+			        dataType : 'json',
+			        data: params,
+			　　　　　　 	contentType : 'application/json', 
+			　　　　　　 	async: false,
+			        success: function (data) { 				        				        	
+			        	var htmllist = parseQATemplate(data);			        	
+			        	$('#searchresult').html(htmllist);			        				        	
+			        },  
+			        error: function (data) { 		        	
+			        	alert('failed:' + data.msg);
+			        }  
+			    });
+			}
+			
+			function parseQATemplate(data){
+				var err = "";
+				var resultHtml = ""; 
+				try{
+					resultHtml = $('#question-header').parseTemplate(data);
+					var i = 1;
+					data.questions.forEach(function(object) {
+						object.qtag = 'qid_' + i;
+						resultHtml += $('#question-list').parseTemplate(object);
+						object.options.forEach(function(item){
+							item.tag = object.id;
+							resultHtml += $('#option-list').parseTemplate(item);
+						});
+						i ++;
+					});
+					return resultHtml;
+				}catch(e){
+					err = e.message;
+				}
+				return "< # ERROR: " + err.toString() + " # >";
+			};
+			function submitSurvey(){
+				
+				$('#survey').submit();
+			}
 		//});
 		</script>
 		

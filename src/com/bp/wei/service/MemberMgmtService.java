@@ -8,6 +8,7 @@ import com.bp.wei.model.Member;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Purchaseinfo;
+import com.bp.wei.model.Questionnaire;
 
 public interface MemberMgmtService {
 	
@@ -55,5 +56,5 @@ public interface MemberMgmtService {
 	Member getMemberById(int memberId);
 	int setMember(Member member);
 	
-	
+	Questionnaire getQuestionnaireById(String id);
 }

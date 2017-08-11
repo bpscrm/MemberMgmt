@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Followerinfo;
 import com.bp.wei.model.Purchaseinfo;
+import com.bp.wei.model.Questionnaire;
 import com.bp.wei.service.MemberMgmtService;
 
 import java.io.InputStreamReader;
@@ -712,5 +714,44 @@ public class MemberMgmtController {
 		
 		return result;		
 	}
-
+	
+	@RequestMapping(value="getQuestionnaire", method = RequestMethod.GET)
+	public @ResponseBody Questionnaire getQuestionnaire(String id){
+		if(id == null || id.length() <= 0){
+			log.error("Invalid questionnaire id from UI.");
+			return null;
+		}
+		Questionnaire result = memberService.getQuestionnaireById(id);
+		if(result == null){
+			log.error("No questionnaire definition.");
+			return null;
+		}
+		System.out.println("@@@@@@@@@@@result: " + result.toString());
+		return result;
+	}
+	
+	@RequestMapping(value="submitSurvey", method = RequestMethod.POST)
+	public ModelAndView submitSurvey(HttpServletRequest request){	
+		log.debug("setSurveryResult start...");
+		String surveryId = request.getParameter("sid");
+		System.out.println("survery id: " + surveryId);
+		int i = 1;
+		boolean hasnext = true;
+		while(hasnext){
+			String questionId = request.getParameter("qid_" + i);
+			System.out.println("question id: " + questionId);
+			if(questionId != null && questionId.length() > 0){
+				String answer = request.getParameter(questionId);
+				System.out.println("answer id: " + answer);
+				i ++;
+			}else{
+				hasnext = false;
+			}
+		}
+		ModelAndView result = new ModelAndView();
+		
+		result.setViewName("register");		
+			
+		return result;
+	}
 }

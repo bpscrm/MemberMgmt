@@ -15,6 +15,7 @@ import com.bp.wei.dao.MemberinfoDao;
 import com.bp.wei.dao.FollowerinfoDao;
 import com.bp.wei.dao.MemberToFollowerDao;
 import com.bp.wei.dao.PurchaseinfoDao;
+import com.bp.wei.dao.QuestionnaireDao;
 import com.bp.wei.model.ChildToMember;
 import com.bp.wei.model.Childinfo;
 import com.bp.wei.model.FeedbackToPurchase;
@@ -25,6 +26,7 @@ import com.bp.wei.model.MemberToFollower;
 import com.bp.wei.model.Memberinfo;
 import com.bp.wei.model.MemberinfoWithBLOBs;
 import com.bp.wei.model.Purchaseinfo;
+import com.bp.wei.model.Questionnaire;
 import com.bp.wei.service.MemberMgmtService;
 
 @Service
@@ -56,6 +58,9 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	
 	@Resource
 	private FeedbackToPurchaseDao ftpdao;
+	
+	@Resource
+	private QuestionnaireDao qDao;
 	
 	////////////////for follower
 	//myfollower
@@ -241,6 +246,19 @@ public class MemberMgmtServiceImpl implements MemberMgmtService {
 	public int setMember(Member member) {
 		int result = dao.insertSelective(member);
 		return result;
+	}
+
+	@Override
+	public Questionnaire getQuestionnaireById(String id) {
+		if(id == null || id.length() <= 0){
+			log.error("Invalid questionnaire id： " + id);
+			return null;
+		}
+		Questionnaire questionnaire = qDao.selectByPrimaryKeyWithQA(id);
+		if(questionnaire == null){
+			log.error("Questionnaire with id :" + id + " does not exist.");
+		}
+		return questionnaire;
 	}
 
 }
