@@ -38,7 +38,7 @@
 				var gbl_url = "";
 				var gbl_appsecret = "";
 				var gbl_location_href = location.href;
-				var gbl_server = "http://wongls.hopto.org"; 
+				var gbl_server = "http://localhost:8080"; 
 				
 				function parse_query_string(query) 
 				{
@@ -64,8 +64,13 @@
 		    	rawFile.open("GET", file, false);
 		    	rawFile.onreadystatechange = function ()
 		    	{
+		    		
+		    		
 		        	if(rawFile.readyState === 4)
 		        	{
+		        	    alert(rawFile.readyState);
+		        	    alert(rawFile.status);
+		        	    
 		            	if(rawFile.status === 200 || rawFile.status == 0)
 		            	{			            	
 		        			var rawfile_recs = rawFile.responseText.replace(/\r/g, "");			        			
@@ -93,7 +98,8 @@
 
 		            		}			
 		              	//var allText = rawFile.responseText;
-		              	//alert(allText);
+		              	alert(gbl_app_id);
+		              	alert(gbl_appsecret);
 		            	}
 		        	}
 		    	}
@@ -109,7 +115,7 @@
 					//alert(gbl_appsecret);
 					//alert(gbl_location_href);
 					var redirect_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+gbl_app_id+"&redirect_uri="+gbl_server+"/MemberMgmt/index1.html&response_type=code&scope=snsapi_userinfo&state="+gbl_appsecret+"appid"+gbl_app_id+"#wechat_redirect";
-					//alert(redirect_url);
+					alert(redirect_url);
 					window.location.href = redirect_url; 	
 				}
 			
