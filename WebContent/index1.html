@@ -21,7 +21,6 @@
 		<br />
 		<br />
 
-
 		<div class="page__bd">
 
 			<div class="page">
@@ -57,12 +56,10 @@
 						<p class="weui-grid__label">预留</p>
 					</a>
 					<a href="javascript:;" class="weui-grid">
-
 						<div class="weui-grid__icon">
 							<img src="./images/book_bookmark_64.png" alt="">
 						</div>
 						<p class="weui-grid__label">预留</p>
-
 					</a>
 				</div>
 			</div>
@@ -109,53 +106,56 @@
 		
 		<script type="text/javascript">
 			var gbl_openid;
-			
-			function parse_query_string(query) {
+		
+			function parse_query_string(query) 
+			{
 				var params = {};
-				if (query) {
-				    var parts = query.substring(1).split('&');
-	
-				    for (var i = 0; i < parts.length; i++) {
-				        var nv = parts[i].split('=');
-				        if (!nv[0]) continue;
-				        params[nv[0]] = nv[1] || true;
-				    }
+				if (query) 
+				{
+			   		var parts = query.substring(1).split('&');
+
+			    	for (var i = 0; i < parts.length; i++) {
+			       		var nv = parts[i].split('=');
+			        	if (!nv[0]) continue;
+			        	params[nv[0]] = nv[1] || true;
+			    	}
 				}
-	
-				 return params;
+
+				return params;
 			}
-					
+				
 			var query_string = location.search;
 			var parsed_qs = parse_query_string(query_string);
 			var ws_appid_pos = parsed_qs.state.indexOf("appid");
 			var ws_appid = parsed_qs.state.substring(ws_appid_pos+5);
 			var ws_appsecret = parsed_qs.state.substring(0,ws_appid_pos);
-			
+		
 			var token_url ="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+ws_appid +
 				"&secret="+ws_appsecret+"&code="+parsed_qs.code+"&grant_type=authorization_code";
 			var abc_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=3.11986,101.67764&sensor=true";
-			//alert("token_url "+token_url);
+			alert("token_url "+token_url);
 			//alert(ws_appid);
-			
+		
 			$.ajax(
 			{ 				
 				type: "get",   
-			    url: "getopenid",   
-			    async: false,
-			    cache: false,
-			    dataType: 'text',
-			    data: {appid: ws_appid, secret: ws_appsecret, code: parsed_qs.code},
-			    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		   	 url: "getopenid",   
+		    	async: false,
+		    	cache: false,
+		    	dataType: 'text',
+		    	data: {appid: ws_appid, secret: ws_appsecret, code: parsed_qs.code},
+		    	contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				success: function(data) {
 					alert("Success "+data);
 					gbl_openid = data;
 				},           	
 				error: function(data) {
 					alert('failed:' + data.msg);
-				}
-			});
+			}});
+				
+			alert("after getopenid ");
 		
-			///////////
+		
 			function memberregister() {						
 				var flid = document.getElementById('followid').value;
 				var mbtel = document.getElementById('membertel').value;
@@ -216,9 +216,11 @@
 						cache: false,
 						async: false,
 						dataType: 'json',
-						　　　　　　contentType: 'application/json',
-						success: function(data) {
-							window.location.href = 'mypromotion.html?flid=' + flid;
+						data: {openid: gbl_openid},
+					　　　contentType: 'application/json',
+						success: function(data) 
+						{
+							window.location.href = 'mypromotion?openid='+gbl_openid;
 						},
 						error: function(data) {
 							alert(data.msg);

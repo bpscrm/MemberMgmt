@@ -1,12 +1,9 @@
 /**
- * All the custom JS functions
+ * All the custom js functions
  */
-	//This is used to parse Questionnaire JSON Object to HTML, JSON object should follow the specific format
-	
-	
 	$.fn.parseTemplate = function(data){ 
 		var str = (this).html(); 
-		var _tmplCache = {}; 
+		var _tmplCache = {} 
 		var err = ""; 
 		try{ 
 			var func = _tmplCache[str]; 
@@ -49,7 +46,7 @@
 	 		return o;    
 	};
 	
-	/*$(function() {
+	$(function() {
 		var winH = $(window).height();
 		var categorySpace = 10;
 
@@ -89,4 +86,4 @@
 				}
 			}
 		});
-	});*/
+	});

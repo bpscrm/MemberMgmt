@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -15,7 +14,7 @@
 
 	<body>
 
-		<form id="mypromotion" method="post">
+		<form id="mypromotion" method="get">
 			
 			<header class="ui-header ui-header-positive ui-border-b">
 				<h1>我的推广</h1><button class="ui-btn" onclick="history.back()">回上页</button>
@@ -53,9 +52,32 @@
 		</form>
 
 		<script type="text/javascript">
-			function myfollower() {
+		
+			var ws_location = location.search;
+			
+			function parse_query_string(query) 
+			{
+				var params = {};
+				if (query) 
+				{
+			   		var parts = query.substring(1).split('&');
+
+			    	for (var i = 0; i < parts.length; i++) {
+			       		var nv = parts[i].split('=');
+			        	if (!nv[0]) continue;
+			        	params[nv[0]] = nv[1] || true;
+			    	}
+				}
+
+				return params;
+			}
+			
+			function myfollower() 
+			{
 			    var flid = document.getElementById('flid').value;
 
+			    alert(flid);
+			    
 				$.ajax({
 					type: 'get',
 					url: 'myfollower',
@@ -72,35 +94,52 @@
 				});
 			}
 
-			function myqrcode() {
+			function myqrcode() 
+			{
+				//alert(ws_location);				
+				
+				var query_string = location.search;
+				var parsed_qs = parse_query_string(query_string);
+				
+				window.location.href = 'http://wongls.hopto.org/MemberMgmt/myqrcode';
 
+				/*
 				$.ajax({
 					type: 'get',
 					url: 'myqrcode',
 					cache: false,
 					async: false,
 					dataType: 'json',
-					　　　　　　contentType: 'application/json',
-					success: function(data) {
+					data: {keycode: "https://open.weixin.qq.com/connect/oauth2/authorize",
+						   appid: "wxf2c80bfa2eabeb26",
+						   redirect_uri: "http://wongls.hopto.org/WeWeb&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect"
+					}
+					//data: {openid: parsed_qs.openid},
+				　　　contentType: 'application/json',
+					success: function(data) 
+					{
 						window.location.href = 'myqrcode';
+						//window.location.href = 'myqrcode?keycode=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf2c80bfa2eabeb26&redirect_uri=http://wongls.hopto.org/WeWeb&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect&openid=' + parsed_qs.openid;
 					},
 					error: function(data) {
 						alert(data.msg);
 					}
 				});
+				*/
 			}
 
-			jQuery.getUrlParam = function (name) {
+			jQuery.getUrlParam = function (name) 
+			{
      			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
      			var r = window.location.search.substr(1).match(reg);
      			if (r != null) return unescape(r[2]); return null;
 			}  
 			
-			$(document).ready(function() {
+			$(document).ready(function() 
+			{
 				
 				$("#flid").val($.getUrlParam('flid'));
 				//alert($.getUrlParam('flid'));
-				
 			});				
 		</script>
 
