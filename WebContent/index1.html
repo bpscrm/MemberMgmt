@@ -105,7 +105,7 @@
 		
 		
 		<script type="text/javascript">
-			var gbl_openid;
+			//var gbl_openid;
 		
 			function parse_query_string(query) 
 			{
@@ -124,36 +124,36 @@
 				return params;
 			}
 				
-			var query_string = location.search;
-			var parsed_qs = parse_query_string(query_string);
-			var ws_appid_pos = parsed_qs.state.indexOf("appid");
-			var ws_appid = parsed_qs.state.substring(ws_appid_pos+5);
-			var ws_appsecret = parsed_qs.state.substring(0,ws_appid_pos);
+			//var query_string = location.search;
+			//var parsed_qs = parse_query_string(query_string);
+			//var ws_appid_pos = parsed_qs.state.indexOf("appid");
+			//var ws_appid = parsed_qs.state.substring(ws_appid_pos+5);
+			//var ws_appsecret = parsed_qs.state.substring(0,ws_appid_pos);
 		
-			var token_url ="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+ws_appid +
-				"&secret="+ws_appsecret+"&code="+parsed_qs.code+"&grant_type=authorization_code";
-			var abc_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=3.11986,101.67764&sensor=true";
-			alert("token_url "+token_url);
+			//var token_url ="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+ws_appid +
+			//	"&secret="+ws_appsecret+"&code="+parsed_qs.code+"&grant_type=authorization_code";
+			//var abc_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=3.11986,101.67764&sensor=true";
+			//alert("token_url "+token_url);
 			//alert(ws_appid);
 		
-			$.ajax(
-			{ 				
-				type: "get",   
-		   	 url: "getopenid",   
-		    	async: false,
-		    	cache: false,
-		    	dataType: 'text',
-		    	data: {appid: ws_appid, secret: ws_appsecret, code: parsed_qs.code},
-		    	contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-				success: function(data) {
-					alert("Success "+data);
-					gbl_openid = data;
-				},           	
-				error: function(data) {
-					alert('failed:' + data.msg);
-			}});
+			//$.ajax(
+			//{ 				
+			//	type: "get",   
+		   	 //url: "getopenid",   
+		    	//async: false,
+		    	//cache: false,
+		    	//dataType: 'text',
+		    	//data: {appid: ws_appid, secret: ws_appsecret, code: parsed_qs.code},
+		    	//contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				//success: function(data) {
+				//	alert("Success "+data);
+				//	gbl_openid = data;
+				//},           	
+				//error: function(data) {
+				//	alert('failed:' + data.msg);
+		//	}});
 				
-			alert("after getopenid ");
+			//alert("after getopenid ");
 		
 		
 			function memberregister() {						
@@ -302,6 +302,15 @@
 				}
 			}
 			
+			jQuery.getUrlParam = function (name) {
+     			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+     			var r = window.location.search.substr(1).match(reg);
+     			if (r != null) return unescape(r[2]); return null;
+			} 			
+			
+			$(document).ready(function() {				
+				alert($.getUrlParam('openid'));
+			});
 			
 		</script>
 	</body>
